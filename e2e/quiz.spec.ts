@@ -100,6 +100,19 @@ test("keyboard selection does not auto-advance; Enter moves on", async ({ page }
   await expect(page.getByText("Question 2 of 28")).toBeVisible();
 });
 
+test("serves the favicon and app icons", async ({ page, request }) => {
+  await page.goto("/");
+  await expect(page.locator('head link[rel="icon"]').first()).toHaveAttribute("href", /\/(favicon\.ico|icon)/);
+  await expect(page.locator('head link[rel="apple-touch-icon"]')).toHaveAttribute("href", /apple-icon/);
+
+  for (const path of ["/favicon.ico"]) {
+    const res = await request.get(path);
+    expect(res.status(), path).toBe(200);
+  }
+  const iconHref = await page.locator('head link[rel="icon"][type="image/png"]').getAttribute("href");
+  expect((await request.get(iconHref!)).headers()["content-type"]).toBe("image/png");
+});
+
 test("shows a friendly message for an invalid report link", async ({ page }) => {
   await page.goto("/results?r=v1BROKEN");
   await expect(page.getByRole("heading", { name: "This report link isn't valid" })).toBeVisible();
