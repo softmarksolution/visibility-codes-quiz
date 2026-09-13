@@ -1,0 +1,84 @@
+.banner {
+  background: #000;
+  overflow: hidden;
+}
+
+.bannerImage {
+  display: block;
+  width: 100%;
+  height: clamp(118px, 17vw, 240px);
+  object-fit: cover;
+  object-position: center;
+}
+
+.footer {
+  background: radial-gradient(ellipse 60% 120% at 50% 100%, rgba(181, 119, 44, 0.28), transparent 60%), #000;
+  color: #e6c98f;
+  font-family: var(--font-serif);
+  font-size: 15px;
+}
+
+.footerInner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 20px 32px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+
+.footerLeft {
+  display: grid;
+  gap: 6px;
+}
+
+.legal,
+.footerRight {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+}
+
+.legal a,
+.footerRight a {
+  text-decoration: none;
+}
+
+.legal a:hover,
+.footerRight a:hover {
+  text-decoration: underline;
+}
+
+.footerRight {
+  justify-content: flex-end;
+}
+
+.footerLogo {
+  display: block;
+  width: 170px;
+  height: auto;
+}
+
+@media (max-width: 820px) {
+  .footerInner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    padding: 24px 20px 28px;
+  }
+
+  .footerLogo {
+    order: -1;
+  }
+
+  .legal,
+  .footerRight {
+    justify-content: center;
+  }
+
+  .footerRight span[aria-hidden="true"] {
+    display: none;
+  }
+}

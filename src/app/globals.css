@@ -1,0 +1,139 @@
+:root {
+  /* Palette from the font card and page/pop-up brand card */
+  --cream: #f7f5ed;
+  --cream-deep: #efe9da;
+  --card: #fffdf9;
+  --white: #ffffff;
+  --ink: #000000;
+  --body: #1f1f1f;
+  --muted: #5e5a52;
+  --gold: #c9a34a;
+  --gold-text: #98631f;
+  --bronze: #b5772c;
+  --gold-light: #e1c05b;
+  --gold-button: #d4af37;
+  --gauge-light: #e9dfc9;
+  --gauge-mid: #d4b36b;
+  --gauge-dark: #8c7739;
+  --navy: #0f2438;
+  --line: #eadfc9;
+  --field: #eeebe6;
+  --field-border: #ded8d0;
+  --night: #0a0a0a;
+
+  --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(60, 40, 10, 0.04), 0 8px 28px rgba(60, 40, 10, 0.07);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--body);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.6;
+  font-variant-numeric: lining-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  color: var(--ink);
+  line-height: 1.1;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Gold CTA from the brand card: uppercase, centred, black text, rounded, soft gold gradient */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 36px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-button) 55%, #c49a2c 100%);
+  box-shadow: 0 6px 18px rgba(180, 140, 40, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.btn-gold:hover {
+  filter: brightness(1.04);
+  box-shadow: 0 8px 24px rgba(180, 140, 40, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.btn-gold:active {
+  transform: translateY(1px);
+}
+
+.btn-gold:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

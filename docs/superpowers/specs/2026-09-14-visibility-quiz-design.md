@@ -72,7 +72,7 @@ pillar percentages and the Visibility Score.
 
 ## Report link
 
-`r` = `v1` + one letter per scored question (23 letters, A-G), e.g. `v1ABCD...`.
+`r` = `v1` + one letter per scored question (19 letters, A-G), e.g. `v1ABCD...`.
 Invalid or missing code shows a friendly "link not valid" state with a retake button.
 No name or email is ever placed in the URL. `c` is the visitor's own public referral code.
 
