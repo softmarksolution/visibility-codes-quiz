@@ -33,7 +33,7 @@ export function SiteFooter() {
             <a href={brand.termsUrl}>Terms and Conditions</a>
           </p>
         </div>
-        <Image src="/brand/footer-logo.webp" alt="The Visibility Codes" width={231} height={140} className={styles.footerLogo} />
+        <Image src="/brand/footer-logo-v2.webp" alt="The Visibility Codes" width={231} height={140} className={styles.footerLogo} />
         <p className={styles.footerRight}>
           <span>{brand.instagramHandle}</span>
           <span aria-hidden="true">|</span>
