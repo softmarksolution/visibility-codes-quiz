@@ -8,12 +8,16 @@ import UnlockModal from "./UnlockModal";
 import styles from "./quiz.module.css";
 
 const TOTAL = QUESTIONS.length;
+/** Pause so the chosen answer visibly highlights before moving on. */
+const ADVANCE_DELAY_MS = 350;
 
 export default function Quiz() {
   const [progress, setProgress] = useState<Progress>(loadProgress);
   const [unlockOpen, setUnlockOpen] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const firstRender = useRef(true);
+  const usingKeyboard = useRef(false);
+  const advanceTimer = useRef<number | undefined>(undefined);
 
   const question = QUESTIONS[progress.index]!;
   const value = progress.answers[question.id];
@@ -32,6 +36,8 @@ export default function Quiz() {
     headingRef.current?.focus();
   }, [progress.index]);
 
+  useEffect(() => () => window.clearTimeout(advanceTimer.current), []);
+
   function setAnswer(next: AnswerValue) {
     setProgress((p) => ({ ...p, answers: { ...p.answers, [question.id]: next } }));
   }
@@ -41,14 +47,30 @@ export default function Quiz() {
     setAnswer(current.includes(optionId) ? current.filter((id) => id !== optionId) : [...current, optionId]);
   }
 
+  /**
+   * Single-choice answers picked by mouse or touch move on automatically.
+   * Keyboard users (arrow keys change the selection) press Enter instead.
+   */
+  function autoAdvance() {
+    if (usingKeyboard.current) return;
+    const from = progress.index;
+    window.clearTimeout(advanceTimer.current);
+    advanceTimer.current = window.setTimeout(() => {
+      if (from === TOTAL - 1) setUnlockOpen(true);
+      else setProgress((p) => (p.index === from ? { ...p, index: from + 1 } : p));
+    }, ADVANCE_DELAY_MS);
+  }
+
   function goNext(event: React.FormEvent) {
     event.preventDefault();
     if (!answered) return;
+    window.clearTimeout(advanceTimer.current);
     if (progress.index === TOTAL - 1) setUnlockOpen(true);
     else setProgress((p) => ({ ...p, index: p.index + 1 }));
   }
 
   function goBack() {
+    window.clearTimeout(advanceTimer.current);
     setProgress((p) => ({ ...p, index: Math.max(0, p.index - 1) }));
   }
 
@@ -95,7 +117,16 @@ export default function Quiz() {
             </p>
           </div>
         ) : (
-          <fieldset className={styles.options} aria-labelledby="question-text">
+          <fieldset
+            className={styles.options}
+            aria-labelledby="question-text"
+            onKeyDown={() => {
+              usingKeyboard.current = true;
+            }}
+            onPointerDown={() => {
+              usingKeyboard.current = false;
+            }}
+          >
             {question.options.map((option) => {
               const multi = question.type === "multi";
               const checked = multi ? Array.isArray(value) && value.includes(option.id) : value === option.id;
@@ -108,6 +139,7 @@ export default function Quiz() {
                     value={option.id}
                     checked={checked}
                     onChange={() => (multi ? toggleMulti(option.id) : setAnswer(option.id))}
+                    onClick={multi ? undefined : autoAdvance}
                   />
                   {multi && <span className={styles.checkbox} aria-hidden="true" />}
                   <span>{option.label}</span>
