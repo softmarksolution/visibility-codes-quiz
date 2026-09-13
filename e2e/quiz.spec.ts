@@ -20,16 +20,21 @@ test("completes the quiz, unlocks the report and reopens it from the report link
   for (let i = 1; i <= 28; i++) {
     await expect(page.getByText(`Question ${i} of 28`)).toBeVisible();
     const next = page.getByRole("button", { name: "Next" });
-    await expect(next).toBeDisabled();
     if (i === 28) {
+      await expect(next).toBeDisabled();
       await page.getByRole("textbox", { name: "Your answer" }).fill("I overthink everything.");
+      await next.click();
     } else if (i === 26) {
+      // Multi-select waits for Next.
+      await expect(next).toBeDisabled();
       await page.locator("label").filter({ has: page.getByRole("checkbox") }).first().click();
+      await page.waitForTimeout(700);
+      await expect(page.getByText("Question 26 of 28")).toBeVisible();
+      await next.click();
     } else {
-      // Last option is the highest score on every scored question.
+      // Single choice advances on its own. Last option is the highest score on every scored question.
       await page.locator("label").filter({ has: page.getByRole("radio") }).last().click();
     }
-    await next.click();
   }
 
   const dialog = page.getByRole("dialog");
@@ -67,7 +72,6 @@ test("completes the quiz, unlocks the report and reopens it from the report link
 test("keeps progress after a reload and allows going back", async ({ page }) => {
   await page.goto("/quiz");
   await page.locator("label").filter({ has: page.getByRole("radio") }).first().click();
-  await page.getByRole("button", { name: "Next" }).click();
   await expect(page.getByText("Question 2 of 28")).toBeVisible();
 
   await page.reload();
@@ -76,6 +80,24 @@ test("keeps progress after a reload and allows going back", async ({ page }) => 
   await page.getByRole("button", { name: "Back" }).click();
   await expect(page.getByText("Question 1 of 28")).toBeVisible();
   await expect(page.getByRole("radio").first()).toBeChecked();
+
+  // Clicking the answer that is already selected moves on again.
+  await page.locator("label").filter({ has: page.getByRole("radio") }).first().click();
+  await expect(page.getByText("Question 2 of 28")).toBeVisible();
+});
+
+test("keyboard selection does not auto-advance; Enter moves on", async ({ page }) => {
+  await page.goto("/quiz");
+  await page.getByRole("radio").first().focus();
+  await page.keyboard.press("Space");
+  await expect(page.getByRole("radio").first()).toBeChecked();
+  await page.keyboard.press("ArrowDown");
+  await expect(page.getByRole("radio").nth(1)).toBeChecked();
+  await page.waitForTimeout(700);
+  await expect(page.getByText("Question 1 of 28")).toBeVisible();
+
+  await page.keyboard.press("Enter");
+  await expect(page.getByText("Question 2 of 28")).toBeVisible();
 });
 
 test("shows a friendly message for an invalid report link", async ({ page }) => {
