@@ -77,4 +77,8 @@
   .footerRight {
     justify-content: center;
   }
+
+  .footerRight span[aria-hidden="true"] {
+    display: none;
+  }
 }

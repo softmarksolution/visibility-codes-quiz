@@ -938,6 +938,7 @@
   }
 
   .copyInput {
+    flex: none;
     height: 50px;
     padding: 0 14px;
     font-size: 14px;
