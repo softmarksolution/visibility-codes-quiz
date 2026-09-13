@@ -19,7 +19,7 @@ function body(overrides: Record<string, unknown> = {}) {
 }
 
 function deps(result: SyncResult = { synced: true, contactId: "c1" }) {
-  const sync = vi.fn(async (_payload: GhlLeadPayload) => result);
+  const sync = vi.fn<(payload: GhlLeadPayload) => Promise<SyncResult>>(async () => result);
   return { sync, siteUrl: "https://quiz.test" };
 }
 
