@@ -68,7 +68,7 @@ export default function Quiz() {
           aria-valuemax={TOTAL}
           aria-valuenow={progress.index}
         >
-          <div className={styles.fill} style={{ width: `${(progress.index / TOTAL) * 100}%` }} />
+          <div className={styles.fill} style={{ transform: `scaleX(${progress.index / TOTAL})` }} />
         </div>
 
         <h1 className={styles.question} ref={headingRef} tabIndex={-1} id="question-text">
