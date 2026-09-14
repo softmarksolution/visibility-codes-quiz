@@ -3,8 +3,8 @@ import Link from "next/link";
 import { brand } from "@/content/site";
 import styles from "./SiteChrome.module.css";
 
-/** "cover" is the taller banner on the cover page; "compact" is the 800px-wide banner on the quiz. */
-export function HeaderBanner({ variant = "default" }: { variant?: "default" | "cover" | "compact" }) {
+/** "compact" is the 800px-wide banner used on the quiz and results pages. */
+export function HeaderBanner({ variant = "default" }: { variant?: "default" | "compact" }) {
   return (
     <header className={styles.banner}>
       <Link href="/" aria-label="The Visibility Codes home">

@@ -8,7 +8,7 @@ import type { PillarId } from "@/lib/quiz/questions";
 import type { Badge, LevelName } from "@/lib/quiz/scoring";
 
 export const brand = {
-  tagline: "Stand out · Be seen · Be chosen",
+  tagline: "Stand out • Be seen • Be chosen",
   copyright: "© 2026 Katrina Kavvalos International",
   privacyUrl: "/privacy-policy",
   termsUrl: "/terms-of-use",
@@ -18,22 +18,97 @@ export const brand = {
   websiteUrl: "https://thevisibilitycodes.com",
 };
 
-// Cover page copy, word for word from the client's cover page design.
+// Landing page copy, word for word from the client's desktop and mobile layout PDFs.
 // Uppercase styling is applied in CSS so screen readers read words, not letters.
+// Images in /public/landing were cropped from the flattened PDFs; replace them with the
+// client's original files (same names) for sharper photos and logos.
 export const landing = {
-  eyebrow: "For entrepreneurs, coaches, speakers, authors, personal brands",
-  headingLines: ["What’s actually standing between", "you and the opportunities", "you know you’re capable of?"],
-  pills: ["28 questions", "Personalised visibility score", "3 minute quiz"],
-  paragraphs: [
-    "You know you are good at what you do. You have the experience, the knowledge and the ability to deliver. Yet somehow, you keep watching other people get the clients, stages, media opportunities, partnerships and invitations you know you could handle. You show up, work hard and keep building your expertise, but the right people still do not seem to see you at the level you know you are capable of.",
-    "I became fascinated by this because every major opportunity in my career came to me. From hosting the AACTA Awards red carpet, to my first speaking tour, to being chosen to host one of the biggest entrepreneurial events in front of 12,000 people alongside Tony Robbins, Steven Bartlett, Gary Brecka and other world class speakers, I did not chase those opportunities. I was chosen for them.",
-    "It is time to stop wondering what is wrong with you, why you are not being noticed, and what is keeping you from being chosen. In 3 minutes, this assessment will help you identify what is really getting in the way, where your visibility is breaking down, and exactly what to shift so the right people begin to see, recognise and choose you.",
+  hero: {
+    title: "Why Aren’t You Getting The Opportunities You Know You Deserve?",
+    body: "In just 3 minutes, discover what is stopping you from standing out, being seen and being chosen, and what to shift next.",
+    tagline: "Stand out. Be seen. Be chosen.",
+    button: "Start assessment",
+    journey: ["Overlooked", "Recognised", "Chosen"],
+    imageAlt: "Katrina Kavvalos in front of The Visibility Codes title",
+  },
+  press: [
+    { id: "aacta", name: "AACTA Awards", w: 109, h: 61 },
+    { id: "nyfinance", name: "The New York Finance", w: 106, h: 52 },
+    { id: "dailytelegraph", name: "The Daily Telegraph", w: 152, h: 41 },
+    { id: "seven", name: "Channel 7", w: 42, h: 43 },
+    { id: "nine", name: "Channel 9", w: 76, h: 40 },
+    { id: "currentaffair", name: "A Current Affair", w: 118, h: 39 },
+    { id: "newidea", name: "New Idea", w: 67, h: 47 },
+    { id: "tennews", name: "10 News First", w: 85, h: 43 },
+    { id: "livingroom", name: "The Living Room", w: 89, h: 40 },
+    { id: "prevention", name: "Prevention", w: 122, h: 37 },
   ],
-  button: "Start quiz",
-  reminder: [
-    "Remember to answer based on where you are right now, not where you want to be.",
-    "The more honest your answers, the more useful your result.",
+  score: {
+    title: "Get Your Visibility Score Free",
+    body: "The first step to improving your visibility is knowing exactly where your gap is. Take this 3-minute Visibility Assessment to uncover what may be keeping you from standing out, being seen, and being chosen for the opportunities you want.",
+    bullets: [
+      { icon: "target", strong: "Discover your Visibility Score,", rest: " from 0 to 100, and what it means." },
+      { icon: "search", strong: "Identify your primary visibility gap", rest: " and the area that needs the most attention." },
+      { icon: "clipboard", strong: "Get your visibility category", rest: " and personalised next steps you can apply straight away." },
+    ],
+    after: "You’ll receive your score, primary blocker, strongest area, and next steps to help you move forward with clarity.",
+    button: "Get your free score",
+    gaugeTitle: "Your visibility score",
+    sample: 88,
+    rangeFrom: "Hidden potential",
+    rangeTo: "Chosen expert",
+    pill: "Score. Gap. Next steps.",
+  },
+  who: {
+    title: "Who this is for",
+    photoAlt: "Sydney host Katrina Kavvalos with Steven Bartlett and Tony Robbins",
+    bullets: [
+      "You know you’re good at what you do, but you still feel overlooked in your industry.",
+      "You struggle to explain what makes you different, so your message is not cutting through.",
+      "You’re showing up and creating content, but it is not turning into recognition, authority or opportunities.",
+      "You keep watching people with less experience get the clients, stages, media and partnerships you want.",
+      "You know you need to become more visible, but you are unsure where to focus or what will actually move the needle.",
+      "You feel capable of playing at a much bigger level, but your current positioning does not reflect the level you want to be known for.",
+    ],
+  },
+  gaps: {
+    titleStart: "What’s Your",
+    titleGold: "Visibility Gap?",
+    body: "In just 3 minutes, uncover the hidden gap affecting your visibility, identify where you are strongest, and receive a personalised next-step plan.",
+    items: [
+      { name: "Direction", text: "Your message, positioning, or focus is unclear, making it harder for people to understand what you do and why it matters." },
+      { name: "Recognition", text: "You have value to offer, but the right people are not noticing, remembering, or choosing you yet." },
+      { name: "Consistency", text: "You show up in pockets, but not often enough to build trust, momentum, and authority." },
+      { name: "Connection", text: "Your content or presence is not fully creating resonance, trust, or the relationships that open doors." },
+      { name: "Opportunity", text: "You are visible in some ways, but not yet positioned for the rooms, referrals, and aligned opportunities you want." },
+    ],
+    button: "Start free quiz",
+  },
+  meet: {
+    title: "Meet Katrina",
+    photoAlt: "Katrina Kavvalos hosting the AACTA Awards red carpet",
+    paragraphs: [
+      "Katrina Kavvalos is a TV show creator, producer, speaker, media personality, red carpet host, celebrity interviewer, and #1 bestselling author whose career spans broadcast television, publishing, and digital media.",
+      "As a Red Carpet Host and Celebrity Interviewer at the AACTA Awards, Katrina has interviewed some of the most recognisable names in entertainment, and also served as VIP Social Media Reporter for The Voice Australia and singer Will.i.am.",
+      "With more than a decade of experience across media and digital platforms, Katrina has built a respected reputation across both broadcast and social, while contributing to bestselling books on credibility, relationships, and personal influence in the digital age.",
+      "Across television, publishing, and visibility-focused media projects, Katrina’s work explores identity, reinvention, success, and human potential, helping people step out of the background, elevate their authority, and become impossible to overlook.",
+    ],
+  },
+  galleryLabel: "Katrina speaking, hosting and on the red carpet",
+  gallery: [
+    { id: 1, alt: "Katrina speaking on stage to a full conference room", w: 276, h: 232 },
+    { id: 2, alt: "Katrina interviewing an actor on the red carpet", w: 277, h: 232 },
+    { id: 3, alt: "Katrina with a guest at a red carpet event", w: 276, h: 232 },
+    { id: 4, alt: "Katrina with a guest at an awards night", w: 202, h: 216 },
+    { id: 5, alt: "Katrina with two guests at a media event", w: 203, h: 216 },
+    { id: 6, alt: "Katrina laughing with a guest on the red carpet", w: 203, h: 216 },
+    { id: 7, alt: "Katrina presenting on stage at a live event", w: 203, h: 216 },
   ],
+  final: {
+    lines: ["You were never meant", "to be overlooked."],
+    body: "Discover what is currently holding back your visibility, and the exact area to focus on next.",
+    button: "Get your visibility score free",
+  },
 } as const;
 
 export const unlock = {

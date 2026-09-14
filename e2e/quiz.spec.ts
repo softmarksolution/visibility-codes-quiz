@@ -15,9 +15,9 @@ test("completes the quiz, unlocks the report and reopens it from the report link
 
   await page.goto("/?ref=sam-ab12c");
   await expect(
-    page.getByRole("heading", { name: "What’s actually standing between you and the opportunities you know you’re capable of?" }),
+    page.getByRole("heading", { level: 1, name: "Why Aren’t You Getting The Opportunities You Know You Deserve?" }),
   ).toBeVisible();
-  await page.getByRole("link", { name: "Start quiz" }).click();
+  await page.getByRole("link", { name: /start assessment/i }).click();
   await expect(page).toHaveURL(/\/quiz$/);
 
   for (let i = 1; i <= 28; i++) {
@@ -227,41 +227,79 @@ test("pop-up and results page follow the compact quiz style", async ({ page }) =
   }
 });
 
-test("cover page shows the client's copy", async ({ page }) => {
+test("landing page matches the client's desktop and mobile layout", async ({ page }) => {
   const errors = trackConsoleErrors(page);
   await page.goto("/");
-  await expect(page.getByText("For entrepreneurs, coaches, speakers, authors, personal brands")).toBeVisible();
-  for (const pill of ["28 questions", "Personalised visibility score", "3 minute quiz"]) {
-    await expect(page.getByRole("listitem").filter({ hasText: new RegExp(`^${pill}$`, "i") })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Why Aren’t You Getting The Opportunities You Know You Deserve?" }),
+  ).toBeVisible();
+  for (const name of [
+    "Get Your Visibility Score Free",
+    "Who this is for",
+    "What’s Your Visibility Gap?",
+    "Meet Katrina",
+    "You were never meant to be overlooked.",
+  ]) {
+    await expect(page.getByRole("heading", { level: 2, name })).toBeVisible();
   }
-  await expect(page.getByText(/^You know you are good at what you do\./)).toBeVisible();
-  await expect(page.getByText(/hosting the AACTA Awards red carpet/)).toBeVisible();
-  await expect(page.getByText(/^It is time to stop wondering what is wrong with you/)).toBeVisible();
-  await expect(page.getByText("Remember to answer based on where you are right now, not where you want to be.")).toBeVisible();
-  await expect(page.getByText("The more honest your answers, the more useful your result.")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Start quiz" })).toHaveAttribute("href", "/quiz");
+  await expect(page.getByRole("heading", { level: 3 })).toHaveCount(5);
+  await expect(page.getByRole("img", { name: "Example score: 88 out of 100" })).toBeVisible();
+  await expect(page.getByText("Score. Gap. Next steps.")).toBeVisible();
 
-  // Body text, reminder and button use the Futura-style font (Jost); headline stays serif.
+  // Every call to action starts the quiz.
+  for (const name of [/start assessment/i, /get your free score/i, /start free quiz/i, /get your visibility score free/i]) {
+    await expect(page.getByRole("link", { name })).toHaveAttribute("href", "/quiz");
+  }
+
+  // One press strip per layout (after the hero on desktop, after Meet Katrina on mobile), ten logos.
+  const press = page.getByRole("region", { name: "As featured in" });
+  await expect(press).toHaveCount(1);
+  await expect(press.getByRole("img")).toHaveCount(10);
+
+  // Scroll through so lazy images load, then every visible image must have rendered.
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.body.scrollHeight; y += 500) {
+      window.scrollTo(0, y);
+      await new Promise((r) => setTimeout(r, 60));
+    }
+  });
+  await page.waitForFunction(
+    () => {
+      const visible = [...document.images].filter((img) => img.getBoundingClientRect().width > 0);
+      return visible.length >= 21 && visible.every((img) => img.complete && img.naturalWidth > 0);
+    },
+    null,
+    { timeout: 15_000 },
+  );
+
   await page.evaluate(() => document.fonts.ready);
-  const fonts = await page.evaluate(() => {
-    const family = (el: Element | null) => (el ? getComputedStyle(el).fontFamily : "");
+  const m = await page.evaluate(() => {
+    const hero = document.querySelector("main picture img")!.getBoundingClientRect();
+    const card = document.querySelector("main h1")!.parentElement!.getBoundingClientRect();
+    const meet = [...document.querySelectorAll("h2")].find((h) => h.textContent === "Meet Katrina")!;
     return {
-      paragraph: family(document.querySelector("main p:nth-of-type(1) ~ div p")),
-      reminder: family([...document.querySelectorAll("main p")].at(-1) ?? null),
-      button: family(document.querySelector('main a[href="/quiz"]')),
-      heading: family(document.querySelector("main h1")),
-      jostLoaded: [...document.fonts].some((f) => /jost/i.test(f.family) && f.status === "loaded"),
+      vw: window.innerWidth,
+      heroLeft: hero.left,
+      heroBottom: hero.bottom,
+      cardRight: card.right,
+      cardTop: card.top,
+      capsFont: getComputedStyle(meet).fontFamily,
+      cinzelLoaded: [...document.fonts].some((f) => /cinzel/i.test(f.family) && f.status === "loaded"),
+      overflow: document.documentElement.scrollWidth - window.innerWidth,
     };
   });
-  expect(fonts.paragraph).toMatch(/jost/i);
-  expect(fonts.reminder).toMatch(/jost/i);
-  expect(fonts.button).toMatch(/jost/i);
-  expect(fonts.heading).not.toMatch(/jost/i);
-  expect(fonts.jostLoaded).toBe(true);
-
-  // Nothing on the page may be wider than the viewport.
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-  expect(overflow).toBeLessThanOrEqual(0);
+  expect(m.capsFont).toMatch(/cinzel/i);
+  expect(m.cinzelLoaded).toBe(true);
+  if (m.vw > 760) {
+    // Desktop: headline card sits left of the photo; the journey pill is mobile only.
+    expect(m.cardRight).toBeLessThanOrEqual(m.heroLeft + 60);
+    await expect(page.getByText("Recognised", { exact: true })).toBeHidden();
+  } else {
+    // Mobile: photo on top, headline card below it, journey pill visible.
+    expect(m.cardTop).toBeGreaterThanOrEqual(m.heroBottom - 24);
+    await expect(page.getByText("Recognised", { exact: true })).toBeVisible();
+  }
+  expect(m.overflow).toBeLessThanOrEqual(0);
   expect(errors).toEqual([]);
 });
 
