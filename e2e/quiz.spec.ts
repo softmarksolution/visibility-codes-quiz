@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { QUESTIONS } from "../src/lib/quiz/questions";
 
 function trackConsoleErrors(page: Page) {
   const errors: string[] = [];
@@ -168,6 +169,61 @@ test("quiz page uses an 800px header on black and a compact survey card", async 
   } else {
     expect(m.question).toBe("22px");
     expect(m.option).toBe("15px");
+  }
+});
+
+test("pop-up and results page follow the compact quiz style", async ({ page }) => {
+  // Pop-up: white card on a dark overlay, smaller card and title.
+  const full: Record<number, string | string[]> = {};
+  for (const q of QUESTIONS) full[q.id] = q.type === "multi" ? ["A"] : q.type === "text" ? "Test" : "A";
+  await page.goto("/quiz");
+  await page.evaluate((a) => localStorage.setItem("vc_quiz_progress_v1", JSON.stringify({ answers: a, index: 27 })), full);
+  await page.reload();
+  await page.getByRole("button", { name: "Next" }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  const pop = await page.evaluate(() => {
+    const d = document.querySelector('[role="dialog"]')!;
+    return {
+      vw: window.innerWidth,
+      overlay: getComputedStyle(d.parentElement!).backgroundColor,
+      card: getComputedStyle(d).backgroundColor,
+      width: d.getBoundingClientRect().width,
+      title: getComputedStyle(d.querySelector("h2")!).fontSize,
+    };
+  });
+  expect(pop.overlay).toBe("rgba(0, 0, 0, 0.8)");
+  expect(pop.card).toBe("rgb(255, 255, 255)");
+  expect(pop.width).toBe(Math.min(460, pop.vw - 40));
+  expect(pop.title).toBe(pop.vw >= 640 ? "32px" : "26px");
+
+  // Results: 800px header on black, cream body kept, narrower content and smaller type.
+  await page.goto("/results?r=v1BBABACCCDCCBCBBCBBC&c=emma-ab12c");
+  await expect(page.getByTestId("score")).toBeVisible();
+  const r = await page.evaluate(() => {
+    const header = document.querySelector("header")!;
+    const score = document.querySelector('[data-testid="score"]')!;
+    return {
+      vw: window.innerWidth,
+      img: header.querySelector("img")!.getBoundingClientRect().width,
+      headerBg: getComputedStyle(header).backgroundColor,
+      mainBg: getComputedStyle(document.querySelector("main")!).backgroundColor,
+      card: score.closest("section")!.getBoundingClientRect().width,
+      h1: getComputedStyle(document.querySelector("main h1")!).fontSize,
+      score: getComputedStyle(score).fontSize,
+      overflow: document.documentElement.scrollWidth - window.innerWidth,
+    };
+  });
+  expect(r.img).toBe(Math.min(800, r.vw));
+  expect(r.headerBg).toBe("rgb(0, 0, 0)");
+  expect(r.mainBg).toBe("rgb(247, 245, 237)");
+  expect(r.overflow).toBeLessThanOrEqual(0);
+  if (r.vw >= 1000) {
+    expect(r.card).toBe(880);
+    expect(r.h1).toBe("38px");
+    expect(r.score).toBe("104px");
+  } else {
+    expect(r.h1).toBe("28px");
+    expect(r.score).toBe("88px");
   }
 });
 

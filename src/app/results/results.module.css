@@ -27,7 +27,7 @@
 .intro {
   max-width: 900px;
   margin: 0 auto;
-  padding: 52px 0 34px;
+  padding: 40px 0 28px;
   text-align: center;
 }
 
@@ -41,19 +41,19 @@
 
 .title {
   margin-top: 8px;
-  font-size: clamp(32px, 4.4vw, 46px);
+  font-size: clamp(28px, 3.6vw, 38px);
   font-weight: 600;
 }
 
 .lead {
   max-width: 660px;
-  margin: 14px auto 0;
-  font-size: 18px;
+  margin: 12px auto 0;
+  font-size: 16px;
 }
 
 /* Cards */
 .card {
-  max-width: 1000px;
+  max-width: 880px;
   margin-left: auto;
   margin-right: auto;
   background: var(--card);
@@ -94,7 +94,7 @@
 
 .scoreNumber {
   font-family: var(--font-serif);
-  font-size: 128px;
+  font-size: 104px;
   font-weight: 700;
   line-height: 1.05;
   color: #ad6d22;
@@ -102,7 +102,7 @@
 
 .scoreOutOf {
   font-family: var(--font-serif);
-  font-size: 26px;
+  font-size: 22px;
   color: var(--ink);
 }
 
@@ -140,7 +140,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .stat dt::after {
@@ -158,7 +158,7 @@
 
 .stat dd {
   margin: 0;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -167,7 +167,8 @@
 }
 
 .means {
-  margin-top: 32px;
+  margin-top: 28px;
+  font-size: 15px;
   display: grid;
   grid-template-columns: 96px 1fr;
   gap: 28px;
@@ -189,7 +190,7 @@
 
 /* Breakdown */
 .section {
-  max-width: 1000px;
+  max-width: 880px;
   margin: 48px auto 0;
 }
 
@@ -220,7 +221,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 22px 16px 24px;
+  padding: 22px 10px 24px;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -240,7 +241,7 @@
 .pillarPercent {
   margin-top: 4px;
   font-family: var(--font-serif);
-  font-size: 44px;
+  font-size: 38px;
   font-weight: 700;
   line-height: 1.1;
   color: var(--bronze);
@@ -252,10 +253,11 @@
 
 .badge {
   margin-top: 10px;
-  padding: 3px 10px;
+  padding: 3px 8px;
+  white-space: nowrap;
   border: 1px solid;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -294,7 +296,7 @@
 
 /* Dark panels */
 .panels {
-  max-width: 1000px;
+  max-width: 880px;
   margin: 22px auto 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -335,14 +337,14 @@
 
 .panelName {
   margin-top: 8px;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 400;
   color: #fff;
 }
 
 .panelPercent {
   font-family: var(--font-serif);
-  font-size: 34px;
+  font-size: 30px;
   line-height: 1.2;
   color: #e7ad58;
 }
@@ -369,7 +371,7 @@
 }
 
 .panelText {
-  font-size: 17px;
+  font-size: 15px;
   line-height: 1.65;
 }
 
@@ -417,7 +419,7 @@
 
 .actionSteps {
   margin-top: 6px;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .actionClosing {
@@ -437,7 +439,7 @@
 
 /* Masterclass */
 .masterclass {
-  max-width: 1000px;
+  max-width: 880px;
   margin: 22px auto 0;
   padding: 30px 32px;
 }
@@ -449,7 +451,7 @@
 }
 
 .mcTitle {
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 400;
   text-transform: uppercase;
   color: #f0c77e;
@@ -538,7 +540,7 @@
 .dateValue {
   display: block;
   font-family: var(--font-serif);
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 400;
   line-height: 1.2;
   text-transform: uppercase;
@@ -595,7 +597,7 @@
 }
 
 .referTitle {
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 400;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -687,6 +689,7 @@
 /* Report link */
 .reportLink {
   margin-top: 22px;
+  font-size: 15px;
   padding: 22px 32px;
   display: grid;
   grid-template-columns: 72px 1fr;
@@ -716,7 +719,7 @@
   box-shadow: inset 0 0 0 1px #3a2c14;
   color: #f0d9a8;
   font-family: var(--font-serif);
-  font-size: 18px;
+  font-size: 16px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
@@ -736,7 +739,7 @@
   border: 0;
   background: none;
   color: var(--gold-text);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -818,7 +821,7 @@
   }
 
   .scoreNumber {
-    font-size: 104px;
+    font-size: 88px;
   }
 
   .stats {
@@ -863,7 +866,7 @@
   }
 
   .pillarPercent {
-    font-size: 38px;
+    font-size: 34px;
   }
 
   .pillarDesc {
@@ -875,7 +878,7 @@
   }
 
   .panelName {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .panelText {
@@ -903,7 +906,7 @@
   }
 
   .mcTitle {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .dates {
@@ -911,7 +914,7 @@
   }
 
   .dateValue {
-    font-size: 24px;
+    font-size: 21px;
   }
 
   .mcButtons {
@@ -930,7 +933,7 @@
   }
 
   .referTitle {
-    font-size: 26px;
+    font-size: 23px;
   }
 
   .copyField {

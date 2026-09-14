@@ -43,7 +43,7 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
 
   return (
     <>
-      <HeaderBanner />
+      <HeaderBanner variant="compact" />
       <main className={styles.main}>
         <section className={styles.intro}>
           <p className={styles.eyebrow}>{resultsCopy.eyebrow}</p>
@@ -287,7 +287,7 @@ function Panel({ title, pillar, percent, text }: { title: string; pillar: Pillar
 function InvalidReport() {
   return (
     <>
-      <HeaderBanner />
+      <HeaderBanner variant="compact" />
       <main className={styles.main}>
         <section className={`${styles.card} ${styles.invalid}`}>
           <h1 className={styles.invalidTitle}>{resultsCopy.invalidTitle}</h1>
