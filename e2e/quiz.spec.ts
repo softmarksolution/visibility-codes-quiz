@@ -102,6 +102,41 @@ test("keyboard selection does not auto-advance; Enter moves on", async ({ page }
   await expect(page.getByText("Question 2 of 28")).toBeVisible();
 });
 
+test("single-choice answers show a round radio indicator; multi-select keeps checkboxes", async ({ page }) => {
+  await page.goto("/quiz");
+  const indicators = page.locator('label [data-indicator="radio"]');
+  await expect(indicators).toHaveCount(6); // Q1 has 6 options
+  await expect(page.locator('label [data-indicator="checkbox"]')).toHaveCount(0);
+
+  const style = (i: number) =>
+    indicators.nth(i).evaluate((el) => {
+      const box = getComputedStyle(el);
+      const dot = getComputedStyle(el, "::after");
+      return { radius: box.borderRadius, width: box.width, height: box.height, dot: dot.backgroundColor };
+    });
+
+  const before = await style(1);
+  expect(before.radius).toBe("50%");
+  expect(before.width).toBe(before.height);
+  expect(before.dot).toBe("rgba(0, 0, 0, 0)");
+
+  // Keyboard selection so the quiz stays on this question.
+  await page.getByRole("radio").nth(1).focus();
+  await page.keyboard.press("Space");
+  await expect(page.getByRole("radio").nth(1)).toBeChecked();
+  expect((await style(1)).dot).toBe("rgb(201, 163, 74)");
+  expect((await style(0)).dot).toBe("rgba(0, 0, 0, 0)");
+
+  // Q26 (select all that apply) uses square checkboxes, not radios.
+  await page.evaluate(() =>
+    localStorage.setItem("vc_quiz_progress_v1", JSON.stringify({ answers: {}, index: 25 })),
+  );
+  await page.reload();
+  await expect(page.getByText("Question 26 of 28")).toBeVisible();
+  await expect(page.locator('label [data-indicator="radio"]')).toHaveCount(0);
+  await expect(page.locator('label [data-indicator="checkbox"]')).toHaveCount(12);
+});
+
 test("cover page shows the client's copy", async ({ page }) => {
   const errors = trackConsoleErrors(page);
   await page.goto("/");

@@ -133,6 +133,42 @@
   transform: translateY(-1px) rotate(45deg);
 }
 
+/* Round radio indicator for single-choice answers */
+.radio {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid #6b6b6b;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: border-color 0.15s ease;
+}
+
+.radio::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  transform: scale(0.4);
+  transition: transform 0.15s ease;
+}
+
+.option:hover .radio {
+  border-color: #8a7a55;
+}
+
+.selected .radio,
+.selected:hover .radio {
+  border-color: #c9a34a;
+}
+
+.selected .radio::after {
+  background: #c9a34a;
+  transform: scale(1);
+}
+
 .textWrap {
   margin-top: 30px;
 }
