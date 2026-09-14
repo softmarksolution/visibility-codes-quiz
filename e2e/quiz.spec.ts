@@ -116,6 +116,24 @@ test("cover page shows the client's copy", async ({ page }) => {
   await expect(page.getByText("The more honest your answers, the more useful your result.")).toBeVisible();
   await expect(page.getByRole("link", { name: "Start quiz" })).toHaveAttribute("href", "/quiz");
 
+  // Body text, reminder and button use the Futura-style font (Jost); headline stays serif.
+  await page.evaluate(() => document.fonts.ready);
+  const fonts = await page.evaluate(() => {
+    const family = (el: Element | null) => (el ? getComputedStyle(el).fontFamily : "");
+    return {
+      paragraph: family(document.querySelector("main p:nth-of-type(1) ~ div p")),
+      reminder: family([...document.querySelectorAll("main p")].at(-1) ?? null),
+      button: family(document.querySelector('main a[href="/quiz"]')),
+      heading: family(document.querySelector("main h1")),
+      jostLoaded: [...document.fonts].some((f) => /jost/i.test(f.family) && f.status === "loaded"),
+    };
+  });
+  expect(fonts.paragraph).toMatch(/jost/i);
+  expect(fonts.reminder).toMatch(/jost/i);
+  expect(fonts.button).toMatch(/jost/i);
+  expect(fonts.heading).not.toMatch(/jost/i);
+  expect(fonts.jostLoaded).toBe(true);
+
   // Nothing on the page may be wider than the viewport.
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);

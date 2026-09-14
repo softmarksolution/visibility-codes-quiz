@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
+import { Jost } from "next/font/google";
 import Link from "next/link";
 import { HeaderBanner, SiteFooter } from "@/components/SiteChrome";
 import { landing } from "@/content/site";
 import RefCapture from "./RefCapture";
 import styles from "./page.module.css";
+
+// Futura-style font for the cover page body text, matching the client's design.
+// Loaded here so the quiz and results pages don't download it.
+const jost = Jost({ subsets: ["latin"], variable: "--font-jost", display: "swap" });
 
 export const metadata: Metadata = {
   title: "The Visibility Codes Quiz | Get Your Personalised Visibility Score",
@@ -15,7 +20,7 @@ export default function HomePage() {
   return (
     <>
       <HeaderBanner variant="cover" />
-      <main className={styles.main}>
+      <main className={`${styles.main} ${jost.variable}`}>
         <section className={styles.cover}>
           <p className={styles.eyebrow}>{landing.eyebrow}</p>
           <h1 className={styles.heading}>
