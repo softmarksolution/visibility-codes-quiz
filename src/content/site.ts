@@ -10,9 +10,8 @@ import type { Badge, LevelName } from "@/lib/quiz/scoring";
 export const brand = {
   tagline: "Stand out · Be seen · Be chosen",
   copyright: "© 2026 Katrina Kavvalos International",
-  // TODO(client): real Privacy Policy and Terms URLs.
-  privacyUrl: "#",
-  termsUrl: "#",
+  privacyUrl: "/privacy-policy",
+  termsUrl: "/terms-of-use",
   instagramHandle: "@KatrinaKavvalos",
   hashtag: "#TheVisibilityCodes",
   websiteLabel: "TheVisibilityCodes.com",
