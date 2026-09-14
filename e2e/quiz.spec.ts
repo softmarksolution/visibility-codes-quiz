@@ -137,6 +137,40 @@ test("single-choice answers show a round radio indicator; multi-select keeps che
   await expect(page.locator('label [data-indicator="checkbox"]')).toHaveCount(12);
 });
 
+test("quiz page uses an 800px header on black and a compact survey card", async ({ page }) => {
+  await page.goto("/quiz");
+  await expect(page.getByText("Question 1 of 28")).toBeVisible();
+  const m = await page.evaluate(() => {
+    const header = document.querySelector("header")!;
+    const img = header.querySelector("img")!;
+    const card = document.querySelector("form")!;
+    const q = document.querySelector("form h1")!;
+    const opt = document.querySelector("form label")!;
+    return {
+      viewport: window.innerWidth,
+      imgWidth: img.getBoundingClientRect().width,
+      headerBg: getComputedStyle(header).backgroundColor,
+      pageBg: getComputedStyle(header.parentElement!).backgroundColor,
+      cardWidth: card.getBoundingClientRect().width,
+      question: getComputedStyle(q).fontSize,
+      option: getComputedStyle(opt).fontSize,
+      overflow: document.documentElement.scrollWidth - window.innerWidth,
+    };
+  });
+  expect(m.imgWidth).toBe(Math.min(800, m.viewport));
+  expect(m.headerBg).toBe("rgb(0, 0, 0)");
+  expect(m.pageBg).toBe("rgb(0, 0, 0)");
+  expect(m.overflow).toBeLessThanOrEqual(0);
+  if (m.viewport >= 800) {
+    expect(m.cardWidth).toBe(720);
+    expect(m.question).toBe("26px");
+    expect(m.option).toBe("16px");
+  } else {
+    expect(m.question).toBe("22px");
+    expect(m.option).toBe("15px");
+  }
+});
+
 test("cover page shows the client's copy", async ({ page }) => {
   const errors = trackConsoleErrors(page);
   await page.goto("/");

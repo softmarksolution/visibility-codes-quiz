@@ -11,8 +11,20 @@
   object-position: center;
 }
 
-.bannerCover {
+.banner > a {
+  display: block;
+}
+
+.banner_cover {
   height: clamp(150px, 33.6vw, 420px);
+}
+
+/* Quiz page: the full banner at a fixed 800px width, centred on black */
+.banner_compact {
+  width: min(800px, 100%);
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
 }
 
 .footer {
