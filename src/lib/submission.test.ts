@@ -38,7 +38,8 @@ describe("processSubmission", () => {
     expect(payload.tags).toContain("ROLE_OTHER");
     expect(payload.tags).toContain(COMPLETED_TAG);
     expect(payload.managedTags).toEqual(ALL_QUIZ_TAGS);
-    expect(payload.fields).toMatchObject({
+    // Keys match the fields in the Katrina Kavvalos International GHL sub-account.
+    expect(payload.fields).toEqual({
       direction_percent: 100,
       recognition_percent: 100,
       connection_percent: 100,
@@ -46,15 +47,40 @@ describe("processSubmission", () => {
       opportunity_percent: 100,
       visibility_score: 100,
       visibility_gap: 0,
-      visibility_level: "Chosen Expert",
-      strongest_visibility_area: "Direction",
-      primary_visibility_gap: "Direction",
-      visibility_actions_tried: "Posted more consistently on social media; Been a guest on podcasts or interview shows",
-      biggest_visibility_obstacle: "I overthink everything.",
+      visibility_level_quiz: "Chosen Expert",
+      strongest_code: "Direction",
+      weakest_code: "Direction",
+      q2_desired_outcome: "Other",
+      q3_perceived_problem: "Other",
+      primary_visibility_problem: "Other",
+      q4_primary_platform: "Other",
+      inner_visibility_blocker: "Other",
+      q25_years_experience: "More than 15 years",
+      what_have_you_already_done_to_try_to_become_more_visible: [
+        "Posted more consistently on social media",
+        "Been a guest on podcasts or interview shows",
+      ],
+      q27_intent_level:
+        "Increasing my visibility is a major priority and I am willing to invest in the right strategy or support",
+      q28_written_response: "I overthink everything.",
       referral_code: res.body.referralCode,
       visibility_report_url: `https://quiz.test/results?r=${res.body.reportCode}&c=${res.body.referralCode}`,
+      referred_by: undefined,
     });
-    expect(payload.fields.referred_by).toBeUndefined();
+  });
+
+  it("saves readable answer text into the existing GHL answer fields", async () => {
+    const d = deps();
+    await processSubmission(body({ answers: { ...answers(), 2: "C", 3: "B", 4: "D", 19: "E", 25: "B", 27: "A" } }), d);
+    expect(d.sync.mock.calls[0]![0].fields).toMatchObject({
+      q2_desired_outcome: "Get more media, TV, magazine or press opportunities",
+      q3_perceived_problem: "I do not stand out enough from others in my industry",
+      primary_visibility_problem: "I do not stand out enough from others in my industry",
+      q4_primary_platform: "LinkedIn",
+      inner_visibility_blocker: "I overthink things, second guess myself or wait until everything feels perfect",
+      q25_years_experience: "1 to 3 years",
+      q27_intent_level: "I am interested, but it is not a major priority right now",
+    });
   });
 
   it("ignores client-sent scores", async () => {
