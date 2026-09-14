@@ -141,7 +141,11 @@ export default function Quiz() {
                     onChange={() => (multi ? toggleMulti(option.id) : setAnswer(option.id))}
                     onClick={multi ? undefined : autoAdvance}
                   />
-                  {multi && <span className={styles.checkbox} aria-hidden="true" />}
+                  <span
+                    className={multi ? styles.checkbox : styles.radio}
+                    data-indicator={multi ? "checkbox" : "radio"}
+                    aria-hidden="true"
+                  />
                   <span>{option.label}</span>
                 </label>
               );
