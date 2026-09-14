@@ -13,8 +13,10 @@ test("completes the quiz, unlocks the report and reopens it from the report link
   const errors = trackConsoleErrors(page);
 
   await page.goto("/?ref=sam-ab12c");
-  await expect(page.getByRole("heading", { name: "Get Your Visibility Score Free" })).toBeVisible();
-  await page.getByRole("link", { name: /get your free score/i }).click();
+  await expect(
+    page.getByRole("heading", { name: "What’s actually standing between you and the opportunities you know you’re capable of?" }),
+  ).toBeVisible();
+  await page.getByRole("link", { name: "Start quiz" }).click();
   await expect(page).toHaveURL(/\/quiz$/);
 
   for (let i = 1; i <= 28; i++) {
@@ -98,6 +100,26 @@ test("keyboard selection does not auto-advance; Enter moves on", async ({ page }
 
   await page.keyboard.press("Enter");
   await expect(page.getByText("Question 2 of 28")).toBeVisible();
+});
+
+test("cover page shows the client's copy", async ({ page }) => {
+  const errors = trackConsoleErrors(page);
+  await page.goto("/");
+  await expect(page.getByText("For entrepreneurs, coaches, speakers, authors, personal brands")).toBeVisible();
+  for (const pill of ["28 questions", "Personalised visibility score", "3 minute quiz"]) {
+    await expect(page.getByRole("listitem").filter({ hasText: new RegExp(`^${pill}$`, "i") })).toBeVisible();
+  }
+  await expect(page.getByText(/^You know you are good at what you do\./)).toBeVisible();
+  await expect(page.getByText(/hosting the AACTA Awards red carpet/)).toBeVisible();
+  await expect(page.getByText(/^It is time to stop wondering what is wrong with you/)).toBeVisible();
+  await expect(page.getByText("Remember to answer based on where you are right now, not where you want to be.")).toBeVisible();
+  await expect(page.getByText("The more honest your answers, the more useful your result.")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Start quiz" })).toHaveAttribute("href", "/quiz");
+
+  // Nothing on the page may be wider than the viewport.
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(overflow).toBeLessThanOrEqual(0);
+  expect(errors).toEqual([]);
 });
 
 test("serves the favicon and app icons", async ({ page, request }) => {

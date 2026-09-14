@@ -92,18 +92,6 @@ const paths = {
       <path d="M18 15v6M15 18h6" />
     </>
   ),
-  search: (
-    <>
-      <circle cx="10.5" cy="10.5" r="6.5" />
-      <path d="M15.5 15.5l5 5" />
-    </>
-  ),
-  clipboard: (
-    <>
-      <rect x="5" y="4.5" width="14" height="16.5" rx="2" />
-      <path d="M9 4.5V3h6v1.5M9 13l2 2 4-4" />
-    </>
-  ),
   apple: (
     <path
       fill="currentColor"

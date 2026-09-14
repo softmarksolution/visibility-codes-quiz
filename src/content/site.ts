@@ -19,19 +19,22 @@ export const brand = {
   websiteUrl: "https://thevisibilitycodes.com",
 };
 
+// Cover page copy, word for word from the client's cover page design.
+// Uppercase styling is applied in CSS so screen readers read words, not letters.
 export const landing = {
-  heading: "Get Your Visibility Score Free",
-  body: "The first step to improving your visibility is knowing exactly where your gap is. Take this 3-minute Visibility Assessment to uncover what may be keeping you from standing out, being seen, and being chosen for the opportunities you want.",
-  bullets: [
-    { icon: "target", strong: "Discover your Visibility Score,", rest: " from 0 to 100, and what it means." },
-    { icon: "search", strong: "Identify your primary visibility gap", rest: " and the area that needs the most attention." },
-    { icon: "clipboard", strong: "Get your visibility category", rest: " and personalised next steps you can apply straight away." },
+  eyebrow: "For entrepreneurs, coaches, speakers, authors, personal brands",
+  headingLines: ["What’s actually standing between", "you and the opportunities", "you know you’re capable of?"],
+  pills: ["28 questions", "Personalised visibility score", "3 minute quiz"],
+  paragraphs: [
+    "You know you are good at what you do. You have the experience, the knowledge and the ability to deliver. Yet somehow, you keep watching other people get the clients, stages, media opportunities, partnerships and invitations you know you could handle. You show up, work hard and keep building your expertise, but the right people still do not seem to see you at the level you know you are capable of.",
+    "I became fascinated by this because every major opportunity in my career came to me. From hosting the AACTA Awards red carpet, to my first speaking tour, to being chosen to host one of the biggest entrepreneurial events in front of 12,000 people alongside Tony Robbins, Steven Bartlett, Gary Brecka and other world class speakers, I did not chase those opportunities. I was chosen for them.",
+    "It is time to stop wondering what is wrong with you, why you are not being noticed, and what is keeping you from being chosen. In 3 minutes, this assessment will help you identify what is really getting in the way, where your visibility is breaking down, and exactly what to shift so the right people begin to see, recognise and choose you.",
   ],
-  secondary:
-    "You'll receive your score, primary blocker, strongest area, and next steps to help you move forward with clarity.",
-  button: "Get your free score",
-  previewTitle: "Your Visibility Score",
-  previewCaption: "Example result",
+  button: "Start quiz",
+  reminder: [
+    "Remember to answer based on where you are right now, not where you want to be.",
+    "The more honest your answers, the more useful your result.",
+  ],
 } as const;
 
 export const unlock = {

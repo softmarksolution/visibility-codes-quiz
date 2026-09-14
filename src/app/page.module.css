@@ -1,145 +1,167 @@
+/* Cover page, matched to the client's cover page design */
+
 .main {
-  background:
-    radial-gradient(ellipse 70% 50% at 85% 20%, rgba(212, 179, 107, 0.14), transparent 70%),
-    var(--cream);
+  background: #f1eee9;
+  color: #111;
 }
 
-.hero {
-  max-width: 1200px;
+.cover {
+  max-width: 900px;
   margin: 0 auto;
-  padding: 72px 32px 96px;
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-  gap: 64px;
-  align-items: center;
-}
-
-.eyebrow {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold-text);
-  margin-bottom: 18px;
-}
-
-.heading {
-  font-size: clamp(40px, 5vw, 64px);
-  font-weight: 700;
-  letter-spacing: -1px;
-  line-height: 1.04;
-}
-
-.body {
-  margin-top: 24px;
-  max-width: 640px;
-  font-size: 19px;
-}
-
-.bullets {
-  list-style: none;
-  margin: 32px 0 0;
-  padding: 0;
-  display: grid;
-  gap: 18px;
-}
-
-.bullets li {
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 18px;
-  align-items: center;
-  font-size: 19px;
-}
-
-.bullets strong {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.bulletIcon {
-  color: var(--gold);
-}
-
-.secondary {
-  margin-top: 28px;
-  max-width: 620px;
-}
-
-.cta {
-  margin-top: 36px;
-}
-
-.preview {
-  justify-self: center;
-  width: 100%;
-  max-width: 400px;
-  padding: 40px 36px 32px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
+  padding: 58px 24px 22px;
   text-align: center;
 }
 
-.previewTitle {
+.eyebrow {
   font-family: var(--font-serif);
-  font-size: 21px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--navy);
-}
-
-.gauge {
-  display: block;
-  width: 100%;
-  max-width: 260px;
-  margin: 24px auto 0;
-}
-
-.previewScore {
-  font-family: var(--font-serif);
-  font-size: 76px;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--ink);
-  margin-top: 8px;
-}
-
-.previewScore span {
-  font-size: 34px;
+  font-size: 17px;
   font-weight: 400;
-  color: var(--gold);
-  margin-left: 6px;
-}
-
-.previewCaption {
-  margin-top: 14px;
-  font-size: 12px;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.07em;
+  line-height: 1.4;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #b4642c;
 }
 
-@media (max-width: 900px) {
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 48px;
-    padding: 44px 20px 64px;
+.heading {
+  margin-top: 22px;
+  font-size: clamp(34px, 5.2vw, 54px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #000;
+  text-wrap: balance;
+}
+
+.headingLine {
+  display: block;
+}
+
+.pills {
+  list-style: none;
+  margin: 34px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 30px;
+}
+
+.pills li {
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+  padding: 10px 32px;
+  border: 1.5px solid #c07a45;
+  border-radius: 10px;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #1f1f1f;
+}
+
+.copy {
+  max-width: 680px;
+  margin: 44px auto 0;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: #111;
+}
+
+.copy p + p {
+  margin-top: 28px;
+}
+
+.start {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 324px;
+  min-height: 58px;
+  margin-top: 30px;
+  padding: 12px 24px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #d0ae86 0%, #c29d72 100%);
+  color: #111;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: filter 0.15s ease;
+}
+
+.start:hover {
+  filter: brightness(1.05);
+}
+
+.start:active {
+  filter: brightness(0.97);
+}
+
+.reminder {
+  margin-top: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #000;
+}
+
+.reminderLine {
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .cover {
+    padding: 36px 18px 24px;
   }
 
-  .body,
-  .bullets li {
+  .eyebrow {
+    font-size: 14px;
+    letter-spacing: 0.05em;
+  }
+
+  .heading {
+    margin-top: 16px;
+  }
+
+  .headingLine {
+    display: inline;
+  }
+
+  .pills {
+    margin-top: 26px;
+    gap: 10px;
+  }
+
+  .pills li {
+    min-height: 44px;
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .copy {
+    margin-top: 30px;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .copy p + p {
+    margin-top: 22px;
+  }
+
+  .start {
+    max-width: none;
     font-size: 17px;
   }
 
-  .bullets li {
-    grid-template-columns: 36px 1fr;
-    gap: 14px;
+  .reminder {
+    font-size: 14px;
   }
 
-  .cta {
-    width: 100%;
+  .reminderLine {
+    display: inline;
   }
 }
