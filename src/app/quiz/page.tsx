@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function QuizPage() {
   return (
     <div className={styles.page}>
-      <HeaderBanner />
+      <HeaderBanner variant="compact" />
       <main className={styles.main}>
         <QuizLoader />
       </main>
