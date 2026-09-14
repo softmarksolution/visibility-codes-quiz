@@ -92,6 +92,33 @@ const paths = {
       <path d="M18 15v6M15 18h6" />
     </>
   ),
+  search: (
+    <>
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="M15.5 15.5l5 5" />
+    </>
+  ),
+  clipboard: (
+    <>
+      <rect x="5" y="4.5" width="14" height="16.5" rx="2" />
+      <path d="M9 4.5V3h6v1.5M9 13l2 2 4-4" />
+    </>
+  ),
+  instagram: (
+    <>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+      <circle cx="12" cy="12" r="4" />
+      <path d="M16.9 7.1h.01" strokeWidth="2.2" />
+    </>
+  ),
+  hash: <path d="M9.5 3.5L7.5 20.5M16.5 3.5l-2 17M4 9h17M3 15h17" />,
+  globe: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" />
+    </>
+  ),
+  arrowRight: <path d="M4 12h15M14 6.5l5.5 5.5-5.5 5.5" />,
   apple: (
     <path
       fill="currentColor"

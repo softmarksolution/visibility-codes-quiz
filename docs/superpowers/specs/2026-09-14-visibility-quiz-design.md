@@ -32,9 +32,11 @@ pillar percentages and the Visibility Score.
 
 ## User flow
 
-1. **Cover page `/`** (cream), matched word for word to the client's cover page design:
-   tall logo banner, audience eyebrow, three-line headline, three outlined pills,
-   three centred paragraphs, flat tan "Start quiz" button, honesty reminder.
+1. **Landing `/`**, matched to the client's desktop and mobile layout PDFs (2026-09-15):
+   hero photo with gold lettering and headline card, press logos, "Get Your Visibility
+   Score Free" with example gauge, Who this is for, What's Your Visibility Gap (5 cards),
+   Meet Katrina, photo gallery, final call to action, landing footer. Images in
+   `public/landing/` are crops from the flattened PDFs, to be replaced with originals.
    Captures `?ref=` into localStorage.
 2. **Quiz `/quiz`** (dark card, from screenshot). One question per screen,
    "Question N of 28", gold progress bar, Back / Next. Next disabled until answered.
