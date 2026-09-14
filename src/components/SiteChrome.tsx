@@ -3,18 +3,19 @@ import Link from "next/link";
 import { brand } from "@/content/site";
 import styles from "./SiteChrome.module.css";
 
-export function HeaderBanner() {
+/** "cover" is the taller banner used on the cover page. */
+export function HeaderBanner({ variant = "default" }: { variant?: "default" | "cover" }) {
   return (
     <header className={styles.banner}>
       <Link href="/" aria-label="The Visibility Codes home">
         <Image
-          src="/brand/header-banner.webp"
+          src="/brand/header-banner-hd.webp"
           alt="The Visibility Codes"
-          width={2400}
-          height={408}
+          width={3402}
+          height={578}
           priority
           sizes="100vw"
-          className={styles.bannerImage}
+          className={`${styles.bannerImage} ${variant === "cover" ? styles.bannerCover : ""}`}
         />
       </Link>
     </header>

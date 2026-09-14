@@ -32,8 +32,9 @@ pillar percentages and the Visibility Score.
 
 ## User flow
 
-1. **Landing `/`** (cream). Logo banner, "Get Your Visibility Score Free", body copy,
-   three benefit bullets, secondary copy, gold "Get your free score" CTA.
+1. **Cover page `/`** (cream), matched word for word to the client's cover page design:
+   tall logo banner, audience eyebrow, three-line headline, three outlined pills,
+   three centred paragraphs, flat tan "Start quiz" button, honesty reminder.
    Captures `?ref=` into localStorage.
 2. **Quiz `/quiz`** (dark card, from screenshot). One question per screen,
    "Question N of 28", gold progress bar, Back / Next. Next disabled until answered.
