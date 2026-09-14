@@ -16,7 +16,7 @@
 }
 
 .banner_cover {
-  height: clamp(150px, 33.6vw, 420px);
+  height: clamp(130px, 17.5vw, 245px);
 }
 
 /* Quiz page: the full banner at a fixed 800px width, centred on black */

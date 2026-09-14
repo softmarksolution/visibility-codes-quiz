@@ -29,9 +29,9 @@ export function SiteFooter() {
         <div className={styles.footerLeft}>
           <p>{brand.copyright}</p>
           <p className={styles.legal}>
-            <a href={brand.privacyUrl}>Privacy Policy</a>
+            <Link href={brand.privacyUrl}>Privacy Policy</Link>
             <span aria-hidden="true">|</span>
-            <a href={brand.termsUrl}>Terms and Conditions</a>
+            <Link href={brand.termsUrl}>Terms of Use</Link>
           </p>
         </div>
         <Image src="/brand/footer-logo-v2.webp" alt="The Visibility Codes" width={231} height={140} className={styles.footerLogo} />
