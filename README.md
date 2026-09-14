@@ -48,26 +48,37 @@ Without GHL credentials the quiz still works end to end; the submission is simpl
 
 ## GoHighLevel setup
 
-Create these **Contact** custom fields in the sub-account. The **key** must match exactly
-(GHL shows it as `contact.<key>`). Fields that don't exist are skipped and logged.
+These **Contact** custom fields are set up in the Katrina Kavvalos International sub-account
+(created or mapped on 2026-09-14). The app looks fields up by **key** (GHL shows it as
+`contact.<key>`). A field that doesn't exist is skipped and logged; the rest still sync.
 
-| Field name | Key | Type |
-|---|---|---|
-| Direction % | `direction_percent` | Number |
-| Recognition % | `recognition_percent` | Number |
-| Connection % | `connection_percent` | Number |
-| Consistency % | `consistency_percent` | Number |
-| Opportunity % | `opportunity_percent` | Number |
-| Visibility Score | `visibility_score` | Number |
-| Visibility Gap | `visibility_gap` | Number |
-| Visibility Level | `visibility_level` | Single line |
-| Strongest Visibility Area | `strongest_visibility_area` | Single line |
-| Primary Visibility Gap | `primary_visibility_gap` | Single line |
-| Visibility Actions Tried | `visibility_actions_tried` | Multi line |
-| Biggest Visibility Obstacle | `biggest_visibility_obstacle` | Multi line |
-| Visibility Report URL | `visibility_report_url` | Single line |
-| Referral Code | `referral_code` | Single line |
-| Referred By | `referred_by` | Single line |
+| Quiz data | GHL field | Key | Type | Origin |
+|---|---|---|---|---|
+| Direction % | Direction Percent | `direction_percent` | Number | Created |
+| Recognition % | Recognition Percent | `recognition_percent` | Number | Created |
+| Connection % | Connection Percent | `connection_percent` | Number | Created |
+| Consistency % | Consistency Percent | `consistency_percent` | Number | Created |
+| Opportunity % | Opportunity Percent | `opportunity_percent` | Number | Created |
+| Visibility Score | visibility_score | `visibility_score` | Number | Existing |
+| Visibility Gap | Visibility Gap | `visibility_gap` | Number | Existing |
+| Visibility Level | Visibility Level (Quiz) | `visibility_level_quiz` | Dropdown: the 5 levels | Created |
+| Strongest area | Strongest Code | `strongest_code` | Text | Existing |
+| Primary gap | Weakest Code | `weakest_code` | Text | Existing |
+| Q2 answer | Q2 Desired Outcome | `q2_desired_outcome` | Text | Existing |
+| Q3 answer | Q3 Perceived Problem | `q3_perceived_problem` | Text | Existing |
+| Q3 answer | Primary Visibility Problem | `primary_visibility_problem` | Long text | Existing |
+| Q4 answer | Q4 Primary Platform | `q4_primary_platform` | Text | Existing |
+| Q19 answer | Inner Visibility Blocker | `inner_visibility_blocker` | Text | Existing |
+| Q25 answer | Q25 Years Experience | `q25_years_experience` | Text | Existing |
+| Q26 answers | What have you already done to try to become more visible? | `what_have_you_already_done_to_try_to_become_more_visible` | Checkbox | Existing |
+| Q27 answer | Q27 Intent Level | `q27_intent_level` | Text | Existing |
+| Q28 answer | Q28 Written Response | `q28_written_response` | Long text | Existing |
+| Report link | Visibility Report URL | `visibility_report_url` | Text | Created |
+| Referral code | Referral Code | `referral_code` | Text | Created |
+| Referred by | Referred By | `referred_by` | Text | Created |
+
+Q1 (role) is saved as a tag only. The older `visibility_level` dropdown (its options don't match the
+scoring doc's level names) and `visibility_gap_rating` (no score bands yet) are left untouched.
 
 **Tags.** Each submission adds the answer tags from the questions document (role, goal, problem,
 platform, blocker, experience, intent) plus `visibility_quiz_completed`. On a retake, quiz tags from

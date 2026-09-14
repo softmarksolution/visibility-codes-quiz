@@ -132,6 +132,18 @@ describe("syncLeadToGhl", () => {
     expect(result).toEqual({ synced: false, reason: "error" });
   });
 
+  it("sends checkbox answers as an array", async () => {
+    const { calls, fetchImpl } = fakeGhl({ fieldKeys: ["actions_tried"] });
+    await syncLeadToGhl(
+      { ...payload, fields: { actions_tried: ["Used paid advertising", "Other"] } },
+      options(fetchImpl),
+    );
+    const upsert = calls.find((c) => c.path === "/contacts/upsert")!;
+    expect((upsert.body as { customFields: unknown[] }).customFields).toEqual([
+      { id: "f0", field_value: ["Used paid advertising", "Other"] },
+    ]);
+  });
+
   it("caches the custom field lookup", async () => {
     const { calls, fetchImpl } = fakeGhl();
     await syncLeadToGhl(payload, options(fetchImpl));

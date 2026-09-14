@@ -102,25 +102,22 @@ Response: `{ ok: true, reportCode, referralCode, synced }`.
 Concurrency: double-submit or retry upserts the same contact by email with identical
 values; tag add/remove is idempotent. No money or auth involved.
 
-### GHL custom fields to create (Contact object)
+### GHL custom fields (Contact object)
 
-| Field name | Key | Type |
-|---|---|---|
-| Direction % | `direction_percent` | Number |
-| Recognition % | `recognition_percent` | Number |
-| Connection % | `connection_percent` | Number |
-| Consistency % | `consistency_percent` | Number |
-| Opportunity % | `opportunity_percent` | Number |
-| Visibility Score | `visibility_score` | Number |
-| Visibility Gap | `visibility_gap` | Number |
-| Visibility Level | `visibility_level` | Single line |
-| Strongest Visibility Area | `strongest_visibility_area` | Single line |
-| Primary Visibility Gap | `primary_visibility_gap` | Single line |
-| Visibility Actions Tried (Q26) | `visibility_actions_tried` | Multi line |
-| Biggest Visibility Obstacle (Q28) | `biggest_visibility_obstacle` | Multi line |
-| Visibility Report URL | `visibility_report_url` | Single line |
-| Referral Code | `referral_code` | Single line |
-| Referred By | `referred_by` | Single line |
+Mapped against the live sub-account on 2026-09-14 (user-approved): reuse existing fields
+where they fit, create only what was missing. The full table is in the README.
+
+- **Created:** `direction_percent`, `recognition_percent`, `connection_percent`,
+  `consistency_percent`, `opportunity_percent` (Number); `visibility_level_quiz` (dropdown with
+  the 5 doc levels, because the existing `visibility_level` dropdown uses different names);
+  `visibility_report_url`, `referral_code`, `referred_by` (Text).
+- **Reused:** `visibility_score`, `visibility_gap`, `strongest_code` (strongest area),
+  `weakest_code` (primary gap), `q2_desired_outcome`, `q3_perceived_problem` and
+  `primary_visibility_problem` (both Q3), `q4_primary_platform`, `inner_visibility_blocker` (Q19),
+  `q25_years_experience`, the Q26 checkbox field
+  `what_have_you_already_done_to_try_to_become_more_visible` (sent as an array of option labels),
+  `q27_intent_level`, `q28_written_response`.
+- **Untouched:** `visibility_level` (old option names), `visibility_gap_rating` (no bands yet).
 
 Tags: the answer tags from the questions doc (Q1-4, Q19, Q25, Q27) plus
 `visibility_quiz_completed` (use as the GHL workflow trigger). GHL stores tags lowercase.

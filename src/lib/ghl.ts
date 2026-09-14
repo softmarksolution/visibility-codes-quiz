@@ -4,6 +4,9 @@ const BASE_URL = "https://services.leadconnectorhq.com";
 const API_VERSION = "2021-07-28";
 const FIELD_CACHE_MS = 10 * 60 * 1000;
 
+/** Text/number fields take a single value; checkbox fields take an array of option labels. */
+export type GhlFieldValue = string | number | string[];
+
 export interface GhlLeadPayload {
   firstName: string;
   email: string;
@@ -12,7 +15,7 @@ export interface GhlLeadPayload {
   /** Every tag the quiz can set; used to remove tags left over from an earlier attempt. */
   managedTags: readonly string[];
   /** Custom field values keyed by field key without the "contact." prefix. */
-  fields: Record<string, string | number | undefined>;
+  fields: Record<string, GhlFieldValue | undefined>;
 }
 
 export type SyncResult =
@@ -82,7 +85,7 @@ export async function syncLeadToGhl(payload: GhlLeadPayload, opts: GhlOptions): 
   try {
     const fieldIds = await loadFieldIds(locationId, request);
     const missing: string[] = [];
-    const customFields: { id: string; field_value: string | number }[] = [];
+    const customFields: { id: string; field_value: GhlFieldValue }[] = [];
     for (const [key, value] of Object.entries(payload.fields)) {
       if (value === undefined) continue;
       const id = fieldIds.get(key);
