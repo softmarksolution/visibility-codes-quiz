@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Fragment } from "react";
 import { Icon } from "@/components/Icon";
 import { HeaderBanner, SiteFooter } from "@/components/SiteChrome";
-import { thankYouCopy } from "@/content/site";
-import { PILLAR_NAMES, type PillarId } from "@/lib/quiz/questions";
+import { type ThankYouCard, type ThankYouState, thankYouCopy } from "@/content/site";
+import { type PillarId } from "@/lib/quiz/questions";
 import styles from "./thank-you.module.css";
 
 export const metadata: Metadata = {
@@ -19,6 +20,16 @@ function one(v: string | string[] | undefined) {
   return typeof v === "string" ? v : "";
 }
 
+function Spark() {
+  return (
+    <span className={styles.spark} aria-hidden="true">
+      <i />
+      <Icon name="sparkle" size={13} />
+      <i />
+    </span>
+  );
+}
+
 export default async function ThankYouPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const paid = one(params.paid) === "1";
@@ -27,92 +38,113 @@ export default async function ThankYouPage({ searchParams }: { searchParams: Sea
   const raw = one(params.edition);
   const edition = EDITIONS.includes(raw as PillarId) ? (raw as PillarId) : null;
 
+  const state: ThankYouState = paid
+    ? onWaitlist
+      ? thankYouCopy.paidOnWaitlist
+      : thankYouCopy.paid
+    : thankYouCopy.notPaid;
+
   /* The plans are the paid product and this repository is public, so the PDFs
      are not committed here. PLANS_BASE_URL points at wherever they are hosted —
      which needs to be signed or expiring URLs, since the file names are
      guessable and a buyer's link would otherwise work for anyone they forward
-     it to. Until it is set, the page does not offer a download at all: the copy
-     already tells the buyer their plan is on its way by email. */
+     it to. Until it is set, the Action Plan card drops its button and says the
+     plan is coming by email rather than offering a dead link. */
   const plansBase = process.env.PLANS_BASE_URL?.replace(/\/$/, "") ?? "";
   const planHref =
-    plansBase && edition
-      ? `${plansBase}/${edition}-${onWaitlist ? "on" : "not-on"}-waitlist.pdf`
-      : null;
+    plansBase && edition ? `${plansBase}/${edition}-${onWaitlist ? "on" : "not-on"}-waitlist.pdf` : null;
+
+  function hrefFor(target: NonNullable<ThankYouCard["cta"]>["href"]) {
+    if (target === "waitlist") return "/waitlist";
+    if (target === "results") return reportCode ? `/results?r=${encodeURIComponent(reportCode)}` : "/quiz";
+    return planHref;
+  }
 
   return (
     <>
       <HeaderBanner variant="compact" />
       <main className={styles.page}>
-        {paid ? (
-          <>
-            <header className={styles.head}>
-              <span className={styles.tick} aria-hidden="true">
-                <Icon name="sparkle" size={26} />
-              </span>
-              <h1 className={styles.title}>{thankYouCopy.paidTitle}</h1>
-              <p className={styles.body}>{thankYouCopy.paidBody}</p>
-            </header>
+        <h1 className={styles.title}>
+          {state.titleLines.map((line) => (
+            <Fragment key={line}>
+              {line}
+              <br />
+            </Fragment>
+          ))}
+          {state.titleEm && <em>{state.titleEm}</em>}
+        </h1>
 
-            <div className={styles.cards}>
-              <section className={styles.card}>
-                <p className={styles.cardEyebrow}>
-                  {edition ? `${PILLAR_NAMES[edition]} Edition` : "Your Action Plan"}
-                </p>
-                <h2 className={styles.cardTitle}>Your Visibility Action Plan</h2>
-                {planHref ? (
-                  <a className={styles.button} href={planHref} download>
-                    {thankYouCopy.downloadButton}
-                  </a>
-                ) : (
-                  <p className={styles.body}>{thankYouCopy.byEmail}</p>
-                )}
-              </section>
+        <Spark />
 
-              {onWaitlist ? (
-                <section className={styles.card}>
-                  <p className={styles.cardEyebrow}>{thankYouCopy.waitlistCardTitle}</p>
-                  <h2 className={styles.cardTitle}>The Visibility Codes Masterclass</h2>
-                  <p className={styles.body}>{thankYouCopy.waitlistCardBody}</p>
-                </section>
-              ) : (
-                <section className={styles.card}>
-                  <p className={styles.cardEyebrow}>{thankYouCopy.joinTitle}</p>
-                  <h2 className={styles.cardTitle}>The Visibility Codes Masterclass</h2>
-                  <p className={styles.body}>{thankYouCopy.joinBody}</p>
-                  <Link className={styles.button} href="/waitlist">
-                    {thankYouCopy.joinButton}
-                  </Link>
-                </section>
-              )}
-            </div>
-          </>
-        ) : (
-          <>
-            <header className={styles.head}>
-              <h1 className={styles.title}>{thankYouCopy.notPaidTitle}</h1>
-              <p className={styles.body}>{thankYouCopy.notPaidBody}</p>
-            </header>
-            <div className={styles.cards}>
-              <section className={styles.card}>
-                <h2 className={styles.cardTitle}>Your Visibility Action Plan</h2>
-                <Link className={styles.button} href={reportCode ? `/checkout?r=${reportCode}` : "/quiz"}>
-                  {thankYouCopy.notPaidButton}
-                </Link>
-              </section>
-              <section className={styles.card}>
-                <p className={styles.cardEyebrow}>{thankYouCopy.joinTitle}</p>
-                <h2 className={styles.cardTitle}>The Visibility Codes Masterclass</h2>
-                <p className={styles.body}>{thankYouCopy.joinBody}</p>
-                <Link className={styles.button} href="/waitlist">
-                  {thankYouCopy.joinButton}
-                </Link>
-              </section>
-            </div>
-          </>
-        )}
+        {state.lead && <p className={styles.lead}>{state.lead}</p>}
+        <div className={styles.body}>
+          {state.body.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
+        </div>
+        <p className={styles.tag}>{thankYouCopy.tagline}</p>
 
-        <p className={styles.back}>
-          <Link href="/">{thankYouCopy.backHome}</Link>
+        <div className={styles.cards}>
+          {state.cards.map((card) => {
+            const href = card.cta ? hrefFor(card.cta.href) : null;
+            return (
+              <section key={card.title} className={`${styles.card} ${card.small ? styles.cardSmall : ""}`}>
+                <span className={styles.icon} aria-hidden="true">
+                  <Icon name={card.icon} size={26} />
+                </span>
+                <div className={styles.cardBody}>
+                  {card.eyebrow && <p className={styles.eyebrow}>{card.eyebrow}</p>}
+                  <h2 className={styles.cardTitle}>{card.title}</h2>
+                  {card.paras.map((p) => (
+                    <p key={p} className={styles.para}>
+                      {p}
+                    </p>
+                  ))}
+
+                  {card.cta &&
+                    (href ? (
+                      card.cta.href === "plan" ? (
+                        <a className={styles.button} href={href} download>
+                          {card.cta.label}
+                        </a>
+                      ) : (
+                        <Link className={styles.button} href={href}>
+                          {card.cta.label}
+                        </Link>
+                      )
+                    ) : (
+                      <p className={styles.para}>{thankYouCopy.byEmail}</p>
+                    ))}
+
+                  {card.note && <p className={styles.note}>{card.note}</p>}
+
+                  {card.strip && (
+                    <div className={styles.strip}>
+                      <span className={styles.stripIcon} aria-hidden="true">
+                        <Icon name="crown" size={16} />
+                      </span>
+                      <div>
+                        <p className={styles.stripHead}>{card.strip.head}</p>
+                        <p className={styles.stripText}>{card.strip.text}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
+            );
+          })}
+        </div>
+
+        <Spark />
+        <p className={styles.closeA}>{state.closeA}</p>
+        {state.closeB && <p className={styles.closeB}>{state.closeB}</p>}
+        {state.closeTag && <p className={`${styles.tag} ${styles.tagEnd}`}>{thankYouCopy.tagline}</p>}
+
+        <p className={styles.follow}>
+          <a href={thankYouCopy.instagram} target="_blank" rel="noopener noreferrer">
+            <Icon name="instagram" size={17} />
+            {thankYouCopy.follow}
+          </a>
         </p>
       </main>
       <SiteFooter />

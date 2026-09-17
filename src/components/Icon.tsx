@@ -104,6 +104,30 @@ const paths = {
       <path d="M9 4.5V3h6v1.5M9 13l2 2 4-4" />
     </>
   ),
+  mail: (
+    <>
+      <rect x="2.4" y="4.8" width="19.2" height="14.4" rx="2.2" />
+      <path d="m3.2 6.2 8.8 6.6 8.8-6.6" />
+    </>
+  ),
+  screen: (
+    <>
+      <rect x="2.4" y="4" width="19.2" height="13" rx="2.2" />
+      <path d="M8.4 21h7.2M12 17v4" />
+      <path
+        d="m12 7.6 1 2.1 2.3.3-1.7 1.6.4 2.3-2-1.1-2 1.1.4-2.3-1.7-1.6 2.3-.3Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    </>
+  ),
+  clock: (
+    <>
+      <path d="M3.2 12a8.8 8.8 0 1 0 2.6-6.2" />
+      <path d="M3 4.6v4h4" />
+      <path d="M12 7.6V12l3 1.8" />
+    </>
+  ),
   microphone: (
     <>
       <rect x="8.6" y="1.9" width="6.8" height="12" rx="3.4" fill="currentColor" stroke="none" />

@@ -61,17 +61,6 @@
   line-height: 1.6;
 }
 
-/* "I didn't chase those opportunities. I was chosen for them." and the line
-   after it are the turn of the argument, so they carry weight. */
-.copy p:nth-child(3),
-.copy p:nth-child(4) {
-  color: var(--ink);
-  font-family: var(--font-serif);
-  font-size: clamp(16px, 1.5vw, 20px);
-  font-weight: 600;
-  line-height: 1.35;
-  text-align: center;
-}
 
 .button {
   display: inline-block;

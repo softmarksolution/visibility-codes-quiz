@@ -4,6 +4,7 @@
 // designs and needs client approval. Everything else is taken from the client's
 // font card, brand card and results page PDF.
 
+import type { IconName } from "@/components/Icon";
 import type { PillarId } from "@/lib/quiz/questions";
 import type { Badge, LevelName } from "@/lib/quiz/scoring";
 
@@ -174,17 +175,13 @@ export const optIn = {
 };
 
 export const quizCover = {
-  eyebrow: "The Visibility Codes for entrepreneurs, coaches, speakers, authors, personal brands",
-  title:
-    "What’s actually stopping you from being seen, remembered and chosen for the opportunities you know you’re capable of?",
-  stats: ["28 Questions", "Personalised Visibility Score", "3 Min Quiz"],
+  eyebrow: "For entrepreneurs, coaches, speakers, authors, personal brands",
+  title: "What’s actually standing between you and the opportunities you know you’re capable of?",
+  stats: ["28 Questions", "Personalised Visibility Score", "3 Minute Quiz"],
   paragraphs: [
-    "You know you are good at what you do. You have the experience, the knowledge and the ability to deliver. Yet somehow, you keep watching other people get the clients, stages, media opportunities, partnerships and invitations you know you could handle.",
-    "It’s time to stop wondering what’s wrong with you and start identifying what might be keeping you overlooked, forgotten and not chosen. I’ve been chosen for incredible opportunities throughout my career — before I’d ever hosted, spoken on stage or been known. From the AACTA Awards red carpet and my first speaking tour, to hosting the biggest entrepreneurial event in front of 12,000 people alongside Tony Robbins, Steven Bartlett, Gary Brecka and other world-class speakers.",
-    "I didn’t chase those opportunities. I was chosen for them.",
-    "That taught me something important. Being talented is not enough.",
-    "If the right people can’t clearly see your value, understand what you’re known for, remember you when an opportunity appears, or recognise you as the obvious person to choose, you remain invisible.",
-    "In 3 minutes, this quiz will show you where your visibility is breaking down, what may be causing you to be overlooked, what is already working, and what to shift next so the right people begin to see, recognise and choose you.",
+    "You know you are good at what you do. You have the experience, the knowledge and the ability to deliver. Yet somehow, you keep watching other people get the clients, stages, media opportunities, partnerships and invitations you know you could handle. You show up, work hard and keep building your expertise, but the right people still do not seem to see you at the level you know you are capable of.",
+    "I became fascinated by this because every major opportunity in my career came to me. From hosting the AACTA Awards red carpet, to my first speaking tour, to being chosen to host one of the biggest entrepreneurial events in front of 12,000 people alongside Tony Robbins, Steven Bartlett, Gary Brecka and other world class speakers, I did not chase those opportunities. I was chosen for them.",
+    "It is time to stop wondering what is wrong with you, why you are not being noticed, and what is keeping you from being chosen. In 3 minutes, this assessment will help you identify what is really getting in the way, where your visibility is breaking down, and exactly what to shift so the right people begin to see, recognise and choose you.",
   ],
   button: "Start quiz",
   footnote:
@@ -233,24 +230,170 @@ export const checkoutCopy = {
   termsLink: "Terms of Purchase",
 };
 
+/* Three states, from the local thank-you page: purchased and on the waitlist,
+   purchased and not, and no purchase. Each is a lead line, body copy, a set of
+   cards and a closing pair. */
+const SPAM =
+  "If you do not see the email within the next few minutes, check your spam or promotions folder and move the email into your primary inbox.";
+const MASTERCLASS = "The Visibility Codes Masterclass";
+
+export interface ThankYouCard {
+  icon: IconName;
+  eyebrow?: string;
+  title: string;
+  small?: boolean;
+  paras: string[];
+  cta?: { label: string; href: "plan" | "waitlist" | "results" };
+  note?: string;
+  strip?: { head: string; text: string };
+}
+
+export interface ThankYouState {
+  titleLines: string[];
+  titleEm?: string;
+  lead?: string;
+  body: string[];
+  cards: ThankYouCard[];
+  closeA: string;
+  closeB?: string;
+  closeTag?: boolean;
+}
+
 export const thankYouCopy = {
-  paidTitle: "Your personalised Visibility Action Plan is ready.",
-  paidBody:
-    "Your purchase confirmation and a copy of your Action Plan are on their way to your inbox.",
-  downloadButton: "Download my Action Plan",
-  byEmail: "Your Action Plan is on its way to your inbox — check your email in the next few minutes.",
-  waitlistCardTitle: "You’re on the Priority Waitlist",
-  waitlistCardBody:
-    "You’ll be first to know when doors open, with early updates, priority bonuses and launch pricing reserved for waitlist members.",
-  joinTitle: "Join the Priority Waitlist — free",
-  joinBody:
-    "Be first to know when The Visibility Codes Masterclass doors open, plus early updates, priority bonuses and special launch pricing.",
-  joinButton: "Join the priority waitlist free",
-  notPaidTitle: "Your results are saved.",
-  notPaidBody:
-    "Your Visibility Action Plan is still available whenever you are ready for it.",
-  notPaidButton: "See my Action Plan",
-  backHome: "Back to the home page",
+  tagline: "Stand out. Be seen. Be chosen.",
+  follow: "Follow @KatrinaKavvalos",
+  instagram: "https://www.instagram.com/katrinakavvalos/",
+  byEmail:
+    "Your Action Plan is on its way to your inbox — check your email in the next few minutes.",
+
+  paidOnWaitlist: {
+    titleLines: ["Your personalised", "Visibility Action Plan is ready."],
+    lead: "Purchase confirmed. You’re officially in.",
+    body: [
+      "You’ve taken the next step from simply knowing your visibility gap to doing something about it.",
+      "Your personalised Visibility Action Plan is designed to help you turn your results into clear, focused action.",
+    ],
+    cards: [
+      {
+        icon: "mail",
+        title: "Check your email",
+        small: true,
+        paras: [
+          "Your purchase confirmation, a copy of your Visibility Action Plan and your Masterclass waitlist confirmation are on their way to your inbox.",
+          SPAM,
+          "Keep this email. It contains your access details and important next steps.",
+        ],
+      },
+      {
+        icon: "document",
+        eyebrow: "Access now",
+        title: "Access Your Visibility Action Plan",
+        paras: [
+          "Your Action Plan has been created around the visibility area your assessment identified as your biggest gap.",
+          "Inside, you will use guided strategy, AI prompts and practical exercises to help you clarify what needs to change and decide exactly what to do next.",
+        ],
+        cta: { label: "Access my action plan", href: "plan" },
+        note: "Save your Action Plan somewhere easy to find so you can return to it as you work through each section.",
+      },
+      {
+        icon: "calendar",
+        eyebrow: "You’re on the waitlist",
+        title: MASTERCLASS,
+        paras: [
+          "You’re officially on the Priority Waitlist. You’ll be the first to know when doors open, plus receive early updates, priority bonuses and special launch pricing — available only to Priority Waitlist members.",
+        ],
+        strip: { head: "Watch your inbox", text: "We’ll be in touch with all the details." },
+      },
+    ],
+    closeA: "You have your result. Now turn it into action.",
+    closeB: "Start with your Visibility Action Plan and get ready for the next level.",
+  } satisfies ThankYouState,
+
+  paid: {
+    titleLines: ["Your personalised", "Visibility Action Plan is ready."],
+    lead: "Purchase confirmed. You’re officially in.",
+    body: [
+      "You’ve taken the next step from simply knowing your visibility gap to doing something about it.",
+      "Your personalised Visibility Action Plan is ready to help you turn your results into clear, focused action.",
+    ],
+    cards: [
+      {
+        icon: "mail",
+        title: "Check your email",
+        small: true,
+        paras: [
+          "Your purchase confirmation and a copy of your Visibility Action Plan are on their way to your inbox.",
+          SPAM,
+          "Keep this email. It contains your access details and Action Plan link.",
+        ],
+      },
+      {
+        icon: "document",
+        eyebrow: "Start here",
+        title: "Access Your Visibility Action Plan",
+        paras: [
+          "Your Action Plan has been created around the visibility area your assessment identified as your biggest gap.",
+          "Inside, you will use guided strategy, AI prompts and practical exercises to help you clarify what needs to change and decide exactly what to do next.",
+        ],
+        cta: { label: "Access my action plan", href: "plan" },
+        note: "Save your Action Plan somewhere easy to find so you can return to it as you work through each section.",
+      },
+      {
+        icon: "screen",
+        eyebrow: "Want to go deeper?",
+        title: MASTERCLASS,
+        paras: [
+          "Go behind the scenes and learn the exact strategies, mindset and positioning that get you chosen for red carpets, major stages and standout opportunities.",
+          "The Visibility Codes Masterclass shows you how to strengthen all five areas of visibility so you can position yourself more powerfully, become more recognised and create bigger opportunities for what’s next.",
+        ],
+        cta: { label: "Join the priority waitlist free", href: "waitlist" },
+      },
+    ],
+    closeA: "You have your result. Now turn it into action.",
+    closeB: "Start with your Visibility Action Plan and take your first step today.",
+  } satisfies ThankYouState,
+
+  notPaid: {
+    titleLines: ["Your visibility results are ready."],
+    titleEm: "You now know where you stand.",
+    body: [
+      "Your assessment has identified your Visibility Score, your strongest visibility area and the gap that may be holding you back most.",
+      "A link to your full results has been emailed to you, so you can return to them anytime.",
+    ],
+    cards: [
+      {
+        icon: "mail",
+        title: "Check your email",
+        small: true,
+        paras: [
+          "Your visibility results have been sent to your inbox.",
+          SPAM,
+          "Keep this email. It contains your full results and a link to return to them anytime.",
+        ],
+        cta: { label: "Return to my results", href: "results" },
+      },
+      {
+        icon: "screen",
+        eyebrow: "Want to go deeper?",
+        title: MASTERCLASS,
+        paras: [
+          "Discover the exact strategies, mindset shifts and proven steps behind being chosen for red carpets, major stages and standout opportunities.",
+          "Go beyond your results and learn how to strengthen all five areas of visibility so you can position yourself more powerfully, become more recognised and create the opportunities you want.",
+        ],
+        cta: { label: "Join the priority waitlist free", href: "waitlist" },
+      },
+      {
+        icon: "clock",
+        title: "Your results are still yours",
+        small: true,
+        paras: [
+          "You can return to your full results anytime using the link in the email we’ve sent you. It will always be there when you need a reminder of your Visibility Score, your strongest area and the gap to focus on.",
+        ],
+      },
+    ],
+    closeA: "You know where you stand. Now decide what happens next.",
+    closeTag: true,
+  } satisfies ThankYouState,
 };
 
 export const resultsCopy = {
