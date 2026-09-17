@@ -29,6 +29,15 @@ function write(key: string, value: string | null) {
   }
 }
 
+/**
+ * Restores a run that was interrupted, so a reload or a closed tab does not cost
+ * someone the answers they already gave. Anything unreadable falls back to a
+ * fresh start rather than throwing.
+ *
+ * This is only for *continuing* a run. Starting the quiz from the landing page
+ * is a deliberate restart and clears the saved progress first, so a new run is
+ * never scored against leftover answers from the previous one.
+ */
 export function loadProgress(): Progress {
   const empty: Progress = { answers: {}, index: 0 };
   const raw = read(PROGRESS_KEY);
@@ -46,6 +55,7 @@ export function loadProgress(): Progress {
 }
 
 export const saveProgress = (progress: Progress) => write(PROGRESS_KEY, JSON.stringify(progress));
+/** Called when a run ends and when the landing page starts a new one. */
 export const clearProgress = () => write(PROGRESS_KEY, null);
 
 /** The name is tied to one report so a shared link never shows this device's name. */
