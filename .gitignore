@@ -19,5 +19,3 @@ npm-debug.log*
 # the client's paid Action Plan PDFs — never commit these
 static-site/plans/
 
-# the client's paid Action Plan PDFs — never commit these to a public repo
-public/plans/*.pdf

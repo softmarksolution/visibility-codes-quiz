@@ -44,15 +44,17 @@ export default async function ThankYouPage({ searchParams }: { searchParams: Sea
       : thankYouCopy.paid
     : thankYouCopy.notPaid;
 
-  /* The plans are the paid product and this repository is public, so the PDFs
-     are not committed here. PLANS_BASE_URL points at wherever they are hosted —
-     which needs to be signed or expiring URLs, since the file names are
-     guessable and a buyer's link would otherwise work for anyone they forward
-     it to. Until it is set, the Action Plan card drops its button and says the
-     plan is coming by email rather than offering a dead link. */
+  /* The plan PDFs ship in public/plans, so the download works out of the box.
+     The file name is per edition and per waitlist state, matching the client's
+     two delivery folders.
+
+     These paths are guessable, so anyone can fetch a paid plan by typing the
+     URL and a buyer's link keeps working for whoever they forward it to. Set
+     PLANS_BASE_URL to a host that issues signed, expiring links and the button
+     points there instead, with no code change. */
   const plansBase = process.env.PLANS_BASE_URL?.replace(/\/$/, "") ?? "";
-  const planHref =
-    plansBase && edition ? `${plansBase}/${edition}-${onWaitlist ? "on" : "not-on"}-waitlist.pdf` : null;
+  const planFile = edition ? `${edition}-${onWaitlist ? "on" : "not-on"}-waitlist.pdf` : null;
+  const planHref = planFile ? `${plansBase || "/plans"}/${planFile}` : null;
 
   function hrefFor(target: NonNullable<ThankYouCard["cta"]>["href"]) {
     if (target === "waitlist") return "/waitlist";
