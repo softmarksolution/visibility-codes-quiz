@@ -304,12 +304,15 @@ test("landing page matches the client's desktop and mobile layout", async ({ pag
       cardRight: card.right,
       cardTop: card.top,
       capsFont: getComputedStyle(meet).fontFamily,
-      cinzelLoaded: [...document.fonts].some((f) => /cinzel/i.test(f.family) && f.status === "loaded"),
+      capsLoaded: [...document.fonts].some((f) => /playfair/i.test(f.family) && f.status === "loaded"),
       overflow: document.documentElement.scrollWidth - window.innerWidth,
     };
   });
-  expect(m.capsFont).toMatch(/cinzel/i);
-  expect(m.cinzelLoaded).toBe(true);
+  // The master "SIMPLE TYPOGRAPHY BRAND CARD" allows only Playfair Display for
+  // headings and Montserrat for body. This previously asserted Cinzel, which is
+  // on neither card.
+  expect(m.capsFont).toMatch(/playfair/i);
+  expect(m.capsLoaded).toBe(true);
   if (m.vw > 760) {
     // Desktop: headline card sits left of the photo; the journey pill is mobile only.
     expect(m.cardRight).toBeLessThanOrEqual(m.heroLeft + 60);
