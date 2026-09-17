@@ -153,9 +153,9 @@ export default function HomePage() {
             <Image
               src="/landing/who-photo.webp"
               alt={who.photoAlt}
-              width={514}
-              height={529}
-              sizes="(max-width: 760px) 100vw, 620px"
+              width={850}
+              height={896}
+              sizes="(max-width: 1100px) 100vw, 44vw"
               className={styles.whoPhoto}
             />
             <div className={styles.whoText}>
@@ -197,9 +197,9 @@ export default function HomePage() {
             <Image
               src="/landing/meet-katrina.webp"
               alt={meet.photoAlt}
-              width={440}
-              height={505}
-              sizes="(max-width: 760px) 100vw, 560px"
+              width={942}
+              height={1096}
+              sizes="(max-width: 1100px) 100vw, 50vw"
               className={styles.meetPhoto}
             />
             <div className={styles.meetText}>

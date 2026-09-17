@@ -581,19 +581,27 @@
   }
 }
 
+/* ---------- Who this is for ----------
+   Geometry measured off the FINAL.pdf master (black band rows 3264-4264):
+     photo block   x  52.7 - 316.3 units
+     text column   x 318.8 - 530.7 units  (211.9 wide)
+     heading ink width 212.8 units, cap height 12.7 -> font-size ~18.2
+     body line pitch 10.55 units -> font-size 7.27 at line-height 1.45 */
+
 .who {
-  padding: clamp(60px, 7vw, 110px) 24px clamp(40px, 5vw, 80px);
-  background: radial-gradient(ellipse 50% 60% at 30% 50%, rgba(150, 100, 40, 0.12), transparent 70%), #000;
+  padding: clamp(24px, 2.69vw, 39px) 0;
+  background: #000;
   color: #ece6da;
 }
 
 .whoInner {
   display: grid;
-  grid-template-columns: minmax(0, 690fr) minmax(0, 630fr);
-  gap: 20px;
+  grid-template-columns: clamp(240px, 44.27vw, 637px) minmax(0, 1fr);
+  gap: clamp(4px, 0.42vw, 6px);
   align-items: center;
-  max-width: 1320px;
+  max-width: 1920px;
   margin: 0 auto;
+  padding-inline: clamp(20px, 8.85vw, 127px) clamp(20px, 10.88vw, 157px);
 }
 
 .whoPhoto {
@@ -606,14 +614,22 @@
   text-align: center;
 }
 
+/* 212.8 units of ink in a 211.9-unit column, so without nowrap the heading
+   breaks onto two lines. */
+.whoText .capsTitle {
+  font-size: clamp(22px, 3.06vw, 44px);
+  letter-spacing: 0.21em;
+  white-space: nowrap;
+}
+
 .whoText .divider {
-  margin-top: 14px;
+  margin-top: clamp(8px, 0.84vw, 12px);
 }
 
 .whoList {
   display: grid;
-  gap: 18px;
-  margin: 26px 0 0;
+  gap: clamp(8px, 0.84vw, 12px);
+  margin: clamp(12px, 1.34vw, 19px) 0 0;
   padding: 0;
   list-style: none;
   text-align: left;
@@ -621,24 +637,25 @@
 
 .whoList li {
   position: relative;
-  padding-left: 36px;
-  font-size: clamp(16px, 1.45vw, 21px);
-  font-weight: 300;
-  line-height: 1.38;
+  padding-left: clamp(20px, 2.03vw, 29px);
+  font-size: clamp(13px, 1.22vw, 18px);
+  font-weight: 400;
+  line-height: 1.45;
 }
 
+/* The gold diamond bullet, from the WHO brand card's component strip — 4.3
+   design units square. The desktop rule was lost when this block was rewritten;
+   only the max-width:760px copy survived, so the markers vanished above 760px. */
 .whoList li::before {
   content: "";
   position: absolute;
-  top: 0.35em;
-  left: 4px;
-  width: 12px;
-  height: 12px;
-  background: #d9a55a;
+  top: 0.4em;
+  left: clamp(1px, 0.17vw, 2px);
+  width: clamp(7px, 0.72vw, 10px);
+  height: clamp(7px, 0.72vw, 10px);
+  background: linear-gradient(135deg, #f0ce7b, #be8b24);
   transform: rotate(45deg);
 }
-
-/* ---------- What's your visibility gap ---------- */
 
 .gapsWrap {
   padding: clamp(60px, 7vw, 120px) 24px;
@@ -728,53 +745,67 @@
 
 /* ---------- Meet Katrina ---------- */
 
+/* ---------- Meet Katrina ----------
+   Type measured off the client's MEET KATRINA.png: body line pitch is 11.40
+   design units, i.e. 8.14 at line-height 1.4, and paragraphs sit ~23.5 units
+   apart. The heading is SMALL CAPS — full-height M and K over small-cap
+   "eet"/"atrina" — with a cap height of 17.8 units, not the uniform upper case
+   the shared .capsTitle rule applies.
+   1 design unit = 0.168vw, and 2.42px at a 1440px layout. */
+
 .meetWrap {
-  padding: clamp(60px, 8vw, 110px) 24px clamp(20px, 3vw, 40px);
+  padding: 0;
   background: #000;
 }
 
 .meetCard {
   display: grid;
-  grid-template-columns: minmax(0, 52fr) minmax(0, 48fr);
-  max-width: 1230px;
+  grid-template-columns: minmax(0, 298fr) minmax(0, 297.5fr);
+  align-items: center;
+  max-width: 1920px;
   margin: 0 auto;
   overflow: hidden;
-  border-radius: 24px;
-  background: linear-gradient(90deg, #111 0%, #1b1a18 100%);
+  border-radius: 0;
+  background: #000;
 }
 
+/* The crop is cut at this column's exact aspect, so `cover` trims nothing and
+   the photo's own ratio sets the section height. */
 .meetPhoto {
   display: block;
   width: 100%;
   height: 100%;
+  aspect-ratio: 942 / 1096;
   object-fit: cover;
-  object-position: center top;
-  mask-image: linear-gradient(90deg, #000 70%, transparent 100%);
+  object-position: center;
+  mask-image: linear-gradient(270deg, transparent 0, #000 clamp(40px, 5.71vw, 82px));
 }
 
 .meetText {
   align-self: center;
-  padding: clamp(36px, 5vw, 80px) clamp(24px, 3.4vw, 56px);
+  padding: 0 clamp(16px, 2.31vw, 33px);
   text-align: center;
   color: #e9e3d7;
 }
 
 .meetText .capsTitle {
-  font-size: clamp(28px, 2.9vw, 46px);
+  font-size: clamp(26px, 4.27vw, 61px);
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.125em;
+  text-transform: none;
+  font-variant-caps: small-caps;
   white-space: nowrap;
 }
 
 .meetText .divider {
-  margin-top: 12px;
+  margin-top: clamp(8px, 0.84vw, 12px);
 }
 
 .meetText p {
-  margin-top: 20px;
-  font-size: clamp(15px, 1.2vw, 17px);
-  font-weight: 300;
-  line-height: 1.5;
+  margin-top: clamp(14px, 2.02vw, 29px);
+  font-size: clamp(14px, 1.37vw, 20px);
+  font-weight: 400;
+  line-height: 1.4;
 }
 
 /* ---------- Gallery ---------- */
