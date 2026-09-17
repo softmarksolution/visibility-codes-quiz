@@ -300,7 +300,10 @@ test("landing page matches the client's desktop and mobile layout", async ({ pag
     return {
       vw: window.innerWidth,
       heroLeft: hero.left,
+      heroRight: hero.right,
+      heroWidth: hero.width,
       heroBottom: hero.bottom,
+      cardLeft: card.left,
       cardRight: card.right,
       cardTop: card.top,
       capsFont: getComputedStyle(meet).fontFamily,
@@ -314,8 +317,11 @@ test("landing page matches the client's desktop and mobile layout", async ({ pag
   expect(m.capsFont).toMatch(/playfair/i);
   expect(m.capsLoaded).toBe(true);
   if (m.vw > 760) {
-    // Desktop: headline card sits left of the photo; the journey pill is mobile only.
-    expect(m.cardRight).toBeLessThanOrEqual(m.heroLeft + 60);
+    // Desktop: FINAL BANNER 5 carries the gold card frame inside the artwork, so
+    // the copy sits within the banner's right-hand half rather than beside it.
+    // The journey pill is mobile only.
+    expect(m.cardLeft).toBeGreaterThan(m.heroLeft + m.heroWidth * 0.5);
+    expect(m.cardRight).toBeLessThanOrEqual(m.heroRight + 1);
     await expect(page.getByText("Recognised", { exact: true })).toBeHidden();
   } else {
     // Mobile: photo on top, headline card below it, journey pill visible.

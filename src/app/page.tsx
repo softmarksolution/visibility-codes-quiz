@@ -30,8 +30,8 @@ export default function HomePage() {
     <div className={`${styles.page} ${montserrat.variable}`}>
       <main>
         <section className={styles.hero}>
-          <HeroArt />
           <div className={styles.heroInner}>
+            <HeroArt />
             <div className={styles.heroCard}>
               <h1 className={styles.heroTitle}>{hero.title}</h1>
               <span className={styles.shortRule} aria-hidden="true" />
@@ -284,10 +284,10 @@ function HeroArt() {
   const alt = landing.hero.imageAlt;
   const {
     props: { srcSet: desktop },
-  } = getImageProps({ alt, src: "/landing/hero-desktop.webp", width: 722, height: 668, sizes: "60vw" });
+  } = getImageProps({ alt, src: "/landing/hero-desktop.webp", width: 1920, height: 1077, sizes: "100vw" });
   const {
     props: { srcSet: mobile, ...rest },
-  } = getImageProps({ alt, src: "/landing/hero-mobile.webp", width: 390, height: 341, sizes: "100vw", priority: true });
+  } = getImageProps({ alt, src: "/landing/hero-mobile.webp", width: 941, height: 1672, sizes: "100vw", priority: true });
   return (
     <picture className={styles.heroArt}>
       <source media="(min-width: 761px)" srcSet={desktop} />
