@@ -59,6 +59,30 @@ export const landing = {
     rangeTo: "Chosen expert",
     pill: "Score. Gap. Next steps.",
   },
+  // "Why The Visibility Codes work" — the section between the score card and
+  // "Who this is for" in the client's FINAL.pdf. Copy is word for word.
+  why: {
+    eyebrow: "Why The Visibility Codes Work",
+    titleStart: "You cannot build visibility",
+    titleGold: "waiting to be discovered.",
+    photoAlt: "Katrina Kavvalos on the TikTok Awards red carpet",
+    paragraphs: [
+      "I have been chosen for opportunities, stages and rooms I was not the most qualified for on paper. Not because I was better than everyone else, but because I learned how to position myself to be seen, remembered and chosen.",
+      "At the same time, I have seen incredibly talented, experienced and qualified people stay overlooked simply because they were not visible in the right way.",
+      "You can have the experience, the talent and the expertise, and still be missed. Visibility changes when you learn how to position yourself so the right people notice you, remember you and choose you, even before you feel like the obvious choice.",
+    ],
+    stats: [
+      { icon: "instagram", lead: "600,000+", rest: "followers on Instagram",
+        note: "Built through visibility, positioning and content that gets remembered." },
+      { icon: "people", lead: "Almost 1 million", rest: "across social media",
+        note: "A personal brand grown through strategic positioning and visibility." },
+      { icon: "microphone", lead: "", rest: "Chosen for major media and red carpets",
+        note: "Including interviewing global celebrities and entertainment leaders." },
+      { icon: "stage", lead: "12,000 people", rest: "Chosen to host in front of", leadAfter: true,
+        note: "Alongside world class speakers such as Tony Robbins, Steven Bartlett, Gary Brecka and more." },
+    ],
+    footnote: "The Visibility Codes are built from the same strategies I have used in real life to create recognition, credibility, proximity and opportunity.",
+  },
   who: {
     title: "Who this is for",
     photoAlt: "Sydney host Katrina Kavvalos with Steven Bartlett and Tony Robbins",

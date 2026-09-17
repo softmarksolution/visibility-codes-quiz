@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cinzel, Jost } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -9,9 +9,14 @@ import { brand, landing } from "@/content/site";
 import RefCapture from "./RefCapture";
 import styles from "./page.module.css";
 
-// Fonts used only on the landing page, so the quiz and results pages don't download them.
-const jost = Jost({ subsets: ["latin"], variable: "--font-jost", display: "swap" });
-const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "600"], variable: "--font-cinzel", display: "swap" });
+// Montserrat is the body face on the brand's master typography card; headings use
+// Playfair Display, which layout.tsx already loads for every page.
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "The Visibility Codes | Get Your Visibility Score Free",
@@ -19,10 +24,10 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const { hero, score, who, gaps, meet, gallery, final } = landing;
+  const { hero, score, why, who, gaps, meet, gallery, final } = landing;
 
   return (
-    <div className={`${styles.page} ${jost.variable} ${cinzel.variable}`}>
+    <div className={`${styles.page} ${montserrat.variable}`}>
       <main>
         <section className={styles.hero}>
           <HeroArt />
@@ -96,6 +101,49 @@ export default function HomePage() {
                 {score.pill}
                 <span className={styles.star} aria-hidden="true" />
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* WHY THE VISIBILITY CODES WORK — the photo is a cut of the client's
+            master at the exact aspect of its CSS box, so `cover` crops nothing;
+            at the wrong aspect it clipped the top of Katrina's head. */}
+        <section className={styles.why}>
+          <div className={styles.whyPhoto} aria-label={why.photoAlt} role="img" />
+          <div className={styles.whyInner}>
+            <div className={styles.whyContent}>
+              <p className={styles.eyebrow}>
+                {why.eyebrow}
+                <span className={styles.eyebrowLine} aria-hidden="true" />
+              </p>
+              <h2 className={styles.whyTitle}>
+                {why.titleStart} <em>{why.titleGold}</em>
+              </h2>
+              <div className={styles.whyCopy}>
+                {why.paragraphs.map((text) => (
+                  <p key={text}>{text}</p>
+                ))}
+              </div>
+              <ul className={styles.stats}>
+                {why.stats.map((s) => (
+                  <li key={s.note} className={styles.stat}>
+                    <Icon name={s.icon} size={30} className={styles.statIcon} />
+                    <p className={styles.statLead}>
+                      {"leadAfter" in s && s.leadAfter ? (
+                        <>
+                          {s.rest} <b>{s.lead}</b>
+                        </>
+                      ) : (
+                        <>
+                          {s.lead ? <b>{s.lead}</b> : null} {s.rest}
+                        </>
+                      )}
+                    </p>
+                    <p className={styles.statNote}>{s.note}</p>
+                  </li>
+                ))}
+              </ul>
+              <p className={styles.whyFoot}>{why.footnote}</p>
             </div>
           </div>
         </section>
