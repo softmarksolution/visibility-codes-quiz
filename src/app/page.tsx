@@ -4,6 +4,7 @@ import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { Icon } from "@/components/Icon";
+import StartQuizLink from "@/components/StartQuizLink";
 import { brand, landing } from "@/content/site";
 import RefCapture from "./RefCapture";
 import styles from "./page.module.css";
@@ -31,12 +32,12 @@ export default function HomePage() {
               <span className={styles.shortRule} aria-hidden="true" />
               <p className={styles.heroBody}>{hero.body}</p>
               <p className={styles.heroTagline}>{hero.tagline}</p>
-              <Link href="/quiz" className={`${styles.brightButton} ${styles.heroButton}`}>
+              <StartQuizLink className={`${styles.brightButton} ${styles.heroButton}`}>
                 {hero.button}
                 <span className={styles.chevron} aria-hidden="true">
                   ›
                 </span>
-              </Link>
+              </StartQuizLink>
             </div>
             <p className={styles.journey}>
               {hero.journey.map((step, i) => (
@@ -74,9 +75,9 @@ export default function HomePage() {
             <div className={styles.scoreFoot}>
               <Divider />
               <p>{score.after}</p>
-              <Link href="/quiz" className={`${styles.matteButton} ${styles.scoreButton}`}>
+              <StartQuizLink className={`${styles.matteButton} ${styles.scoreButton}`}>
                 {score.button}
-              </Link>
+              </StartQuizLink>
             </div>
 
             <div className={styles.gaugeCard}>
@@ -137,9 +138,9 @@ export default function HomePage() {
                 </li>
               ))}
             </ol>
-            <Link href="/quiz" className={`${styles.matteButton} ${styles.gapsButton}`}>
+            <StartQuizLink className={`${styles.matteButton} ${styles.gapsButton}`}>
               {gaps.button}
-            </Link>
+            </StartQuizLink>
           </div>
         </section>
 
@@ -187,10 +188,10 @@ export default function HomePage() {
           </h2>
           <Divider className={styles.dividerWide} />
           <p className={styles.finalBody}>{final.body}</p>
-          <Link href="/quiz" className={`${styles.brightButton} ${styles.finalButton}`}>
+          <StartQuizLink className={`${styles.brightButton} ${styles.finalButton}`}>
             {final.button}
             <Icon name="arrowRight" size={22} />
-          </Link>
+          </StartQuizLink>
         </section>
       </main>
 

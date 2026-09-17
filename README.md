@@ -12,7 +12,7 @@ only the scored answer letters (no personal data).
 | Path | What it is |
 |---|---|
 | `/` | Landing page. Captures `?ref=` referral codes. |
-| `/quiz` | The quiz. Progress is saved in the browser. The unlock pop-up appears after question 28. |
+| `/quiz` | The quiz. Progress is saved in the browser, so a reload picks up where you left off; starting again from the landing page clears it. The unlock pop-up appears after question 28. |
 | `/results?r=…&c=…` | The results report. Works on any device from the copied link. |
 | `/api/submit` | Validates, scores and sends the lead to GHL. |
 | `/api/calendar` | `.ics` file for Apple / Outlook calendars. |

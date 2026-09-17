@@ -89,6 +89,26 @@ test("keeps progress after a reload and allows going back", async ({ page }) => 
   await expect(page.getByText("Question 2 of 28")).toBeVisible();
 });
 
+test("starting the quiz from the landing page begins a fresh run", async ({ page }) => {
+  // Get part-way through, then leave.
+  await page.goto("/quiz");
+  await page.locator("label").filter({ has: page.getByRole("radio") }).first().click();
+  await expect(page.getByText("Question 2 of 28")).toBeVisible();
+
+  // Coming back through a "start quiz" button is a deliberate restart, so it
+  // drops the earlier answers instead of dropping the visitor mid-assessment.
+  await page.goto("/");
+  await page.getByRole("link", { name: /start assessment/i }).click();
+  await expect(page).toHaveURL(/\/quiz$/);
+  await expect(page.getByText("Question 1 of 28")).toBeVisible();
+  await expect(page.getByRole("radio").first()).not.toBeChecked();
+
+  // The cleared answers are gone for good, not just hidden by the fresh index.
+  await page.reload();
+  await expect(page.getByText("Question 1 of 28")).toBeVisible();
+  await expect(page.getByRole("radio").first()).not.toBeChecked();
+});
+
 test("keyboard selection does not auto-advance; Enter moves on", async ({ page }) => {
   await page.goto("/quiz");
   await page.getByRole("radio").first().focus();
