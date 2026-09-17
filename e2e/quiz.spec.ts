@@ -1,6 +1,22 @@
 import { expect, test, type Page } from "@playwright/test";
 import { QUESTIONS } from "../src/lib/quiz/questions";
 
+/**
+ * The way into the quiz from the landing page: a call to action opens the opt-in
+ * pop-up, that hands off to the quiz cover page, and the cover starts the
+ * questions. Buttons used to link straight to /quiz, skipping both steps.
+ */
+async function startQuizFromLanding(page: Page, cta: RegExp = /start assessment/i) {
+  await page.getByRole("button", { name: cta }).click();
+  await page.getByPlaceholder("Name").fill("Sam Tester");
+  await page.getByPlaceholder("Email").fill("sam@example.com");
+  await page.getByPlaceholder("Phone").fill("0400000000");
+  await page.getByRole("button", { name: /get my visibility score now/i }).click();
+  await expect(page).toHaveURL(/\/quiz-cover$/);
+  await page.getByRole("link", { name: /start quiz/i }).click();
+  await expect(page).toHaveURL(/\/quiz$/);
+}
+
 function trackConsoleErrors(page: Page) {
   const errors: string[] = [];
   page.on("console", (msg) => {
@@ -17,7 +33,7 @@ test("completes the quiz, unlocks the report and reopens it from the report link
   await expect(
     page.getByRole("heading", { level: 1, name: "Why Aren’t You Getting The Opportunities You Know You Deserve?" }),
   ).toBeVisible();
-  await page.getByRole("link", { name: /start assessment/i }).click();
+  await startQuizFromLanding(page);
   await expect(page).toHaveURL(/\/quiz$/);
 
   for (let i = 1; i <= 28; i++) {
@@ -45,6 +61,11 @@ test("completes the quiz, unlocks the report and reopens it from the report link
   await expect(dialog.getByText("You scored 100/100.")).toBeVisible();
   await expect(dialog.getByRole("heading", { name: "You're a Chosen Expert." })).toBeVisible();
 
+  // The opt-in taken before the quiz pre-fills these, so clear them to check the
+  // validation still fires on an empty field.
+  await expect(dialog.getByPlaceholder("First name")).toHaveValue("Sam");
+  await expect(dialog.getByPlaceholder("Email")).toHaveValue("sam@example.com");
+  await dialog.getByPlaceholder("First name").fill("");
   await dialog.getByRole("button", { name: /unlock my full report/i }).click();
   await expect(dialog.getByRole("alert")).toHaveText("Please enter your first name.");
 
@@ -98,8 +119,7 @@ test("starting the quiz from the landing page begins a fresh run", async ({ page
   // Coming back through a "start quiz" button is a deliberate restart, so it
   // drops the earlier answers instead of dropping the visitor mid-assessment.
   await page.goto("/");
-  await page.getByRole("link", { name: /start assessment/i }).click();
-  await expect(page).toHaveURL(/\/quiz$/);
+  await startQuizFromLanding(page);
   await expect(page.getByText("Question 1 of 28")).toBeVisible();
   await expect(page.getByRole("radio").first()).not.toBeChecked();
 
@@ -266,10 +286,13 @@ test("landing page matches the client's desktop and mobile layout", async ({ pag
   await expect(page.getByRole("img", { name: "Example score: 88 out of 100" })).toBeVisible();
   await expect(page.getByText("Score. Gap. Next steps.")).toBeVisible();
 
-  // Every call to action starts the quiz.
+  // Every call to action opens the opt-in pop-up rather than jumping to the quiz.
   for (const name of [/start assessment/i, /get your free score/i, /start free quiz/i, /get your visibility score free/i]) {
-    await expect(page.getByRole("link", { name })).toHaveAttribute("href", "/quiz");
+    await expect(page.getByRole("button", { name })).toBeVisible();
   }
+  await page.getByRole("button", { name: /start assessment/i }).click();
+  await expect(page.getByRole("dialog", { name: /discover your/i })).toBeVisible();
+  await page.keyboard.press("Escape");
 
   // One press strip per layout (after the hero on desktop, after Meet Katrina on mobile), ten logos.
   const press = page.getByRole("region", { name: "As featured in" });

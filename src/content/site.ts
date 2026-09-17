@@ -157,6 +157,40 @@ export const unlock = {
    "CHECK OUT PAGE COPY - $35 USD (USED WHEN THEY CLICK BUTTON ON RESULTS PAGE)"
    and marks the Masterclass waitlist "ADD TO YOUR PURCHASE - MUST SAY FREE", so
    the plan is the paid item and the waitlist is the free add-on. */
+/* The opt-in pop-up every "start" button opens, and the quiz cover page it
+   hands off to. Copy from the client's landing page design and
+   "6. QUIZ / 1. QUIZ COVER PAGE - PAGE 1 / COVER PAGE COPY.docx".
+   The .docx heading says "29 QUESTIONS"; the cover artwork says 28, which is
+   what the quiz actually asks, so 28 is used. */
+export const optIn = {
+  titleLines: ["Discover Your", "Visibility Score", "and Find Your Gap"],
+  body: "Enter your details below to get your personalised Visibility Score and instant insights.",
+  note: "We’ll send it straight to your inbox.",
+  namePlaceholder: "Name",
+  emailPlaceholder: "Email",
+  phonePlaceholder: "Phone",
+  button: "Get My Visibility Score Now",
+  close: "Close",
+};
+
+export const quizCover = {
+  eyebrow: "The Visibility Codes for entrepreneurs, coaches, speakers, authors, personal brands",
+  title:
+    "What’s actually stopping you from being seen, remembered and chosen for the opportunities you know you’re capable of?",
+  stats: ["28 Questions", "Personalised Visibility Score", "3 Min Quiz"],
+  paragraphs: [
+    "You know you are good at what you do. You have the experience, the knowledge and the ability to deliver. Yet somehow, you keep watching other people get the clients, stages, media opportunities, partnerships and invitations you know you could handle.",
+    "It’s time to stop wondering what’s wrong with you and start identifying what might be keeping you overlooked, forgotten and not chosen. I’ve been chosen for incredible opportunities throughout my career — before I’d ever hosted, spoken on stage or been known. From the AACTA Awards red carpet and my first speaking tour, to hosting the biggest entrepreneurial event in front of 12,000 people alongside Tony Robbins, Steven Bartlett, Gary Brecka and other world-class speakers.",
+    "I didn’t chase those opportunities. I was chosen for them.",
+    "That taught me something important. Being talented is not enough.",
+    "If the right people can’t clearly see your value, understand what you’re known for, remember you when an opportunity appears, or recognise you as the obvious person to choose, you remain invisible.",
+    "In 3 minutes, this quiz will show you where your visibility is breaking down, what may be causing you to be overlooked, what is already working, and what to shift next so the right people begin to see, recognise and choose you.",
+  ],
+  button: "Start quiz",
+  footnote:
+    "Remember to answer based on where you are right now, not where you want to be. The more honest your answers, the more useful your result.",
+};
+
 export const checkoutCopy = {
   eyebrow: "Your personalised next step",
   title: "Your Personalised Visibility Action Plan",

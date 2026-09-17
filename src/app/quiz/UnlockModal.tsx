@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { unlock } from "@/content/site";
 import type { Answers } from "@/lib/quiz/questions";
 import { computeResults } from "@/lib/quiz/scoring";
-import { clearProgress, readRef, saveName } from "@/lib/storage";
+import { clearProgress, readLead, readRef, saveName } from "@/lib/storage";
 import styles from "./quiz.module.css";
 
 interface Props {
@@ -16,8 +16,13 @@ interface Props {
 export default function UnlockModal({ answers, onClose }: Props) {
   const router = useRouter();
   const results = useMemo(() => computeResults(answers), [answers]);
-  const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
+  /* The opt-in before the quiz already took a name, email and phone, so this
+     second ask is pre-filled from it rather than made to be re-typed. Read
+     lazily: readLead() is storage-guarded and returns null on the server, and
+     this modal only mounts after the last question is answered, so its first
+     render is client-side. */
+  const [firstName, setFirstName] = useState(() => readLead()?.name.trim().split(/\s+/)[0] ?? "");
+  const [email, setEmail] = useState(() => readLead()?.email ?? "");
   const [website, setWebsite] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
