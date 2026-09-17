@@ -110,6 +110,17 @@ test("keeps progress after a reload and allows going back", async ({ page }) => 
   await expect(page.getByText("Question 2 of 28")).toBeVisible();
 });
 
+test("the quiz cover page sits behind the opt-in", async ({ page }) => {
+  // Reaching it without filling the pop-up sends you back to the landing page,
+  // so the opt-in cannot be skipped by typing the URL.
+  await page.goto("/quiz-cover");
+  await expect(page).toHaveURL(/\/$/);
+
+  // Coming through the pop-up, it opens as normal.
+  await startQuizFromLanding(page);
+  await expect(page.getByText("Question 1 of 28")).toBeVisible();
+});
+
 test("starting the quiz from the landing page begins a fresh run", async ({ page }) => {
   // Get part-way through, then leave.
   await page.goto("/quiz");

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HeaderBanner, SiteFooter } from "@/components/SiteChrome";
 import { quizCover } from "@/content/site";
+import RequireLead from "./RequireLead";
 import styles from "./quiz-cover.module.css";
 
 export const metadata: Metadata = {
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 export default function QuizCoverPage() {
   return (
     <>
-      <HeaderBanner variant="compact" />
+      <HeaderBanner />
+      <RequireLead />
       <main className={styles.page}>
         <p className={styles.eyebrow}>{quizCover.eyebrow}</p>
         <h1 className={styles.title}>{quizCover.title}</h1>

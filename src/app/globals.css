@@ -12,6 +12,24 @@
   --bronze: #b5772c;
   --gold-light: #e1c05b;
   --gold-button: #d4af37;
+  /* Sampled from the client's own button artwork
+     (3. GRAPHICS / BUTTONS / START QUIZ BUTTON.png). */
+  --btn-gold: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.07)),
+    linear-gradient(
+      90deg,
+      #d8a044 0%,
+      #e8b04e 10%,
+      #efb854 22%,
+      #eeb955 32%,
+      #ebb755 40%,
+      #d69f43 50%,
+      #ecb855 60%,
+      #f9c65f 68%,
+      #f4bf5b 74%,
+      #dfa94c 82%,
+      #e0aa4c 90%,
+      #d0973d 100%
+    );
   --gauge-light: #e9dfc9;
   --gauge-mid: #d4b36b;
   --gauge-dark: #8c7739;

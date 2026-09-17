@@ -103,3 +103,21 @@ export function readLead(): Lead | null {
     return null;
   }
 }
+
+/**
+ * True only when storage is readable AND holds no opt-in.
+ *
+ * The difference matters: the quiz cover sends people back to the landing page
+ * when they have not opted in, but storage can also be unavailable (private
+ * mode, blocked site data). Treating "unreadable" as "not opted in" would trap
+ * those visitors in a redirect they can never satisfy, so it returns false.
+ */
+export function isMissingLead(): boolean {
+  try {
+    window.localStorage.setItem("vc_probe", "1");
+    window.localStorage.removeItem("vc_probe");
+  } catch {
+    return false;
+  }
+  return readLead() === null;
+}
