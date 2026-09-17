@@ -1,8 +1,12 @@
 /* Landing page, matched to the client's desktop and mobile layout PDFs */
 
 .page {
-  --font-futura: var(--font-jost), Futura, "Century Gothic", "Avenir Next", system-ui, sans-serif;
-  --font-caps: var(--font-cinzel), "Trajan Pro", var(--font-serif);
+  /* The master "SIMPLE TYPOGRAPHY BRAND CARD" allows only two families:
+     Playfair Display 500-700 for headings, Montserrat 300-400 for body.
+     Cinzel and Jost were neither, and Trajan Pro (named on the WHO card) is a
+     licensed Adobe face with no lower case, so it cannot be used on the web. */
+  --font-futura: var(--font-montserrat), "Helvetica Neue", Arial, sans-serif;
+  --font-caps: var(--font-playfair), Georgia, "Times New Roman", serif;
   --cream: #f1eee8;
   --paper: #fbfaf6;
   --gold: #c9953a;
@@ -427,6 +431,163 @@
 }
 
 /* ---------- Who this is for ---------- */
+
+/* ---------- WHY THE VISIBILITY CODES WORK ----------
+   Proportions converted from the client's FINAL.pdf, whose page is 595.5 design
+   units wide: 1 unit = 0.168vw, and 2.42px at a 1440px layout. */
+
+.why {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(100deg, #fbf5e9 0%, #f8f0e0 44%, #efe0c9 100%);
+  padding: clamp(30px, 2.85vw, 41px) 0 clamp(26px, 2.35vw, 34px);
+  color: #2b3644;
+}
+/* The crop is cut at this box's exact aspect so `cover` trims nothing — at the
+   wrong aspect it scaled by width and clipped the top of Katrina's head. */
+.whyPhoto {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: calc(clamp(240px, 33.92vw, 488px) + max(0px, (100vw - 1440px) / 2));
+  background: url("/landing/why-photo.webp") right center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 clamp(56px, 6.72vw, 97px));
+  mask-image: linear-gradient(90deg, transparent 0, #000 clamp(56px, 6.72vw, 97px));
+}
+.whyInner {
+  position: relative;
+  z-index: 2;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 3.19vw, 46px);
+}
+.whyContent {
+  width: min(100%, clamp(320px, 67vw, 965px));
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.18vw, 17px);
+  color: #8a6a2d;
+  font-size: clamp(11px, 1.11vw, 16px);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrowLine {
+  height: 1px;
+  width: clamp(40px, 7.72vw, 111px);
+  background: linear-gradient(90deg, #8a6a2d, transparent);
+}
+
+.whyTitle {
+  margin-top: clamp(6px, 0.67vw, 10px);
+  font-family: var(--font-caps);
+  font-weight: 700;
+  color: #0e1014;
+  font-size: clamp(30px, 5.21vw, 75px);
+  line-height: 0.98;
+  letter-spacing: -0.018em;
+}
+.whyTitle em {
+  font-style: normal;
+  color: #a5701f;
+}
+
+.whyCopy {
+  margin-top: clamp(10px, 1.01vw, 15px);
+  display: grid;
+  gap: clamp(8px, 0.76vw, 11px);
+  width: min(100%, clamp(280px, 52.1vw, 750px));
+}
+.whyCopy p {
+  color: #2b3644;
+  font-size: clamp(14px, 1.34vw, 19px);
+  line-height: 1.4;
+}
+
+.stats {
+  margin-top: clamp(16px, 1.51vw, 22px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(8px, 0.76vw, 11px);
+}
+.stat {
+  background: #fffdfa;
+  border: 1px solid rgba(201, 150, 46, 0.26);
+  border-radius: clamp(7px, 0.67vw, 10px);
+  padding: clamp(11px, 0.92vw, 13px) clamp(7px, 0.59vw, 8px) clamp(13px, 1.09vw, 16px);
+  text-align: center;
+  box-shadow: 0 clamp(4px, 0.84vw, 12px) clamp(10px, 2vw, 29px) -10px rgba(70, 48, 14, 0.6);
+}
+.statIcon {
+  display: block;
+  margin: 0 auto clamp(5px, 0.42vw, 6px);
+  width: clamp(22px, 2.02vw, 29px);
+  height: clamp(22px, 2.02vw, 29px);
+  color: #a5701f;
+}
+.statLead {
+  font-family: var(--font-caps);
+  font-weight: 700;
+  font-size: clamp(14px, 1.29vw, 19px);
+  line-height: 1.16;
+  color: #15171b;
+}
+.statLead b {
+  display: block;
+  font-weight: 700;
+  font-size: clamp(17px, 1.78vw, 26px);
+  line-height: 1.08;
+  color: #b07c24;
+}
+.statNote {
+  margin-top: clamp(6px, 0.55vw, 8px);
+  padding-top: clamp(6px, 0.55vw, 8px);
+  border-top: 1px solid rgba(201, 150, 46, 0.5);
+  color: #38414e;
+  font-size: clamp(11px, 1.04vw, 15px);
+  line-height: 1.34;
+}
+
+.whyFoot {
+  margin: clamp(12px, 1.18vw, 17px) auto 0;
+  width: min(100%, clamp(300px, 57.9vw, 834px));
+  font-family: var(--font-caps);
+  font-size: clamp(14px, 1.31vw, 19px);
+  line-height: 1.32;
+  color: #1d2027;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .why {
+    padding: clamp(28px, 7vw, 46px) 0 clamp(24px, 6vw, 40px);
+  }
+  .whyPhoto {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: clamp(260px, 72vw, 420px);
+    margin-bottom: 18px;
+    background-position: center 18%;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .whyContent,
+  .whyCopy {
+    width: 100%;
+  }
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+@media (max-width: 460px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
 
 .who {
   padding: clamp(60px, 7vw, 110px) 24px clamp(40px, 5vw, 80px);

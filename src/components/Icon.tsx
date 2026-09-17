@@ -104,6 +104,22 @@ const paths = {
       <path d="M9 4.5V3h6v1.5M9 13l2 2 4-4" />
     </>
   ),
+  microphone: (
+    <>
+      <rect x="8.6" y="1.9" width="6.8" height="12" rx="3.4" fill="currentColor" stroke="none" />
+      <path d="M4.8 11.2a7.2 7.2 0 0 0 14.4 0" />
+      <path d="M12 18.4V22" />
+      <path d="M8.3 22h7.4" />
+    </>
+  ),
+  stage: (
+    <>
+      <path d="M2.4 3.4h19.2v3.1H2.4z" fill="currentColor" stroke="none" />
+      <path d="M4.4 6.5h15.2v9.9H4.4z" />
+      <path d="M4.4 6.5c1.4 1.5 2.6 1.5 4 0 1.4 1.5 2.6 1.5 3.8 0 1.4 1.5 2.6 1.5 3.9 0 1.2 1.5 2.4 1.5 3.5 0" />
+      <path d="M6.1 16.4v4.2M17.9 16.4v4.2" />
+    </>
+  ),
   instagram: (
     <>
       <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
