@@ -151,7 +151,7 @@ export default function HomePage() {
         <section className={styles.who}>
           <div className={styles.whoInner}>
             <Image
-              src="/landing/who-photo.webp"
+              src="/landing/who-photo-ecb2ff68.webp"
               alt={who.photoAlt}
               width={850}
               height={896}
@@ -195,7 +195,7 @@ export default function HomePage() {
         <section className={styles.meetWrap}>
           <div className={styles.meetCard}>
             <Image
-              src="/landing/meet-katrina.webp"
+              src="/landing/meet-katrina-c6503f1f.webp"
               alt={meet.photoAlt}
               width={942}
               height={1096}
@@ -219,7 +219,7 @@ export default function HomePage() {
             {gallery.map((photo, i) => (
               <li key={photo.id} className={i < 3 ? styles.galleryLarge : styles.gallerySmall}>
                 <Image
-                  src={`/landing/gallery-${photo.id}.webp`}
+                  src={`/landing/${photo.file}`}
                   alt={photo.alt}
                   width={photo.w}
                   height={photo.h}
@@ -284,10 +284,10 @@ function HeroArt() {
   const alt = landing.hero.imageAlt;
   const {
     props: { srcSet: desktop },
-  } = getImageProps({ alt, src: "/landing/hero-desktop.webp", width: 1920, height: 1077, sizes: "100vw" });
+  } = getImageProps({ alt, src: "/landing/hero-desktop-90650878.webp", width: 1920, height: 1077, sizes: "100vw" });
   const {
     props: { srcSet: mobile, ...rest },
-  } = getImageProps({ alt, src: "/landing/hero-mobile.webp", width: 941, height: 1672, sizes: "100vw", priority: true });
+  } = getImageProps({ alt, src: "/landing/hero-mobile-9c6ec4bd.webp", width: 941, height: 1672, sizes: "100vw", priority: true });
   return (
     <picture className={styles.heroArt}>
       <source media="(min-width: 761px)" srcSet={desktop} />
@@ -304,7 +304,7 @@ function PressLogos({ className = "" }: { className?: string }) {
         {landing.press.map((logo) => (
           <li key={logo.id}>
             <Image
-              src={`/landing/press-${logo.id}.webp`}
+              src={`/landing/${logo.file}`}
               alt={logo.name}
               width={logo.w}
               height={logo.h}

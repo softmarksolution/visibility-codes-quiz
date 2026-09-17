@@ -441,7 +441,7 @@
   position: absolute;
   inset: 0 0 0 auto;
   width: calc(clamp(240px, 33.92vw, 488px) + max(0px, (100vw - 1440px) / 2));
-  background: url("/landing/why-photo.webp") right center / cover no-repeat;
+  background: url("/landing/why-photo-b6ae4364.webp") right center / cover no-repeat;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 clamp(56px, 6.72vw, 97px));
   mask-image: linear-gradient(90deg, transparent 0, #000 clamp(56px, 6.72vw, 97px));
 }
