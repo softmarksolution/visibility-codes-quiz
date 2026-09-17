@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Icon, type IconName } from "@/components/Icon";
 import { HeaderBanner, SiteFooter } from "@/components/SiteChrome";
-import { PILLAR_DISPLAY_ORDER, badgeTone, brand, masterclass, pillarCopy, referral, resultsCopy } from "@/content/site";
+import { PILLAR_DISPLAY_ORDER, badgeTone, masterclass, pillarCopy, referral, resultsCopy } from "@/content/site";
 import { googleCalendarUrl } from "@/lib/calendar";
 import { PILLAR_NAMES, type PillarId } from "@/lib/quiz/questions";
 import { decodeReportCode } from "@/lib/quiz/reportCode";
@@ -149,12 +149,10 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
           </div>
           <div className={styles.bonus}>
             <Image src="/brand/icon-gift.webp" alt="" width={96} height={96} className={styles.blendIcon} />
-            <p>
-              {bonus.before}
-              <a href={brand.websiteUrl} className={styles.goldLink}>
-                {bonus.link}
-              </a>
-            </p>
+            <p>{bonus.before}</p>
+            <Link href={`/checkout?r=${encodeURIComponent(reportCode)}`} className={styles.bonusCta}>
+              {bonus.button}
+            </Link>
           </div>
         </section>
 

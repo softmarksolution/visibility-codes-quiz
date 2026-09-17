@@ -1,0 +1,99 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 64px) 20px clamp(40px, 5vw, 72px);
+  background: var(--cream);
+  color: var(--body);
+  text-align: center;
+}
+.eyebrow {
+  color: var(--gold-text);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.title {
+  margin-top: 8px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(27px, 3.4vw, 42px);
+  line-height: 1.16;
+  color: var(--ink);
+}
+.body {
+  margin: 12px auto 0;
+  max-width: 54ch;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.form {
+  margin: clamp(20px, 3vw, 30px) auto 0;
+  display: grid;
+  gap: 13px;
+  max-width: 400px;
+  text-align: left;
+}
+.field > span {
+  display: block;
+  margin-bottom: 5px;
+  color: #2b3644;
+  font-size: 13px;
+  font-weight: 500;
+}
+.field input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--field-border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 15px;
+}
+.field input:focus {
+  outline: 0;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 150, 46, 0.18);
+}
+.error {
+  color: #b4413a;
+  font-size: 13px;
+}
+.button {
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #e8c46a, #c99a33);
+  color: #1a1407;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+.done {
+  margin-top: clamp(20px, 3vw, 30px);
+  padding: clamp(20px, 2.6vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.doneTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(20px, 2.1vw, 26px);
+  font-weight: 700;
+  color: var(--ink);
+}
+.back {
+  margin-top: 14px;
+  font-size: 13.5px;
+}
+.back a {
+  color: var(--muted);
+}

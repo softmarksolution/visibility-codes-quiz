@@ -152,6 +152,69 @@ export const unlock = {
   genericError: "Something went wrong. Please try again.",
 };
 
+/* Check-out and thank-you copy, from the client's
+   "VISIBILITY ACTION PLAN - CHECK OUT PAGE COPY.docx". That document opens
+   "CHECK OUT PAGE COPY - $35 USD (USED WHEN THEY CLICK BUTTON ON RESULTS PAGE)"
+   and marks the Masterclass waitlist "ADD TO YOUR PURCHASE - MUST SAY FREE", so
+   the plan is the paid item and the waitlist is the free add-on. */
+export const checkoutCopy = {
+  eyebrow: "Your personalised next step",
+  title: "Your Personalised Visibility Action Plan",
+  priceCents: 3500,
+  currency: "USD",
+  inside: "Inside, you’ll get:",
+  bullets: [
+    "A guided AI strategy prompt tailored to your biggest visibility gap",
+    "Three personalised strategy options to help you identify your strongest path forward",
+    "Your personalised focus strategy showing you what to prioritise and where to focus",
+    "Practical worksheets to turn your insights into clear decisions and next steps",
+    "Your activation plan so you know exactly what action to take next",
+    "A one week action plan to help you start putting your strategy into motion immediately",
+    "A progress check to make sure your plan is clear, realistic and ready to execute",
+  ],
+  closing:
+    "Walk away knowing exactly what to focus on, what to do next and how to start moving your visibility forward.",
+  addOnLabel: "Add to your purchase",
+  addOnFree: "Free",
+  addOnTitle: "The Visibility Codes Masterclass",
+  addOnSubtitle: "Priority Waitlist Access",
+  addOnBody:
+    "Learn the exact strategies that got me chosen for red carpets, major stages and to host alongside some of the world’s biggest names, even when I wasn’t the obvious choice.",
+  addOnJoin:
+    "Join the Priority Waitlist FREE to be first to know when doors open, plus receive early updates, priority bonuses and special launch pricing available only to Priority Waitlist members.",
+  payButton: (amount: string) => `Pay ${amount}`,
+  buyButton: "Complete my purchase",
+  coverAlt: (edition: string) => `Visibility Action Plan, ${edition} Edition`,
+  personalised: "Personalised to your result",
+  noResultTitle: "We could not find your results",
+  noResultBody:
+    "Your Action Plan is built around the visibility gap your assessment finds, so we need your results first — it takes about 3 minutes.",
+  noResultButton: "Take the 3-minute assessment",
+  backToResults: "← Back to my results",
+  terms: "By paying you agree to the",
+  termsLink: "Terms of Purchase",
+};
+
+export const thankYouCopy = {
+  paidTitle: "Your personalised Visibility Action Plan is ready.",
+  paidBody:
+    "Your purchase confirmation and a copy of your Action Plan are on their way to your inbox.",
+  downloadButton: "Download my Action Plan",
+  byEmail: "Your Action Plan is on its way to your inbox — check your email in the next few minutes.",
+  waitlistCardTitle: "You’re on the Priority Waitlist",
+  waitlistCardBody:
+    "You’ll be first to know when doors open, with early updates, priority bonuses and launch pricing reserved for waitlist members.",
+  joinTitle: "Join the Priority Waitlist — free",
+  joinBody:
+    "Be first to know when The Visibility Codes Masterclass doors open, plus early updates, priority bonuses and special launch pricing.",
+  joinButton: "Join the priority waitlist free",
+  notPaidTitle: "Your results are saved.",
+  notPaidBody:
+    "Your Visibility Action Plan is still available whenever you are ready for it.",
+  notPaidButton: "See my Action Plan",
+  backHome: "Back to the home page",
+};
+
 export const resultsCopy = {
   eyebrow: "Your personalised visibility results",
   intro: ["Your assessment has identified how effectively you are currently positioned to be seen, recognised, remembered and ", "chosen", " for opportunities."],
@@ -178,9 +241,14 @@ export const resultsCopy = {
   strongestPanelTitle: "Where you're strongest",
   gapPanelTitle: "Your biggest visibility gap",
   quickActionTitle: "Your quick action step",
+  /* This previously read "one of the bonuses you'll receive when you join The
+     Visibility Codes Masterclass", which contradicts the client's check-out
+     copy: "CHECK OUT PAGE COPY - $35 USD (USED WHEN THEY CLICK BUTTON ON
+     RESULTS PAGE)". The plan is the paid item; the Masterclass waitlist is the
+     free add-on to it. */
   bonus: (pillar: string) => ({
-    before: `The full ${pillar} Action Plan (with deeper exercises and prompts) is one of the bonuses you'll receive when you join `,
-    link: "The Visibility Codes Masterclass.",
+    before: `Your full ${pillar} Action Plan goes deeper — personalised strategy options, worksheets, a one-week plan and a progress check, built around this result.`,
+    button: "Access my Action Plan",
   }),
   reportLinkText: "Want your results on another device? This link opens your exact report anywhere.",
   reportLinkButton: "Copy my report link",

@@ -1,0 +1,477 @@
+/* Check-out page. Layout follows the client's check-out copy document: the plan
+   cover on the left, the price, what's inside, and the free Masterclass
+   waitlist add-on on the right. */
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 56px) 20px clamp(40px, 5vw, 72px);
+  background: var(--cream);
+  color: var(--body);
+}
+
+.head {
+  text-align: center;
+  margin-bottom: clamp(20px, 2.6vw, 34px);
+}
+
+.eyebrow {
+  color: var(--gold-text);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: 8px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(27px, 3.3vw, 42px);
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.headBody {
+  margin: 10px auto 0;
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 44px);
+  align-items: start;
+}
+
+/* ---------- plan cover ---------- */
+
+.art {
+  margin: 0;
+  text-align: center;
+}
+
+.art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.art figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* No result to personalise, so the cover is dimmed and the price is not shown
+   as a live offer. */
+.noResult .art img {
+  filter: grayscale(1) brightness(0.9);
+  opacity: 0.5;
+}
+
+/* ---------- panel ---------- */
+
+.panel {
+  padding: clamp(20px, 2.4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.price b {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 3.4vw, 44px);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.price span {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.price em {
+  margin-left: auto;
+  color: var(--muted);
+  font-style: normal;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.inside {
+  margin-top: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.bullets {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 9px;
+}
+
+.bullets li {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 9px;
+  align-items: start;
+  font-size: 14.5px;
+  line-height: 1.42;
+}
+
+.bullets svg {
+  margin-top: 2px;
+  color: var(--gold-text);
+}
+
+.closing {
+  margin-top: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+
+/* ---------- free add-on ---------- */
+
+.addOn {
+  margin-top: 18px;
+  padding: 14px 16px 16px;
+  border: 1px solid rgba(201, 163, 74, 0.45);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #fffdf6, #fdf8ec);
+}
+
+.addOnHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.addOnHead input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--gold-button);
+}
+
+.addOnLabel {
+  color: var(--gold-text);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.addOnFree {
+  margin-left: auto;
+  color: var(--gold-text);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.addOnTitle {
+  margin-top: 8px;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.addOnSubtitle {
+  color: var(--gold-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.addOnBody {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+/* ---------- buttons ---------- */
+
+.buy,
+.pay {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #e8c46a, #c99a33);
+  color: #1a1407;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.buy:hover,
+.pay:hover {
+  filter: brightness(1.05);
+}
+
+.pay:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.back {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 13.5px;
+}
+
+.back a {
+  color: var(--muted);
+}
+
+.noResultLead {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ---------- payment dialog ---------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(11, 11, 11, 0.66);
+  cursor: pointer;
+}
+
+.dialog {
+  position: relative;
+  z-index: 1;
+  width: min(480px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  padding: 22px 24px 20px;
+  border-radius: 16px;
+  background: var(--white);
+}
+
+.demoBanner {
+  margin-bottom: 12px;
+  padding: 7px 10px;
+  border: 1px solid #e0bc5c;
+  border-radius: 8px;
+  background: #fff3d0;
+  color: #7a5512;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.dialogTitle {
+  font-family: var(--font-serif);
+  font-size: 25px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.summary {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(201, 163, 74, 0.32);
+  border-radius: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.summary p {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.summaryFree b {
+  color: var(--gold-text);
+}
+
+.summaryTotal {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(201, 163, 74, 0.3);
+}
+
+.summaryTotal b {
+  font-family: var(--font-serif);
+  font-size: 19px;
+}
+
+.form {
+  margin-top: 16px;
+  display: grid;
+  gap: 13px;
+}
+
+.field > span {
+  display: block;
+  margin-bottom: 5px;
+  color: #2b3644;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.field input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--field-border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 15px;
+}
+
+.field input:focus {
+  outline: 0;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 150, 46, 0.18);
+}
+
+.field em {
+  display: block;
+  margin-top: 5px;
+  color: #b4413a;
+  font-style: normal;
+  font-size: 12.5px;
+}
+
+.cardMount {
+  padding: 12px 14px;
+  border: 1px solid var(--field-border);
+  border-radius: 8px;
+  min-height: 46px;
+}
+
+/* ---------- demo card ----------
+   Dashed amber so it can never be mistaken for the live processor field, which
+   is a plain iframe. */
+
+.demoCard {
+  display: grid;
+  grid-template-columns: 1fr 92px 74px;
+  gap: 8px;
+}
+
+.demoCard input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px dashed #d8be7a;
+  border-radius: 8px;
+  background: #fbf6e8;
+  font: inherit;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+
+.demoSm {
+  text-align: center;
+}
+
+.demoPick {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.demoPick button {
+  padding: 5px 10px;
+  border: 1px solid #e0cfa4;
+  border-radius: 999px;
+  background: #fff;
+  color: #7a5512;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.demoPick button:hover {
+  background: #fbf6e8;
+  border-color: var(--gold);
+}
+
+.demoNote {
+  margin-top: 7px;
+  color: #8a7a52;
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+.secure,
+.terms {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .art {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .demoCard {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .demoNum {
+    grid-column: 1 / -1;
+  }
+}
