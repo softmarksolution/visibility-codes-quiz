@@ -972,7 +972,13 @@
 /* The Action Plan is the paid next step from this page, per the client's
    check-out copy, so the bonus block ends in a call to action rather than an
    outbound link. */
+/* .bonus is a two-column grid built for [icon][text]. As a third child this
+   button lands in the NEXT row's FIRST column — the 96px icon track — which
+   squeezed it into a four-line tower. Put it under the text instead, and do not
+   let the grid stretch it to the full track. */
 .bonusCta {
+  grid-column: 2;
+  justify-self: start;
   display: inline-block;
   margin-top: 12px;
   padding: 12px 22px;
@@ -984,8 +990,19 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .bonusCta:hover {
   filter: brightness(1.05);
+}
+
+/* This block lives after the media queries above, so its mobile reset has to
+   live here too — an equal-specificity rule earlier in the file would simply be
+   overridden by the base rule below it. At 640px .bonus collapses to a single
+   column, so column 2 no longer exists. */
+@media (max-width: 640px) {
+  .bonusCta {
+    grid-column: 1;
+  }
 }
