@@ -15,3 +15,6 @@ test-results/
 
 npm-debug.log*
 .DS_Store
+
+# the client's paid Action Plan PDFs — never commit these
+static-site/plans/
