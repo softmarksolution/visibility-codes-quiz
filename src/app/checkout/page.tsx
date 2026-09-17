@@ -43,7 +43,10 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Sea
               sizes="(max-width: 860px) 60vw, 360px"
               priority
             />
-            <figcaption>{checkoutCopy.personalised}</figcaption>
+            <figcaption>
+              {edition && <b>{checkoutCopy.editionLabel(edition)}</b>}
+              {checkoutCopy.personalised}
+            </figcaption>
           </figure>
 
           <Purchase

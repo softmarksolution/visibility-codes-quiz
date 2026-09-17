@@ -64,11 +64,22 @@
 
 .art figcaption {
   margin-top: 10px;
+  display: grid;
+  gap: 3px;
   color: var(--muted);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+.art figcaption b {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--gold-text);
 }
 
 /* No result to personalise, so the cover is dimmed and the price is not shown

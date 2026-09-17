@@ -219,6 +219,10 @@ export const checkoutCopy = {
   payButton: (amount: string) => `Pay ${amount}`,
   buyButton: "Complete my purchase",
   coverAlt: (edition: string) => `Visibility Action Plan, ${edition} Edition`,
+  /* Which edition the buyer is getting. Without this the page said only
+     "personalised to your result" and never named the edition, so the first
+     mention of "Direction Edition" was inside the payment dialog. */
+  editionLabel: (edition: string) => `${edition} Edition`,
   personalised: "Personalised to your result",
   noResultTitle: "We could not find your results",
   noResultBody:
