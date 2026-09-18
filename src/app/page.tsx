@@ -134,9 +134,9 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* WHY THE VISIBILITY CODES WORK — the photo is a cut of the client's
-            master at the exact aspect of its CSS box, so `cover` crops nothing;
-            at the wrong aspect it clipped the top of Katrina's head. */}
+        {/* WHY THE VISIBILITY CODES WORK — the photo is the layout's own art
+            band, cut with its beige wash baked in so it dissolves into the
+            text field the way the 18.9.26 layout blends the two halves. */}
         <section className={styles.why}>
           <div className={styles.whyPhoto} aria-label={why.photoAlt} role="img" />
           <div className={styles.whyInner}>

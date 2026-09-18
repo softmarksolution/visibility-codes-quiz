@@ -603,15 +603,27 @@
   padding: clamp(30px, 4.58vw, 88px) 0 clamp(26px, 4.58vw, 88px);
   color: #2b3644;
 }
-/* The crop is cut at this box's exact aspect so `cover` trims nothing — at the
-   wrong aspect it scaled by width and clipped the top of Katrina's head. */
+/* The cut is the layout's own photo band (x 1128..1920 of 1920, the full
+   section height 2187..3277) WITH its beige-over-photo wash baked in — the
+   "Award" letters ghosting through the wash are part of the art. The box takes
+   its width from the section height at the cut's aspect, so the art always
+   fills it edge-to-edge; the old `auto 100%` sizing left a gap whose raw edge
+   drew a hard vertical line whenever the section outgrew the crop's aspect. */
 .whyPhoto {
   position: absolute;
   inset: 0 0 0 auto;
-  width: clamp(240px, 53.1vw, 1020px);
-  background: url("/landing/why-photo-9764ed3d.webp") right center / auto 100% no-repeat; /* fit by height, anchored right, as the design places it */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 clamp(120px, 16.7vw, 320px));
-  mask-image: linear-gradient(90deg, transparent 0, #000 clamp(120px, 16.7vw, 320px));
+  width: auto;
+  aspect-ratio: 792 / 1090;
+  max-width: 47vw; /* text column ends at 58.5vw; keep the opaque zone clear of it */
+  /* max-width transfers through the aspect-ratio into a max-HEIGHT, which would
+     pin the box short of the section bottom on squarer laptop viewports; this
+     forces full height, and `cover` then crops the cut's washed left instead. */
+  min-height: 100%;
+  background: url("/landing/why-photo-d30fa84d.webp") right center / cover no-repeat;
+  /* Only dissolves the cut's left edge into the field — the design's wide
+     photo-to-beige blend itself is baked into the cut. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 clamp(70px, 7vw, 135px));
+  mask-image: linear-gradient(90deg, transparent 0, #000 clamp(70px, 7vw, 135px));
 }
 .whyInner {
   position: relative;
@@ -777,10 +789,10 @@
     position: relative;
     inset: auto;
     width: 100%;
-    height: clamp(260px, 72vw, 420px);
+    max-width: none;
+    height: clamp(260px, 72vw, 420px); /* explicit height beats the base aspect-ratio */
     margin-bottom: 18px;
     background-position: center 18%;
-    background-size: cover; /* the base's "auto 100%" left a narrow strip here */
     -webkit-mask-image: none;
     mask-image: none;
   }
