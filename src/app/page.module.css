@@ -295,10 +295,6 @@
   white-space: nowrap;
 }
 
-.chevron {
-  display: none;
-}
-
 /* The journey pill is mobile only — the FINAL desktop artwork already carries
    this treatment. */
 .journey {
@@ -1403,65 +1399,17 @@
     font-size: 13.5px;
   }
 
-  /* Measured off the client's mobile master ("2. MOBILE VIEW/1._", 941px wide
-     standing for a 390px screen, so 1px there is 0.4145px here):
-
-       button box    x 107..834, y 1348..1453  ->  301.3 x 43.5
-       corner radius ~10px                     ->  4.2
-       label ink     464px wide, cap 29px      ->  192.3 wide, cap 12.0
-       label-chevron gap 26px                  ->  10.8  (.btn-gold's 10px gap)
-
-     Weight and size were settled by rendering candidates at deviceScaleFactor 3
-     and measuring the label against the master crop at the same scale
-     (master: 574 wide, cap 36, median stem 6):
-
-       600 / 16.0px / 0.02em   564 wide, cap 33, stem 6
-       700 / 16.0px / 0.02em   572 wide, cap 33, stem 7   too heavy
-       600 / 16.5px / 0.01em   573 wide, cap 34, stem 6   <- this
-
-     So the master is SemiBold, which the button already was. What made it read
-     thin before was the tracking: 0.3em is ten times the master's, and it is
-     also what pushed a 261px label into a 255px box and clipped it. */
+  /* The mobile button uses the same gold-foil artwork face as desktop (the
+     previous drawn button, measured off the "2. MOBILE VIEW/1._" master, is
+     superseded); the label stays hidden for screen readers, the chevron gone. */
   .heroButton {
     width: 94.7%;
-    height: 43.5px;
+    height: auto;
     min-height: 0;
     margin-top: 14px;
-    padding-block: 0;
-    padding-inline: 10px;
+    padding: 0;
     border-radius: 4px;
-    /* Sampled down the master's button at x=300: pale yellow on the top edge,
-       gold through the middle, amber at the foot, with the bottom edge lifting
-       again. .btn-gold's three-stop ramp is flatter and lighter than this. */
-    background: linear-gradient(
-      180deg,
-      #fdf791 0%,
-      #fcde71 20%,
-      #fabf61 50%,
-      #dd8e35 80%,
-      #ea9838 100%
-    );
-    font-size: 16.5px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-  }
-
-  /* Mobile keeps the drawn button: hide the artwork, restore the live label. */
-  .heroButtonArt {
-    display: none;
-  }
-
-  .heroButtonLabel {
-    position: static;
-    width: auto;
-    height: auto;
-    overflow: visible;
-    clip-path: none;
-  }
-
-  .chevron {
-    display: inline-flex;
-    align-items: center;
+    background: none;
   }
 
   .journey {
