@@ -55,11 +55,14 @@ export default function HomePage() {
                 {/* Desktop face: the client's gold-foil button artwork (label
                     baked in); the live label below stays for screen readers
                     and becomes the visible mobile button. */}
+                {/* Rebuilt from the supplied image: interior flattened opaque and
+                    the alpha cut as a clean rounded rect, because the original's
+                    white-matte edge fringe rendered as a grey rim when scaled. */}
                 <Image
-                  src="/landing/hero-button-fa5e27ed.webp"
+                  src="/landing/hero-button-73ff0acf.webp"
                   alt=""
-                  width={1939}
-                  height={297}
+                  width={1935}
+                  height={294}
                   priority
                   aria-hidden="true"
                   className={styles.heroButtonArt}
