@@ -393,3 +393,19 @@ test("shows a friendly message for an invalid report link", async ({ page }) => 
   await expect(page.getByRole("heading", { name: "This report link isn't valid" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Take the quiz" })).toHaveAttribute("href", "/quiz");
 });
+
+test("the opt-in pop-up never pulls focus out of a field you have already reached", async ({ page }) => {
+  // The pop-up puts the cursor in the first field as a convenience. It used to do
+  // that on a 60ms timer, which landed *after* anyone who had gone straight for a
+  // later field: focus jumped back to the name box mid-word, the rest of what
+  // they typed went in there, and the form then refused to submit because the
+  // field they thought they had filled was empty.
+  await page.goto("/");
+  await page.getByRole("button", { name: /start assessment/i }).click();
+
+  // A visitor who goes straight for the phone box and types at a human pace.
+  await page.getByPlaceholder("Phone").pressSequentially("0400000000", { delay: 20 });
+  await expect(page.getByPlaceholder("Phone")).toHaveValue("0400000000");
+  await expect(page.getByPlaceholder("Phone")).toBeFocused();
+  await expect(page.getByPlaceholder("Name")).toHaveValue("");
+});
