@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
 import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -8,15 +7,6 @@ import StartQuizLink from "@/components/StartQuizLink";
 import { brand, landing } from "@/content/site";
 import RefCapture from "./RefCapture";
 import styles from "./page.module.css";
-
-// Montserrat is the body face on the brand's master typography card; headings use
-// Playfair Display, which layout.tsx already loads for every page.
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-montserrat",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "The Visibility Codes | Get Your Visibility Score Free",
@@ -27,7 +17,7 @@ export default function HomePage() {
   const { hero, score, why, who, gaps, meet, gallery, final } = landing;
 
   return (
-    <div className={`${styles.page} ${montserrat.variable}`}>
+    <div className={styles.page}>
       <main>
         <section className={styles.hero}>
           <div className={styles.heroInner}>
@@ -39,8 +29,20 @@ export default function HomePage() {
               <p className={styles.heroTagline}>{hero.tagline}</p>
               <StartQuizLink className={`${styles.brightButton} ${styles.heroButton}`}>
                 {hero.button}
+                {/* Drawn, not typed. The master's chevron stands the full cap
+                    height of the label — 6.7 x 12.3 at a 2px stroke — and no
+                    glyph reaches that: "›" renders half-height and Montserrat's
+                    ">" sits on the math axis at 23/36 of the cap. */}
                 <span className={styles.chevron} aria-hidden="true">
-                  ›
+                  <svg viewBox="0 0 7 12" width="7" height="12" fill="none">
+                    <path
+                      d="M1 1l5 5-5 5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </span>
               </StartQuizLink>
             </div>
@@ -151,10 +153,10 @@ export default function HomePage() {
         <section className={styles.who}>
           <div className={styles.whoInner}>
             <Image
-              src="/landing/who-photo-ecb2ff68.webp"
+              src="/landing/who-photo-23e7fa6d.webp"
               alt={who.photoAlt}
-              width={850}
-              height={896}
+              width={1700}
+              height={1792}
               sizes="(max-width: 1100px) 100vw, 44vw"
               className={styles.whoPhoto}
             />
@@ -255,7 +257,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className={styles.footerBrand}>
-            <Image src="/brand/footer-logo-v2.webp" alt="The Visibility Codes" width={231} height={140} />
+            <Image src="/brand/footer-logo-v2.webp" alt="The Visibility Codes" width={260} height={157} />
             <p>{brand.tagline}</p>
           </div>
           <ul className={styles.footerLinks}>
@@ -284,7 +286,7 @@ function HeroArt() {
   const alt = landing.hero.imageAlt;
   const {
     props: { srcSet: desktop },
-  } = getImageProps({ alt, src: "/landing/hero-desktop-90650878.webp", width: 1920, height: 1077, sizes: "100vw" });
+  } = getImageProps({ alt, src: "/landing/hero-desktop-556377b9.webp", width: 1920, height: 1077, sizes: "100vw" });
   const {
     props: { srcSet: mobile, ...rest },
   } = getImageProps({ alt, src: "/landing/hero-mobile-a8cd2f4a.webp", width: 941, height: 828, sizes: "100vw", priority: true });
@@ -308,7 +310,7 @@ function PressLogos({ className = "" }: { className?: string }) {
               alt={logo.name}
               width={logo.w}
               height={logo.h}
-              style={{ width: Math.round(logo.w * 1.2), height: "auto" }}
+              style={{ "--dw": logo.dw, height: "auto" } as React.CSSProperties}
             />
           </li>
         ))}
