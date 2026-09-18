@@ -52,6 +52,18 @@ const paths = {
       <path d="M15.7 14.3A5 5 0 0 1 21.5 19" />
     </>
   ),
+  /* The landing stat tiles in "LAYOUT - FINAL WEB DESIGN - 18.9.26" carry solid
+     silhouette icons, unlike the line icons everywhere else. */
+  peopleFill: (
+    <g fill="currentColor" stroke="none">
+      <circle cx="5.9" cy="8.8" r="2.6" />
+      <path d="M1.2 19.4a4.8 4.8 0 0 1 7.2-4.1 7.7 7.7 0 0 0-2.7 4.1z" />
+      <circle cx="18.1" cy="8.8" r="2.6" />
+      <path d="M22.8 19.4a4.8 4.8 0 0 0-7.2-4.1 7.7 7.7 0 0 1 2.7 4.1z" />
+      <circle cx="12" cy="7.2" r="3.5" />
+      <path d="M5.7 20.6a6.3 6.3 0 0 1 12.6 0z" />
+    </g>
+  ),
   person: (
     <>
       <circle cx="12" cy="8" r="4" />
@@ -136,13 +148,17 @@ const paths = {
       <path d="M8.3 22h7.4" />
     </>
   ),
+  /* A hosted screen with an audience in front, per the "12,000 people" tile in
+     the 18.9.26 layout. */
   stage: (
-    <>
-      <path d="M2.4 3.4h19.2v3.1H2.4z" fill="currentColor" stroke="none" />
-      <path d="M4.4 6.5h15.2v9.9H4.4z" />
-      <path d="M4.4 6.5c1.4 1.5 2.6 1.5 4 0 1.4 1.5 2.6 1.5 3.8 0 1.4 1.5 2.6 1.5 3.9 0 1.2 1.5 2.4 1.5 3.5 0" />
-      <path d="M6.1 16.4v4.2M17.9 16.4v4.2" />
-    </>
+    <g fill="currentColor" stroke="none">
+      <path d="M2.6 3.2h18.8v9.2H2.6z" />
+      <path d="M4.7 12.4h1.5v4.4H4.7zM17.8 12.4h1.5v4.4h-1.5z" />
+      <circle cx="7.3" cy="16.9" r="1.8" />
+      <circle cx="16.7" cy="16.9" r="1.8" />
+      <circle cx="12" cy="16.4" r="2.1" />
+      <path d="M3.9 22.2a3.5 3.5 0 0 1 6.8 0zM8.6 22.2a3.6 3.6 0 0 1 6.8 0zM13.3 22.2a3.5 3.5 0 0 1 6.8 0z" />
+    </g>
   ),
   instagram: (
     <>

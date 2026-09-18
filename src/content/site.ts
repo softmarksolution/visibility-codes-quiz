@@ -26,7 +26,9 @@ export const brand = {
 export const landing = {
   hero: {
     title: "Why Aren’t You Getting The Opportunities You Know You Deserve?",
-    body: "In just 3 minutes, discover what is stopping you from standing out, being seen and being chosen, and what to shift next.",
+    // "\n" marks the layout's own line breaks; they render as <br> on desktop
+    // (see withBreaks in page.tsx) and are ignored on phones.
+    body: "In just 3 minutes, discover what\nis stopping you from standing out,\nbeing seen and being chosen,\nand what to shift next.",
     tagline: "Stand out. Be seen. Be chosen.",
     button: "Start assessment",
     journey: ["Overlooked", "Recognised", "Chosen"],
@@ -55,10 +57,10 @@ export const landing = {
     body: "The first step to improving your visibility is knowing exactly where your gap is. Take this 3-minute Visibility Assessment to uncover what may be keeping you from standing out, being seen, and being chosen for the opportunities you want.",
     bullets: [
       { icon: "target", strong: "Discover your Visibility Score,", rest: " from 0 to 100, and what it means." },
-      { icon: "search", strong: "Identify your primary visibility gap", rest: " and the area that needs the most attention." },
-      { icon: "clipboard", strong: "Get your visibility category", rest: " and personalised next steps you can apply straight away." },
+      { icon: "search", strong: "Identify your primary visibility gap", rest: " and the area\nthat needs the most attention." },
+      { icon: "clipboard", strong: "Get your visibility category", rest: " and personalised next steps\nyou can apply straight away." },
     ],
-    after: "You’ll receive your score, primary blocker, strongest area, and next steps to help you move forward with clarity.",
+    after: "You’ll receive your score, primary blocker, strongest area,\nand next steps to help you move forward with clarity.",
     button: "Get your free score",
     gaugeTitle: "Your visibility score",
     sample: 88,
@@ -73,39 +75,41 @@ export const landing = {
     titleStart: "You cannot build visibility",
     titleGold: "waiting to be discovered.",
     photoAlt: "Katrina Kavvalos on the TikTok Awards red carpet",
+    /* Word for word from the 18.9.26 layout, which also drops the old closing
+       clause "even before you feel like the obvious choice." */
     paragraphs: [
-      "I have been chosen for opportunities, stages and rooms I was not the most qualified for on paper. Not because I was better than everyone else, but because I learned how to position myself to be seen, remembered and chosen.",
-      "At the same time, I have seen incredibly talented, experienced and qualified people stay overlooked simply because they were not visible in the right way.",
-      "You can have the experience, the talent and the expertise, and still be missed. Visibility changes when you learn how to position yourself so the right people notice you, remember you and choose you, even before you feel like the obvious choice.",
+      "I have been chosen for opportunities, stages and rooms I was not the most\nqualified for on paper. Not because I was better than everyone else, but because\nI learned how to position myself to be seen, remembered and chosen.",
+      "At the same time, I have seen incredibly talented, experienced and qualified\npeople stay overlooked simply because they were not visible in the right way.",
+      "You can have the experience, the talent and the expertise, and still be missed.\nVisibility changes when you learn how to position yourself so the right people\nnotice you, remember you and choose you.",
     ],
     stats: [
       { icon: "instagram", lead: "600,000+", rest: "followers on Instagram",
         note: "Built through visibility, positioning and content that gets remembered." },
-      { icon: "people", lead: "Almost 1 million", rest: "across social media",
+      { icon: "peopleFill", lead: "Almost 1 million", rest: "across social media",
         note: "A personal brand grown through strategic positioning and visibility." },
       { icon: "microphone", lead: "Chosen for major", rest: "media and red carpets",
         note: "Including interviewing global celebrities and entertainment leaders." },
       { icon: "stage", lead: "12,000 people", rest: "Chosen to host in front of", leadAfter: true,
         note: "Alongside world class speakers such as Tony Robbins, Steven Bartlett, Gary Brecka and more." },
     ],
-    footnote: "The Visibility Codes are built from the same strategies I have used in real life to create recognition, credibility, proximity and opportunity.",
+    footnote: "The Visibility Codes are built from the same strategies I have used in real life\nto create recognition, credibility, proximity and opportunity.",
   },
   who: {
     title: "Who this is for",
     photoAlt: "Sydney host Katrina Kavvalos with Steven Bartlett and Tony Robbins",
     bullets: [
-      "You know you’re good at what you do, but you still feel overlooked in your industry.",
-      "You struggle to explain what makes you different, so your message is not cutting through.",
-      "You’re showing up and creating content, but it is not turning into recognition, authority or opportunities.",
-      "You keep watching people with less experience get the clients, stages, media and partnerships you want.",
-      "You know you need to become more visible, but you are unsure where to focus or what will actually move the needle.",
-      "You feel capable of playing at a much bigger level, but your current positioning does not reflect the level you want to be known for.",
+      "You know you’re good at what you do, but you\nstill feel overlooked in your industry.",
+      "You struggle to explain what makes you different,\nso your message is not cutting through.",
+      "You’re showing up and creating content, but it is\nnot turning into recognition, authority or opportunities.",
+      "You keep watching people with less experience\nget the clients, stages, media and partnerships\nyou want.",
+      "You know you need to become more visible, but\nyou are unsure where to focus or what will actually\nmove the needle.",
+      "You feel capable of playing at a much bigger level,\nbut your current positioning does not reflect the\nlevel you want to be known for.",
     ],
   },
   gaps: {
     titleStart: "What’s Your",
     titleGold: "Visibility Gap?",
-    body: "In just 3 minutes, uncover the hidden gap affecting your visibility, identify where you are strongest, and receive a personalised next-step plan.",
+    body: "In just 3 minutes, uncover the hidden gap affecting your visibility,\nidentify where you are strongest, and receive a personalised next-step plan.",
     items: [
       { name: "Direction", text: "Your message, positioning, or focus is unclear, making it harder for people to understand what you do and why it matters." },
       { name: "Recognition", text: "You have value to offer, but the right people are not noticing, remembering, or choosing you yet." },
@@ -118,11 +122,13 @@ export const landing = {
   meet: {
     title: "Meet Katrina",
     photoAlt: "Katrina Kavvalos hosting the AACTA Awards red carpet",
+    /* The "\n"s are the 18.9.26 layout's own line breaks (desktop only). */
     paragraphs: [
-      "Katrina Kavvalos is a TV show creator, producer, speaker, media personality, red carpet host, celebrity interviewer, and #1 bestselling author whose career spans broadcast television, publishing, and digital media.",
-      "As a Red Carpet Host and Celebrity Interviewer at the AACTA Awards, Katrina has interviewed some of the most recognisable names in entertainment, and also served as VIP Social Media Reporter for The Voice Australia and singer Will.i.am.",
-      "With more than a decade of experience across media and digital platforms, Katrina has built a respected reputation across both broadcast and social, while contributing to bestselling books on credibility, relationships, and personal influence in the digital age.",
-      "Across television, publishing, and visibility-focused media projects, Katrina’s work explores identity, reinvention, success, and human potential, helping people step out of the background, elevate their authority, and become impossible to overlook.",
+      "Katrina Kavvalos is a TV show creator, producer, speaker,\nmedia personality, red carpet host, celebrity interviewer, and\n#1 bestselling author whose career spans broadcast television,\npublishing, and digital media.",
+      "As a Red Carpet Host and Celebrity Interviewer at the AACTA\nAwards, Katrina has interviewed some of the most recognisable\nnames in entertainment, and also served as VIP Social Media\nReporter for The Voice Australia and singer Will.i.am.",
+      "Katrina was also selected to host the world’s largest\nentrepreneurial event for an audience of more than 12,000 people,\nalongside world class speakers including Tony Robbins,\nSteven Bartlett, Gary Brecka, and other internationally\nrecognised leaders.",
+      "With more than a decade of experience across media and digital\nplatforms, Katrina has built a respected reputation across both\nbroadcast and social, while contributing to bestselling books on\ncredibility, relationships, and personal influence in the digital age.",
+      "Across television, publishing, and visibility-focused media projects,\nKatrina’s work explores identity, reinvention, success, and human\npotential, helping people step out of the background, elevate\ntheir authority, and become impossible to overlook.",
     ],
   },
   galleryLabel: "Katrina speaking, hosting and on the red carpet",
@@ -137,7 +143,7 @@ export const landing = {
   ],
   final: {
     lines: ["You were never meant", "to be overlooked."],
-    body: "Discover what is currently holding back your visibility, and the exact area to focus on next.",
+    body: "Discover what is currently holding back your visibility,\nand the exact area to focus on next.",
     button: "Get your visibility score free",
   },
 } as const;

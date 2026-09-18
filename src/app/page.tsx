@@ -10,8 +10,20 @@ import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "The Visibility Codes | Get Your Visibility Score Free",
-  description: landing.hero.body,
+  description: landing.hero.body.replace(/\n/g, " "),
 };
+
+/* The layout PDF's own line breaks, marked "\n" in site.ts. They become <br>
+   elements that exist only at desktop widths (see .brk); phones wrap naturally. */
+function withBreaks(text: string) {
+  const lines = text.split("\n");
+  return lines.map((line, i) => (
+    <Fragment key={line}>
+      {i > 0 && <br className={styles.brk} aria-hidden="true" />}
+      {i > 0 ? " " + line : line}
+    </Fragment>
+  ));
+}
 
 export default function HomePage() {
   const { hero, score, why, who, gaps, meet, gallery, final } = landing;
@@ -25,7 +37,7 @@ export default function HomePage() {
             <div className={styles.heroCard}>
               <h1 className={styles.heroTitle}>{hero.title}</h1>
               <span className={styles.shortRule} aria-hidden="true" />
-              <p className={styles.heroBody}>{hero.body}</p>
+              <p className={styles.heroBody}>{withBreaks(hero.body)}</p>
               <p className={styles.heroTagline}>{hero.tagline}</p>
               <StartQuizLink className={`${styles.brightButton} ${styles.heroButton}`}>
                 {hero.button}
@@ -73,7 +85,7 @@ export default function HomePage() {
                   <Icon name={b.icon} size={42} className={styles.benefitIcon} />
                   <span>
                     <strong>{b.strong}</strong>
-                    {b.rest}
+                    {withBreaks(b.rest)}
                   </span>
                 </li>
               ))}
@@ -81,7 +93,7 @@ export default function HomePage() {
 
             <div className={styles.scoreFoot}>
               <Divider />
-              <p>{score.after}</p>
+              <p>{withBreaks(score.after)}</p>
               <StartQuizLink className={`${styles.matteButton} ${styles.scoreButton}`}>
                 {score.button}
               </StartQuizLink>
@@ -90,12 +102,15 @@ export default function HomePage() {
             <div className={styles.gaugeCard}>
               <Divider />
               <p className={styles.gaugeTitle}>{score.gaugeTitle}</p>
-              <Divider />
+              {/* Desktop layout: a bare star under the title; the mobile master
+                  keeps its line-star-line divider here instead. */}
+              <span className={`${styles.star} ${styles.starSolo}`} aria-hidden="true" />
+              <Divider className={styles.gaugeDividerMobile} />
               <Gauge value={score.sample} />
               <span className={`${styles.star} ${styles.gaugeStar}`} aria-hidden="true" />
               <p className={styles.gaugeRange}>
                 <span>{score.rangeFrom}</span>
-                <Icon name="arrowRight" size={26} className={styles.gaugeArrow} />
+                <LongArrow className={styles.gaugeArrow} />
                 <span>{score.rangeTo}</span>
               </p>
               <p className={styles.gaugePill}>
@@ -123,7 +138,7 @@ export default function HomePage() {
               </h2>
               <div className={styles.whyCopy}>
                 {why.paragraphs.map((text) => (
-                  <p key={text}>{text}</p>
+                  <p key={text.slice(0, 32)}>{withBreaks(text)}</p>
                 ))}
               </div>
               <ul className={styles.stats}>
@@ -133,11 +148,11 @@ export default function HomePage() {
                     <p className={styles.statLead}>
                       {"leadAfter" in s && s.leadAfter ? (
                         <>
-                          {s.rest} <b>{s.lead}</b>
+                          <span className={styles.statRest}>{s.rest}</span> <b>{s.lead}</b>
                         </>
                       ) : (
                         <>
-                          {s.lead ? <b>{s.lead}</b> : null} {s.rest}
+                          {s.lead ? <b>{s.lead}</b> : null} <span className={styles.statRest}>{s.rest}</span>
                         </>
                       )}
                     </p>
@@ -145,7 +160,7 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <p className={styles.whyFoot}>{why.footnote}</p>
+              <p className={styles.whyFoot}>{withBreaks(why.footnote)}</p>
             </div>
           </div>
         </section>
@@ -165,7 +180,7 @@ export default function HomePage() {
               <Divider className={styles.dividerWide} />
               <ul className={styles.whoList}>
                 {who.bullets.map((text) => (
-                  <li key={text}>{text}</li>
+                  <li key={text.slice(0, 32)}>{withBreaks(text)}</li>
                 ))}
               </ul>
             </div>
@@ -178,7 +193,7 @@ export default function HomePage() {
             <h2 className={styles.gapsTitle}>
               {gaps.titleStart} <span className={styles.goldWord}>{gaps.titleGold}</span>
             </h2>
-            <p className={styles.gapsBody}>{gaps.body}</p>
+            <p className={styles.gapsBody}>{withBreaks(gaps.body)}</p>
             <ol className={styles.gapList}>
               {gaps.items.map((gap, i) => (
                 <li key={gap.name}>
@@ -208,8 +223,10 @@ export default function HomePage() {
               <h2 className={styles.capsTitle}>{meet.title}</h2>
               <Divider className={styles.dividerWide} />
               {meet.paragraphs.map((text) => (
-                <p key={text.slice(0, 32)}>{text}</p>
+                <p key={text.slice(0, 32)}>{withBreaks(text)}</p>
               ))}
+              {/* The 18.9.26 layout closes the bio with the same line-star-line rule. */}
+              <Divider className={`${styles.dividerWide} ${styles.meetRule}`} />
             </div>
           </div>
         </section>
@@ -237,10 +254,10 @@ export default function HomePage() {
             <span>{final.lines[0]}</span> <span>{final.lines[1]}</span>
           </h2>
           <Divider className={styles.dividerWide} />
-          <p className={styles.finalBody}>{final.body}</p>
+          <p className={styles.finalBody}>{withBreaks(final.body)}</p>
           <StartQuizLink className={`${styles.brightButton} ${styles.finalButton}`}>
             {final.button}
-            <Icon name="arrowRight" size={22} />
+            <LongArrow className={styles.finalArrow} />
           </StartQuizLink>
         </section>
       </main>
@@ -253,7 +270,9 @@ export default function HomePage() {
             <p>
               <Link href={brand.privacyUrl}>Privacy Policy</Link>
               <span aria-hidden="true">|</span>
-              <Link href={brand.termsUrl}>Terms of Use</Link>
+              {/* The 18.9.26 layout labels this "Terms and Conditions"; the page
+                  behind it is /terms-of-use. */}
+              <Link href={brand.termsUrl}>Terms and Conditions</Link>
             </p>
           </div>
           <div className={styles.footerBrand}>
@@ -319,6 +338,16 @@ function PressLogos({ className = "" }: { className?: string }) {
   );
 }
 
+/** The long thin arrow the 18.9.26 layout draws between the gauge range labels
+    and inside the final CTA button — a shaft far longer than any icon glyph. */
+function LongArrow({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 56 12" width="56" height="12" fill="none" aria-hidden="true" className={className}>
+      <path d="M1 6h53M49 1.5L54.5 6 49 10.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 /** Gold line, four-point star, gold line. */
 function Divider({ className = "" }: { className?: string }) {
   return (
@@ -328,12 +357,14 @@ function Divider({ className = "" }: { className?: string }) {
   );
 }
 
-/** Example score dial: beige to gold to black band, dotted scale, gold needle. */
+/** Example score dial: beige to gold to black band, dotted scale, gold needle.
+    Proportions from the 18.9.26 card: the band is 465px across inside a 644px
+    card, with the dotted scale and its labels tight around it. */
 function Gauge({ value }: { value: number }) {
-  const cx = 230;
-  const cy = 216;
-  const rOut = 168;
-  const rIn = 106;
+  const cx = 260;
+  const cy = 240;
+  const rOut = 200;
+  const rIn = 127;
   const pt = (pct: number, r: number): [number, number] => {
     const a = Math.PI * (1 - pct / 100);
     return [cx + r * Math.cos(a), cy - r * Math.sin(a)];
@@ -346,16 +377,16 @@ function Gauge({ value }: { value: number }) {
     const [x4, y4] = pt(from, rIn);
     return `M${f(x1)} ${f(y1)} A${rOut} ${rOut} 0 0 1 ${f(x2)} ${f(y2)} L${f(x3)} ${f(y3)} A${rIn} ${rIn} 0 0 0 ${f(x4)} ${f(y4)}Z`;
   };
-  const [dotStartX, dotStartY] = pt(0, 190);
-  const [dotEndX, dotEndY] = pt(100, 190);
-  const tip = pt(value, 150);
-  const baseL = pt(value + 3.2, 104);
-  const baseR = pt(value - 3.2, 104);
+  const [dotStartX, dotStartY] = pt(0, 215);
+  const [dotEndX, dotEndY] = pt(100, 215);
+  const tip = pt(value, 172);
+  const baseL = pt(value + 3.2, 122);
+  const baseR = pt(value - 3.2, 122);
 
   return (
-    <svg viewBox="0 -26 460 330" className={styles.gauge} role="img" aria-label={`Example score: ${value} out of 100`}>
+    <svg viewBox="0 -26 528 318" className={styles.gauge} role="img" aria-label={`Example score: ${value} out of 100`}>
       <defs>
-        <linearGradient id="gaugeHot" x1="230" y1="0" x2="398" y2="0" gradientUnits="userSpaceOnUse">
+        <linearGradient id="gaugeHot" x1="260" y1="0" x2="460" y2="0" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#ecdcbd" />
           <stop offset="0.5" stopColor="#d3ad6b" />
           <stop offset="0.78" stopColor="#6b4e22" />
@@ -363,7 +394,7 @@ function Gauge({ value }: { value: number }) {
         </linearGradient>
       </defs>
       <path
-        d={`M${f(dotStartX)} ${f(dotStartY)} A190 190 0 0 1 ${f(dotEndX)} ${f(dotEndY)}`}
+        d={`M${f(dotStartX)} ${f(dotStartY)} A215 215 0 0 1 ${f(dotEndX)} ${f(dotEndY)}`}
         fill="none"
         stroke="#b9a988"
         strokeWidth="2"
@@ -372,10 +403,10 @@ function Gauge({ value }: { value: number }) {
       />
       <path d={band(0, 50)} fill="#efe6d7" />
       <path d={band(50, 100)} fill="url(#gaugeHot)" />
-      <circle cx={cx} cy={cy} r="100" fill="#fffdf8" stroke="#e2cfa6" strokeWidth="1.5" />
+      <circle cx={cx} cy={cy} r="119" fill="#fffdf8" stroke="#e2cfa6" strokeWidth="1.5" />
       {[0, 25, 50, 75, 100].map((tick) => {
-        const [dx, dy] = pt(tick, 190);
-        const [lx, ly] = pt(tick, 214);
+        const [dx, dy] = pt(tick, 215);
+        const [lx, ly] = pt(tick, 240);
         return (
           <g key={tick}>
             <circle cx={f(dx)} cy={f(dy)} r="4" fill="#d09a3c" />
@@ -386,10 +417,10 @@ function Gauge({ value }: { value: number }) {
         );
       })}
       <polygon points={`${f(tip[0])},${f(tip[1])} ${f(baseL[0])},${f(baseL[1])} ${f(baseR[0])},${f(baseR[1])}`} fill="#d6a74f" />
-      <text x={cx} y={cy - 6} textAnchor="middle" className={styles.gaugeValue}>
+      <text x={cx} y={cy - 16} textAnchor="middle" className={styles.gaugeValue}>
         {value}
       </text>
-      <text x={cx} y={cy + 42} textAnchor="middle" className={styles.gaugeOutOf}>
+      <text x={cx} y={cy + 30} textAnchor="middle" className={styles.gaugeOutOf}>
         /100
       </text>
     </svg>

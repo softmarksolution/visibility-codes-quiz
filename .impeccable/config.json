@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "src/app/page.module.css"
+        ],
+        "createdAt": "2026-09-18T08:36:20.474Z",
+        "reason": "client's 18.9.26 layout PDF renders the final CTA headline as a vertical gold gradient; matching it 1:1"
+      }
+    ]
+  }
+}
