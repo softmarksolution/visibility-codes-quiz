@@ -262,21 +262,37 @@
   white-space: nowrap;
 }
 
+/* The desktop button face is the client's gold-foil artwork with the label
+   baked in; the element itself is transparent and sized by the artwork's own
+   1939x297 ratio (486x74 at 1920). */
 .heroButton {
   margin-top: 7.5cqw;
   width: 94cqw; /* 486px measured off the 18.9.26 frame */
-  height: 13.9cqw; /* 72px */
+  height: auto;
   min-height: 0;
   padding: 0;
   border-radius: 2.1cqw;
-  /* The desktop card's button is a near-flat gold — samples down its face read
-     rgb(226,174,73) to rgb(202,150,64) — unlike the mobile master's
-     bright-to-amber ramp. */
-  background: linear-gradient(180deg, #ecbc55 0%, #e2ae49 45%, #d9a340 100%);
+  background: none;
   box-shadow: 0 0 18px rgba(240, 190, 90, 0.28);
-  font-size: 5.6cqw; /* ~29px */
+  font-size: 5.6cqw; /* ~29px, used by the mobile label */
   font-weight: 600;
   letter-spacing: 0.08em;
+}
+
+.heroButtonArt {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The live label is for screen readers on desktop; mobile shows it instead. */
+.heroButtonLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .chevron {
@@ -1428,6 +1444,19 @@
     font-size: 16.5px;
     font-weight: 600;
     letter-spacing: 0.01em;
+  }
+
+  /* Mobile keeps the drawn button: hide the artwork, restore the live label. */
+  .heroButtonArt {
+    display: none;
+  }
+
+  .heroButtonLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
   }
 
   .chevron {
