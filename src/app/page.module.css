@@ -345,8 +345,26 @@
 /* Design at 1920: card 216..1740 (1524 wide), 1279..2047 tall; 90px below the
    press logos, 153px above the WHY section. */
 .scoreWrap {
+  position: relative;
   padding: clamp(30px, 3.44vw, 66px) 24px clamp(60px, 7.45vw, 143px);
   background: var(--cream);
+}
+
+/* The layout melts this section into the WHY section below through a soft
+   ~10px white light-leak running the full width just above the boundary
+   (sampled #feffff at y2180..2188 against cream above and the warm section
+   below). It exists only at this seam. */
+@media (min-width: 761px) {
+  .scoreWrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 14px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 55%, rgba(255, 252, 244, 0.9) 100%);
+    pointer-events: none;
+  }
 }
 
 .scoreCard {
@@ -575,7 +593,11 @@
 .why {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(100deg, #fbf5e9 0%, #f8f0e0 44%, #efe0c9 100%);
+  /* Sampled off the layout: a peach field (#fdefdb left, #fbe7cc mid) that
+     warms toward the photo and toward the foot (#f5ddc1 bottom-left). */
+  background:
+    linear-gradient(165deg, rgba(253, 240, 221, 0) 45%, rgba(244, 214, 175, 0.5) 100%),
+    linear-gradient(100deg, #fdefdb 0%, #fbe7cc 50%, #e9cfa8 100%);
   /* 18.9.26 layout: section 1093 tall, eyebrow 72px from the top, footnote
      88px above the bottom, text column 124..1005, photo from ~1145 to the edge. */
   padding: clamp(30px, 4.58vw, 88px) 0 clamp(26px, 4.58vw, 88px);
@@ -758,6 +780,7 @@
     height: clamp(260px, 72vw, 420px);
     margin-bottom: 18px;
     background-position: center 18%;
+    background-size: cover; /* the base's "auto 100%" left a narrow strip here */
     -webkit-mask-image: none;
     mask-image: none;
   }
