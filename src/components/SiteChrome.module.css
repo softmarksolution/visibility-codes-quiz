@@ -69,8 +69,9 @@
 
 .footerLogo {
   display: block;
-  width: 170px;
+  width: 208px; /* wider box, same ~170px wordmark — see .footerBrand img */
   height: auto;
+  mix-blend-mode: screen; /* the artwork is gold on black; screen drops the black */
 }
 
 @media (max-width: 1100px) {

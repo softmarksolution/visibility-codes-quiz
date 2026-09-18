@@ -1199,9 +1199,13 @@
 
 .footerBrand img {
   display: block;
-  width: clamp(180px, 15vw, 288px); /* design logo is ~288px wide at 1920 */
+  /* The lockup fills ~82% of the artwork's width (the rest is the glow that
+     fades out at the edges), so the box runs wider than the 18.9 layout's
+     ~288px wordmark to land the wordmark itself at that width. */
+  width: clamp(220px, 18.3vw, 352px);
   height: auto;
   margin: 0 auto;
+  mix-blend-mode: screen; /* the artwork is gold on black; screen drops the black */
 }
 
 .footerBrand p {
@@ -1724,7 +1728,7 @@
   }
 
   .footerBrand img {
-    width: 130px;
+    width: 159px; /* wider box, same ~130px wordmark */
   }
 
   .footerBrand p {

@@ -34,7 +34,7 @@ export function SiteFooter() {
             <Link href={brand.termsUrl}>Terms of Use</Link>
           </p>
         </div>
-        <Image src="/brand/footer-logo-v2.webp" alt="The Visibility Codes" width={231} height={140} className={styles.footerLogo} />
+        <Image src="/brand/footer-logo-v3.webp" alt="The Visibility Codes" width={208} height={80} className={styles.footerLogo} />
         <p className={styles.footerRight}>
           <span>{brand.instagramHandle}</span>
           <span aria-hidden="true">|</span>
