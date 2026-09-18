@@ -611,9 +611,9 @@
   text-transform: uppercase;
 }
 .eyebrowLine {
-  height: 1px;
-  width: clamp(40px, 7.72vw, 111px);
-  background: linear-gradient(90deg, #8a6a2d, transparent);
+  height: 2px;
+  width: clamp(60px, 11vw, 211px); /* the 18.9.26 rule runs 684..895 at 1920 */
+  background: linear-gradient(90deg, #8a5c14 82%, rgba(138, 92, 20, 0.15));
 }
 
 .whyTitle {
@@ -638,7 +638,10 @@
 }
 .whyCopy p {
   color: #3a4356;
-  font-size: clamp(14px, 1.34vw, 21.5px); /* ink-measured: 870px line at 73 chars */
+  /* 21.5px at 1920 is 1.12vw; the old 1.34vw coefficient hit the cap by
+     ~1600px wide, so on laptop screens this copy (and the whole section)
+     ran ~15% larger than the PDF's proportion. */
+  font-size: clamp(14px, 1.12vw, 21.5px);
   line-height: 1.5;
 }
 
@@ -697,6 +700,14 @@
   font-weight: 500;
   font-size: clamp(14px, 1.41vw, 27px);
   color: #232936;
+}
+
+/* That line stays unbroken at every desktop width in the layout; it fits the
+   tile only hairline-tight, so rounding must not tip it onto two lines. */
+@media (min-width: 1101px) {
+  .stat:last-child .statRest {
+    white-space: nowrap;
+  }
 }
 .statNote {
   /* The design's cards carry only the figure and its line; the longer note in
