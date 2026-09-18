@@ -94,6 +94,38 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
           </div>
         </section>
 
+        {/* "You have your results. Now take the next step." — the dark, gold-framed
+            box the client's NEW RESULTS PAGE.png places straight after the score card:
+            compass left, gold caps title, three gold-check lines, gold button. */}
+        <section className={styles.nextStep} aria-labelledby="next-step-title">
+          <Image src="/brand/icon-compass.webp" alt="" width={120} height={120} className={styles.nextStepIcon} />
+          <div className={styles.nextStepBody}>
+            <h2 id="next-step-title" className={styles.nextStepTitle}>
+              {resultsCopy.nextStep.title}
+            </h2>
+            <p className={styles.nextStepLead}>{resultsCopy.nextStep.body}</p>
+            <p className={styles.nextStepIntro}>{resultsCopy.nextStep.listIntro}</p>
+            <ul className={styles.nextStepList}>
+              {resultsCopy.nextStep.items.map((item) => (
+                <li key={item}>
+                  <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true">
+                    <circle cx="10" cy="10" r="9" fill="#d9ad4f" />
+                    <path d="M6 10.3l2.6 2.6L14.4 7.3" fill="none" stroke="#1a1207" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className={styles.nextStepCta}>
+              <span className={styles.nextStepRule} aria-hidden="true" />
+              <Link href={`/checkout?r=${encodeURIComponent(reportCode)}`} className={styles.nextStepButton}>
+                {resultsCopy.nextStep.button}
+              </Link>
+              <span className={styles.nextStepRule} aria-hidden="true" />
+            </p>
+          </div>
+        </section>
+
         <section className={styles.section} aria-labelledby="breakdown-title">
           <h2 id="breakdown-title" className={styles.sectionTitle}>
             {resultsCopy.breakdownTitle}

@@ -32,17 +32,23 @@ export const landing = {
     journey: ["Overlooked", "Recognised", "Chosen"],
     imageAlt: "Katrina Kavvalos in front of The Visibility Codes title",
   },
+  /* Cut from the client's own "2. Featured in banner - cropped.png" (1920x167),
+     so the logos carry their real proportions. Its background is rgb(245,242,238)
+     against our --cream #f7f5ed, which showed as a faint box behind every logo, so
+     the background is keyed out to transparent with a soft ramp for the antialiasing.
+     w/h are the file's intrinsic size; dw is the rendered width, held at the previous
+     values so the strip does not move. */
   press: [
-    { id: "aacta", file: "press-aacta-7f994ed4.webp", name: "AACTA Awards", w: 109, h: 61 },
-    { id: "nyfinance", file: "press-nyfinance-4c0ec20f.webp", name: "The New York Finance", w: 106, h: 52 },
-    { id: "dailytelegraph", file: "press-dailytelegraph-bc29e80d.webp", name: "The Daily Telegraph", w: 152, h: 41 },
-    { id: "seven", file: "press-seven-ec966de3.webp", name: "Channel 7", w: 42, h: 43 },
-    { id: "nine", file: "press-nine-201cf967.webp", name: "Channel 9", w: 76, h: 40 },
-    { id: "currentaffair", file: "press-currentaffair-04b9335a.webp", name: "A Current Affair", w: 118, h: 39 },
-    { id: "newidea", file: "press-newidea-9a71eae4.webp", name: "New Idea", w: 67, h: 47 },
-    { id: "tennews", file: "press-tennews-f29340fa.webp", name: "10 News First", w: 85, h: 43 },
-    { id: "livingroom", file: "press-livingroom-223c89b0.webp", name: "The Living Room", w: 89, h: 40 },
-    { id: "prevention", file: "press-prevention-47565bee.webp", name: "Prevention", w: 122, h: 37 },
+    { id: "aacta", file: "press-aacta-f4235c69.webp", name: "AACTA Awards", w: 165, h: 90, dw: 131 },
+    { id: "nyfinance", file: "press-nyfinance-6f7e31ad.webp", name: "The New York Finance", w: 159, h: 71, dw: 127 },
+    { id: "dailytelegraph", file: "press-dailytelegraph-ba448c50.webp", name: "The Daily Telegraph", w: 236, h: 43, dw: 182 },
+    { id: "seven", file: "press-seven-ea597af7.webp", name: "Channel 7", w: 55, h: 63, dw: 50 },
+    { id: "nine", file: "press-nine-af8a12a9.webp", name: "Channel 9", w: 111, h: 57, dw: 91 },
+    { id: "currentaffair", file: "press-currentaffair-a1940675.webp", name: "A Current Affair", w: 182, h: 55, dw: 142 },
+    { id: "newidea", file: "press-newidea-0091cb88.webp", name: "New Idea", w: 97, h: 68, dw: 80 },
+    { id: "tennews", file: "press-tennews-db41e777.webp", name: "10 News First", w: 126, h: 64, dw: 102 },
+    { id: "livingroom", file: "press-livingroom-36f63380.webp", name: "The Living Room", w: 103, h: 51, dw: 107 },
+    { id: "prevention", file: "press-prevention-c7ad38bf.webp", name: "Prevention", w: 183, h: 42, dw: 146 },
   ],
   score: {
     title: "Get Your Visibility Score Free",
@@ -77,7 +83,7 @@ export const landing = {
         note: "Built through visibility, positioning and content that gets remembered." },
       { icon: "people", lead: "Almost 1 million", rest: "across social media",
         note: "A personal brand grown through strategic positioning and visibility." },
-      { icon: "microphone", lead: "", rest: "Chosen for major media and red carpets",
+      { icon: "microphone", lead: "Chosen for major", rest: "media and red carpets",
         note: "Including interviewing global celebrities and entertainment leaders." },
       { icon: "stage", lead: "12,000 people", rest: "Chosen to host in front of", leadAfter: true,
         note: "Alongside world class speakers such as Tony Robbins, Steven Bartlett, Gary Brecka and more." },
@@ -121,13 +127,13 @@ export const landing = {
   },
   galleryLabel: "Katrina speaking, hosting and on the red carpet",
   gallery: [
-    { id: 1, file: "gallery-1-8b696ff3.webp", alt: "Katrina speaking on stage to a full conference room", w: 744, h: 632 },
-    { id: 2, file: "gallery-2-86ce7eac.webp", alt: "Katrina interviewing an actor on the red carpet", w: 744, h: 632 },
-    { id: 3, file: "gallery-3-6886fec8.webp", alt: "Katrina with a guest at a red carpet event", w: 372, h: 316 },
-    { id: 4, file: "gallery-4-e403b6ad.webp", alt: "Katrina with a guest at an awards night", w: 556, h: 592 },
-    { id: 5, file: "gallery-5-8c59104b.webp", alt: "Katrina with two guests at a media event", w: 556, h: 592 },
-    { id: 6, file: "gallery-6-83f5aa2d.webp", alt: "Katrina laughing with a guest on the red carpet", w: 556, h: 592 },
-    { id: 7, file: "gallery-7-f023b411.webp", alt: "Katrina presenting on stage at a live event", w: 556, h: 592 },
+    { id: 1, file: "gallery-1-a7d8ef43.webp", alt: "Katrina speaking on stage to a full conference room", w: 1087, h: 920 },
+    { id: 2, file: "gallery-2-08173966.webp", alt: "Katrina interviewing an actor on the red carpet", w: 1204, h: 1019 },
+    { id: 3, file: "gallery-3-85f72c30.webp", alt: "Katrina with a guest at a red carpet event", w: 502, h: 426 },
+    { id: 4, file: "gallery-4-4e557730.webp", alt: "Katrina with a guest at an awards night", w: 937, h: 1006 },
+    { id: 5, file: "gallery-5-5e1ad081.webp", alt: "Katrina with two guests at a media event", w: 999, h: 1072 },
+    { id: 6, file: "gallery-6-c55c6f55.webp", alt: "Katrina laughing with a guest on the red carpet", w: 937, h: 1006 },
+    { id: 7, file: "gallery-7-57e739ea.webp", alt: "Katrina presenting on stage at a live event", w: 937, h: 1006 },
   ],
   final: {
     lines: ["You were never meant", "to be overlooked."],
@@ -422,6 +428,19 @@ export const resultsCopy = {
   strongestPanelTitle: "Where you're strongest",
   gapPanelTitle: "Your biggest visibility gap",
   quickActionTitle: "Your quick action step",
+  /* The dark, gold-framed box the client's "NEW RESULTS PAGE.png" places straight
+     after the score card. Copy is transcribed from that master. */
+  nextStep: {
+    title: "You have your results. Now take the next step.",
+    body: "Your score shows you where to focus. Your Personalised Action Plan shows you exactly how to close the gap.",
+    listIntro: "Inside your plan, you’ll get:",
+    items: [
+      "Clear next steps based on your results",
+      "Personalised prompts to help you take action",
+      "A focused path to help you stand out, be seen and be chosen",
+    ],
+    button: "Unlock my personalised action plan",
+  },
   /* This previously read "one of the bonuses you'll receive when you join The
      Visibility Codes Masterclass", which contradicts the client's check-out
      copy: "CHECK OUT PAGE COPY - $35 USD (USED WHEN THEY CLICK BUTTON ON

@@ -351,11 +351,18 @@ test("landing page matches the client's desktop and mobile layout", async ({ pag
   expect(m.capsFont).toMatch(/playfair/i);
   expect(m.capsLoaded).toBe(true);
   if (m.vw > 760) {
-    // Desktop: FINAL BANNER 5 carries the gold card frame inside the artwork, so
-    // the copy sits within the banner's right-hand half rather than beside it.
+    // Desktop: "LAYOUT - FINAL WEB DESIGN - 18.9.26.pdf" puts the card on the RIGHT
+    // with Katrina on the left (it supersedes the 14/15 Sep PDFs, which had it left).
+    // Percentages are the card frame's own pixels in that layout's 1920-wide page
+    // image: x 1236..1817 of 1920, so left 64.38% and width 30.26%.
     // The journey pill is mobile only.
+    const left = ((m.cardLeft - m.heroLeft) / m.heroWidth) * 100;
+    const width = ((m.cardRight - m.cardLeft) / m.heroWidth) * 100;
+    expect(left).toBeGreaterThan(63.5);
+    expect(left).toBeLessThan(65.3);
+    expect(width).toBeGreaterThan(29.5);
+    expect(width).toBeLessThan(31.0);
     expect(m.cardLeft).toBeGreaterThan(m.heroLeft + m.heroWidth * 0.5);
-    expect(m.cardRight).toBeLessThanOrEqual(m.heroRight + 1);
     await expect(page.getByText("Recognised", { exact: true })).toBeHidden();
   } else {
     // Mobile: photo on top, headline card below it, journey pill visible.

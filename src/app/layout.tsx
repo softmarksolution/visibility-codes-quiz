@@ -1,11 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+/* The client's master typography card allows two families: Playfair Display for
+   headings and Montserrat for everything else ("Montserrat font for the other
+   text", 13 Sep). Inter, which used to load here as the body face for every page
+   but the landing page, is on neither card. */
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-playfair",
   display: "swap",
 });
@@ -22,7 +31,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-GB" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en-GB" className={`${montserrat.variable} ${playfair.variable}`}>
       <body>{children}</body>
     </html>
   );
