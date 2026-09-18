@@ -34,6 +34,7 @@ export default function StartQuizLink({
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const opener = useRef<HTMLButtonElement | null>(null);
+  const dialog = useRef<HTMLDivElement | null>(null);
   const firstField = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
 
@@ -47,15 +48,25 @@ export default function StartQuizLink({
        page scrollable behind the dialog. */
     const previousOverflow = document.documentElement.style.overflow;
     document.documentElement.style.overflow = "hidden";
-    /* preventScroll because the field is already on screen inside a fixed
+    /* Putting the cursor in the first field is a convenience, so it must never
+       interrupt someone who has already got somewhere themselves. This used to
+       run on a 60ms timer, which on a slow machine landed *after* they had
+       reached a later field: focus jumped back to the name box mid-word, the
+       rest of what they typed went in there, and the form then refused to submit
+       because the field they thought they had filled was empty. So focus now,
+       in the same frame the dialog appears, and only while nothing inside it
+       holds focus yet.
+
+       preventScroll because the field is already on screen inside a fixed
        overlay. Without it the browser scrolled the page down to "reveal" it,
        which moved the whole layout under the pointer as the dialog opened and
        left the visitor further down the page once they closed it. */
-    const t = window.setTimeout(() => firstField.current?.focus({ preventScroll: true }), 60);
+    if (!dialog.current?.contains(document.activeElement)) {
+      firstField.current?.focus({ preventScroll: true });
+    }
     return () => {
       document.removeEventListener("keydown", onKey);
       document.documentElement.style.overflow = previousOverflow;
-      window.clearTimeout(t);
       opener.current?.focus({ preventScroll: true });
     };
   }, [open]);
@@ -92,7 +103,13 @@ export default function StartQuizLink({
             aria-label={optIn.close}
             onClick={() => setOpen(false)}
           />
-          <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="optin-title">
+          <div
+            ref={dialog}
+            className={styles.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="optin-title"
+          >
             <button type="button" className={styles.close} onClick={() => setOpen(false)} aria-label={optIn.close}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M4 4 20 20M20 4 4 20" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
