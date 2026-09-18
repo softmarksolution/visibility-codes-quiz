@@ -88,7 +88,7 @@ export default function HomePage() {
             <div className={styles.scoreHead}>
               <Divider />
               <h2 className={styles.scoreTitle}>{score.title}</h2>
-              <p className={styles.scoreBody}>{score.body}</p>
+              <p className={styles.scoreBody}>{withBreaks(score.body)}</p>
             </div>
 
             <ul className={styles.benefits}>
@@ -111,25 +111,19 @@ export default function HomePage() {
               </StartQuizLink>
             </div>
 
+            {/* The dial is the client's own artwork from the 18.9 asset drop
+                ("3./3A.png"), cropped to its panel. Its title, scale, range row
+                and pill are drawn into the picture, so the alt text carries all
+                of that wording. */}
             <div className={styles.gaugeCard}>
-              <Divider />
-              <p className={styles.gaugeTitle}>{score.gaugeTitle}</p>
-              {/* Desktop layout: a bare star under the title; the mobile master
-                  keeps its line-star-line divider here instead. */}
-              <span className={`${styles.star} ${styles.starSolo}`} aria-hidden="true" />
-              <Divider className={styles.gaugeDividerMobile} />
-              <Gauge value={score.sample} />
-              <span className={`${styles.star} ${styles.gaugeStar}`} aria-hidden="true" />
-              <p className={styles.gaugeRange}>
-                <span>{score.rangeFrom}</span>
-                <LongArrow className={styles.gaugeArrow} />
-                <span>{score.rangeTo}</span>
-              </p>
-              <p className={styles.gaugePill}>
-                <span className={styles.star} aria-hidden="true" />
-                {score.pill}
-                <span className={styles.star} aria-hidden="true" />
-              </p>
+              <Image
+                className={styles.gaugeArt}
+                src="/landing/score-gauge-94632983.webp"
+                alt={`${score.gaugeTitle}: an example score of ${score.sample} out of 100, on a scale running from ${score.rangeFrom} to ${score.rangeTo}. ${score.pill}`}
+                width={629}
+                height={658}
+                sizes="(max-width: 1100px) 92vw, 42vw"
+              />
             </div>
           </div>
         </section>
@@ -350,8 +344,8 @@ function PressLogos({ className = "" }: { className?: string }) {
   );
 }
 
-/** The long thin arrow the 18.9.26 layout draws between the gauge range labels
-    and inside the final CTA button — a shaft far longer than any icon glyph. */
+/** The long thin arrow the 18.9.26 layout draws inside the final CTA button
+    — a shaft far longer than any icon glyph. */
 function LongArrow({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 56 12" width="56" height="12" fill="none" aria-hidden="true" className={className}>
@@ -366,75 +360,5 @@ function Divider({ className = "" }: { className?: string }) {
     <span className={`${styles.divider} ${className}`} aria-hidden="true">
       <span className={styles.star} />
     </span>
-  );
-}
-
-/** Example score dial: beige to gold to black band, dotted scale, gold needle.
-    Proportions from the 18.9.26 card: the band is 465px across inside a 644px
-    card, with the dotted scale and its labels tight around it. */
-function Gauge({ value }: { value: number }) {
-  const cx = 260;
-  const cy = 240;
-  const rOut = 200;
-  const rIn = 127;
-  const pt = (pct: number, r: number): [number, number] => {
-    const a = Math.PI * (1 - pct / 100);
-    return [cx + r * Math.cos(a), cy - r * Math.sin(a)];
-  };
-  const f = (n: number) => n.toFixed(1);
-  const band = (from: number, to: number) => {
-    const [x1, y1] = pt(from, rOut);
-    const [x2, y2] = pt(to, rOut);
-    const [x3, y3] = pt(to, rIn);
-    const [x4, y4] = pt(from, rIn);
-    return `M${f(x1)} ${f(y1)} A${rOut} ${rOut} 0 0 1 ${f(x2)} ${f(y2)} L${f(x3)} ${f(y3)} A${rIn} ${rIn} 0 0 0 ${f(x4)} ${f(y4)}Z`;
-  };
-  const [dotStartX, dotStartY] = pt(0, 215);
-  const [dotEndX, dotEndY] = pt(100, 215);
-  const tip = pt(value, 172);
-  const baseL = pt(value + 3.2, 122);
-  const baseR = pt(value - 3.2, 122);
-
-  return (
-    <svg viewBox="0 -26 528 318" className={styles.gauge} role="img" aria-label={`Example score: ${value} out of 100`}>
-      <defs>
-        <linearGradient id="gaugeHot" x1="260" y1="0" x2="460" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#ecdcbd" />
-          <stop offset="0.5" stopColor="#d3ad6b" />
-          <stop offset="0.78" stopColor="#6b4e22" />
-          <stop offset="1" stopColor="#141210" />
-        </linearGradient>
-      </defs>
-      <path
-        d={`M${f(dotStartX)} ${f(dotStartY)} A215 215 0 0 1 ${f(dotEndX)} ${f(dotEndY)}`}
-        fill="none"
-        stroke="#b9a988"
-        strokeWidth="2"
-        strokeDasharray="0.1 7"
-        strokeLinecap="round"
-      />
-      <path d={band(0, 50)} fill="#efe6d7" />
-      <path d={band(50, 100)} fill="url(#gaugeHot)" />
-      <circle cx={cx} cy={cy} r="119" fill="#fffdf8" stroke="#e2cfa6" strokeWidth="1.5" />
-      {[0, 25, 50, 75, 100].map((tick) => {
-        const [dx, dy] = pt(tick, 215);
-        const [lx, ly] = pt(tick, 240);
-        return (
-          <g key={tick}>
-            <circle cx={f(dx)} cy={f(dy)} r="4" fill="#d09a3c" />
-            <text x={f(lx)} y={f(ly)} className={styles.gaugeTick} textAnchor="middle" dominantBaseline="middle">
-              {tick}
-            </text>
-          </g>
-        );
-      })}
-      <polygon points={`${f(tip[0])},${f(tip[1])} ${f(baseL[0])},${f(baseL[1])} ${f(baseR[0])},${f(baseR[1])}`} fill="#d6a74f" />
-      <text x={cx} y={cy - 16} textAnchor="middle" className={styles.gaugeValue}>
-        {value}
-      </text>
-      <text x={cx} y={cy + 30} textAnchor="middle" className={styles.gaugeOutOf}>
-        /100
-      </text>
-    </svg>
   );
 }
