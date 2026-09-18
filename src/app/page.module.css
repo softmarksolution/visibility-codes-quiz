@@ -273,10 +273,7 @@
   padding: 0;
   border-radius: 2.1cqw;
   background: none;
-  box-shadow: 0 0 18px rgba(240, 190, 90, 0.28);
-  font-size: 5.6cqw; /* ~29px, used by the mobile label */
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  box-shadow: none; /* the artwork is the whole face — no halo around it */
 }
 
 .heroButtonArt {
