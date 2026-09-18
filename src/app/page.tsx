@@ -35,6 +35,18 @@ export default function HomePage() {
           <div className={styles.heroInner}>
             <HeroArt />
             <div className={styles.heroCard}>
+              {/* The client's gold frame artwork (glints top, right and bottom);
+                  sized so its frame line sits on the card bounds and its glow
+                  overhangs them. Decorative only. */}
+              <Image
+                src="/landing/hero-frame-e9a617a1.webp"
+                alt=""
+                width={1182}
+                height={1330}
+                priority
+                aria-hidden="true"
+                className={styles.heroFrame}
+              />
               <h1 className={styles.heroTitle}>{hero.title}</h1>
               <span className={styles.shortRule} aria-hidden="true" />
               <p className={styles.heroBody}>{withBreaks(hero.body)}</p>
