@@ -132,9 +132,9 @@
   display: block;
 }
 
-/* The fallback <img> carries the MOBILE intrinsic size (941x1672) because that
-   is the source getImageProps spreads, so height:auto alone would compute a
-   portrait box here. Pin the banner's own ratio instead. */
+/* The fallback <img> carries the MOBILE intrinsic size (941x828) because that
+   is the source getImageProps spreads, so height:auto alone would compute the
+   mobile box here. Pin the banner's own ratio instead. */
 .heroArt img {
   display: block;
   width: 100%;
@@ -1065,13 +1065,17 @@
     background: #000;
   }
 
-  /* The client's mobile layout shows the top band of the artwork — wordmark and
-     face — with the card starting beneath it, so crop to that band. */
+  /* The artwork's own ratio, so nothing is cropped. The client's mobile master
+     ("2. MOBILE VIEW/1._", 941x1672) is a whole screen: artwork on top, then
+     the card and journey pill, which we draw in HTML. Its card border sits at
+     y=828, so the art is the 941x828 above it — the image this now points at.
+     The previous source was the full 941x1672 slide forced into a 941/700 box,
+     which cropped Katrina off at the chest. */
   .heroArt {
     position: relative;
     display: block;
     width: 100%;
-    aspect-ratio: 941 / 700;
+    aspect-ratio: 941 / 828;
   }
 
   .heroArt img {
@@ -1122,9 +1126,15 @@
     font-size: 13.5px;
   }
 
+  /* Full card width with room inside. At 86% and no horizontal padding the
+     label — 16px at 0.3em tracking plus the chevron, and nowrap — measured
+     261px against a 255px content box at 375px wide, so the S and the chevron
+     were clipped on an iPhone SE / mini. */
   .heroButton {
+    width: 100%;
     min-height: 46px;
     margin-top: 14px;
+    padding-inline: 10px;
     font-size: 16px;
   }
 

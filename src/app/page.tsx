@@ -287,7 +287,7 @@ function HeroArt() {
   } = getImageProps({ alt, src: "/landing/hero-desktop-90650878.webp", width: 1920, height: 1077, sizes: "100vw" });
   const {
     props: { srcSet: mobile, ...rest },
-  } = getImageProps({ alt, src: "/landing/hero-mobile-9c6ec4bd.webp", width: 941, height: 1672, sizes: "100vw", priority: true });
+  } = getImageProps({ alt, src: "/landing/hero-mobile-a8cd2f4a.webp", width: 941, height: 828, sizes: "100vw", priority: true });
   return (
     <picture className={styles.heroArt}>
       <source media="(min-width: 761px)" srcSet={desktop} />
