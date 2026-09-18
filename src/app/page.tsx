@@ -65,21 +65,6 @@ export default function HomePage() {
                   className={styles.heroButtonArt}
                 />
                 <span className={styles.heroButtonLabel}>{hero.button}</span>
-                {/* Drawn, not typed. The master's chevron stands the full cap
-                    height of the label — 6.7 x 12.3 at a 2px stroke — and no
-                    glyph reaches that: "›" renders half-height and Montserrat's
-                    ">" sits on the math axis at 23/36 of the cap. */}
-                <span className={styles.chevron} aria-hidden="true">
-                  <svg viewBox="0 0 7 12" width="7" height="12" fill="none">
-                    <path
-                      d="M1 1l5 5-5 5"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
               </StartQuizLink>
             </div>
             <p className={styles.journey}>
