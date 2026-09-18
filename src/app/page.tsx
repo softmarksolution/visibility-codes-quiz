@@ -52,7 +52,19 @@ export default function HomePage() {
               <p className={styles.heroBody}>{withBreaks(hero.body)}</p>
               <p className={styles.heroTagline}>{hero.tagline}</p>
               <StartQuizLink className={`${styles.brightButton} ${styles.heroButton}`}>
-                {hero.button}
+                {/* Desktop face: the client's gold-foil button artwork (label
+                    baked in); the live label below stays for screen readers
+                    and becomes the visible mobile button. */}
+                <Image
+                  src="/landing/hero-button-fa5e27ed.webp"
+                  alt=""
+                  width={1939}
+                  height={297}
+                  priority
+                  aria-hidden="true"
+                  className={styles.heroButtonArt}
+                />
+                <span className={styles.heroButtonLabel}>{hero.button}</span>
                 {/* Drawn, not typed. The master's chevron stands the full cap
                     height of the label — 6.7 x 12.3 at a 2px stroke — and no
                     glyph reaches that: "›" renders half-height and Montserrat's
