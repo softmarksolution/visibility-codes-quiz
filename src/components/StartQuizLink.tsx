@@ -43,13 +43,20 @@ export default function StartQuizLink({
       if (e.key === "Escape") setOpen(false);
     };
     document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    const t = window.setTimeout(() => firstField.current?.focus(), 60);
+    /* The scroll container is <html>, not <body>, so locking body alone left the
+       page scrollable behind the dialog. */
+    const previousOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    /* preventScroll because the field is already on screen inside a fixed
+       overlay. Without it the browser scrolled the page down to "reveal" it,
+       which moved the whole layout under the pointer as the dialog opened and
+       left the visitor further down the page once they closed it. */
+    const t = window.setTimeout(() => firstField.current?.focus({ preventScroll: true }), 60);
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      document.documentElement.style.overflow = previousOverflow;
       window.clearTimeout(t);
-      opener.current?.focus();
+      opener.current?.focus({ preventScroll: true });
     };
   }, [open]);
 

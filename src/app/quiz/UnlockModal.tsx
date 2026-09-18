@@ -29,16 +29,20 @@ export default function UnlockModal({ answers, onClose }: Props) {
   const firstInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    firstInput.current?.focus();
+    /* preventScroll: the field is already on screen inside a fixed overlay, and
+       scrolling the quiz behind the dialog to "reveal" it moves the layout as
+       the dialog opens. */
+    firstInput.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onKey);
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    /* The scroll container is <html>, not <body>. */
+    const previousOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = previousOverflow;
+      document.documentElement.style.overflow = previousOverflow;
     };
   }, [onClose]);
 
