@@ -167,14 +167,15 @@
    "1A - FINAL/FINAL FINAL FINAL .jpg", so that artwork is used 1:1 and these are the
    card frame's own pixels in that layout: x 1236..1817, y 154..912.
 
-   The artwork has no frame painted in, so the border below draws it. */
+   The artwork has no frame painted in; the client's frame asset (.heroFrame)
+   draws it. */
 .heroCard {
   position: absolute;
   left: 64.38%; /* 1236 / 1920 */
   top: 14.3%; /*  154 / 1077 */
   width: 30.26%; /*  581 / 1920 */
   height: 70.38%; /*  758 / 1077 */
-  border: 1px solid #a67c33;
+  border: 0;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -190,42 +191,15 @@
   container-type: inline-size;
 }
 
-/* The layout's frame is lit: bright glints sweep the top edge left of centre,
-   the upper right edge and the lower left corner. A conic ring masked to the
-   border carries them (angles measured from the card's centre). */
-.heroCard::before {
-  content: "";
+/* The client's frame asset, stretched so its gold line (x 48..1134, y 47..1283
+   in the 1182x1330 canvas) lands exactly on the card's bounds; the lens glints
+   and their glow overhang by the canvas margins (48/1086 and 47/1236). */
+.heroFrame {
   position: absolute;
-  inset: -2.5px;
-  padding: 3px;
-  border-radius: inherit;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg 30deg,
-    rgba(255, 240, 198, 1) 63deg,
-    transparent 96deg 190deg,
-    rgba(255, 236, 190, 0.9) 221deg,
-    transparent 252deg 315deg,
-    rgba(255, 246, 212, 1) 347deg,
-    transparent 360deg
-  );
-  filter: drop-shadow(0 0 5px rgba(255, 226, 160, 0.7));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-/* The three spark blooms sitting on those glints. */
-.heroCard::after {
-  content: "";
-  position: absolute;
-  inset: -24px;
-  background:
-    radial-gradient(26px 18px at 26% 3.2%, rgba(255, 246, 214, 0.6), transparent 70%),
-    radial-gradient(22px 22px at 97.5% 30%, rgba(255, 240, 200, 0.55), transparent 70%),
-    radial-gradient(22px 18px at 2.5% 90%, rgba(255, 238, 196, 0.45), transparent 70%);
+  top: -3.8%;
+  left: -4.42%;
+  width: 108.84%; /* an img keeps its intrinsic ratio under inset-stretching, so size it explicitly */
+  height: 107.6%;
   pointer-events: none;
 }
 
@@ -1377,9 +1351,8 @@
     container-type: normal;
   }
 
-  /* The mobile card paints its own backdrop; no desktop glints or text panels. */
-  .heroCard::before,
-  .heroCard::after {
+  /* The mobile card paints its own backdrop; no desktop frame or text panels. */
+  .heroFrame {
     display: none;
   }
 
