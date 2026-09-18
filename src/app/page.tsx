@@ -282,7 +282,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className={styles.footerBrand}>
-            <Image src="/brand/footer-logo-v2.webp" alt="The Visibility Codes" width={260} height={157} />
+            <Image src="/brand/footer-logo-v3.webp" alt="The Visibility Codes" width={350} height={135} />
             <p>{brand.tagline}</p>
           </div>
           <ul className={styles.footerLinks}>
