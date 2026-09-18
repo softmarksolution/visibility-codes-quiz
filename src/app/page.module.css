@@ -187,7 +187,10 @@
      cqw units below. The design's headline ink reaches 89% of the card frame:
      ~30px a side at 1920, which is 1.6% of the hero. Content box = 517.6px, so
      1cqw = 5.176px of the design. */
-  padding: 0 1.6%;
+  /* The bottom padding biases the centred stack upward, giving the button the
+     PDF's clear air above the frame's bottom line. Like the side padding it
+     resolves against the 1920px hero, so 1.4% is ~27px. */
+  padding: 0 1.6% 1.4%;
   text-align: center;
   container-type: inline-size;
 }
@@ -219,7 +222,7 @@
    the artwork's gold glow stays dimmed behind the copy. */
 .heroTitle {
   width: 100%;
-  padding: 4.4cqw 2cqw;
+  padding: 3.5cqw 2cqw;
   border-radius: 10px;
   background: rgba(8, 6, 3, 0.5);
   font-family: var(--font-caps);
@@ -234,13 +237,13 @@
   display: block;
   width: 33.8cqw; /* 175px */
   height: 1px;
-  margin: 5.8cqw auto 4.8cqw; /* the rule sits in the gap between the panels */
+  margin: 5.2cqw auto 4.2cqw; /* the rule sits in the gap between the panels */
   background: linear-gradient(90deg, transparent, #e3b35c, transparent);
 }
 
 .heroBody {
   width: 91.8cqw; /* the layout's body panel is 475px of the 581px frame */
-  padding: 2.8cqw 3cqw;
+  padding: 2.2cqw 3cqw;
   border-radius: 8px;
   background: rgba(8, 6, 3, 0.45);
   color: #e2e0dc;
@@ -250,8 +253,8 @@
 }
 
 .heroTagline {
-  margin-top: 2.6cqw;
-  padding: 1.7cqw 3cqw;
+  margin-top: 2.2cqw;
+  padding: 1.3cqw 3cqw;
   border-radius: 6px;
   background: rgba(8, 6, 3, 0.38);
   color: #d9be72;
@@ -267,7 +270,7 @@
    baked in; the element itself is transparent and sized by the artwork's own
    1939x297 ratio (486x74 at 1920). */
 .heroButton {
-  margin-top: 7.5cqw;
+  margin-top: 7cqw;
   width: 94cqw; /* 486px measured off the 18.9.26 frame */
   height: auto;
   min-height: 0;
