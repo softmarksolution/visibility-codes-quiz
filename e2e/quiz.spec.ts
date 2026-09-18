@@ -294,8 +294,10 @@ test("landing page matches the client's desktop and mobile layout", async ({ pag
     await expect(page.getByRole("heading", { level: 2, name })).toBeVisible();
   }
   await expect(page.getByRole("heading", { level: 3 })).toHaveCount(5);
-  await expect(page.getByRole("img", { name: "Example score: 88 out of 100" })).toBeVisible();
-  await expect(page.getByText("Score. Gap. Next steps.")).toBeVisible();
+  // The score dial is the client's own artwork, so its wording lives in the alt text.
+  await expect(
+    page.getByRole("img", { name: /example score of 88 out of 100.*score. gap. next steps./i }),
+  ).toBeVisible();
 
   // Every call to action opens the opt-in pop-up rather than jumping to the quiz.
   for (const name of [/start assessment/i, /get your free score/i, /start free quiz/i, /get your visibility score free/i]) {

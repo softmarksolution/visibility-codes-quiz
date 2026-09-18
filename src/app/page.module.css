@@ -346,6 +346,9 @@
    press logos, 153px above the WHY section. */
 .scoreWrap {
   position: relative;
+  /* The 18.9 brand card for this section: gold accent #d4a24a, card surface
+     #fcfcfc inside a warm-gold rule, body copy #4b4b4b, headings #0f0f0f. */
+  --gold: #d4a24a;
   padding: clamp(30px, 3.44vw, 66px) 24px clamp(60px, 7.45vw, 143px);
   background: var(--cream);
 }
@@ -371,24 +374,35 @@
   display: grid;
   /* 18.9.26 layout, ink-measured: title 778px wide from x=257, gauge card
      1071..1715, so columns 785/644 on a 29px gap inside 39/30 padding. */
-  grid-template-columns: minmax(0, 785fr) minmax(0, 644fr);
+  grid-template-columns: minmax(0, 800fr) minmax(0, 627fr);
   grid-template-areas:
     "head gauge"
     "list gauge"
     "foot gauge";
+  grid-template-rows: auto auto 1fr;
   column-gap: clamp(16px, 1.51vw, 29px);
   align-items: start;
+  /* Everything inside is sized off the card, not the viewport, so the two
+     columns keep the layout's proportions at every width instead of drifting
+     apart between the 1920 design and a laptop. 1 design px = 0.0653cqw. */
+  container-type: inline-size;
   max-width: 1524px;
   margin: 0 auto;
-  padding: clamp(36px, 3.13vw, 60px) clamp(24px, 1.56vw, 30px) clamp(30px, 3.13vw, 60px) clamp(24px, 2.03vw, 39px);
-  border: 2px solid #f0dcb4;
+  /* Design at 1920 (card 1524 wide): the dial sits 51px below the card's top
+     line and 62px above its bottom one; the text column starts 24px lower still
+     (see .scoreHead). The card is its own query container, so its own padding
+     stays in vw — only its children may use cqw. */
+  padding: clamp(26px, 2.66vw, 51px) clamp(24px, 1.56vw, 30px) clamp(26px, 3.23vw, 62px) clamp(24px, 2.03vw, 39px);
+  border: 2px solid #efdcbb;
   border-radius: 34px;
-  background: #fdfcf8;
+  background: #fcfcfc;
   box-shadow: 0 10px 40px rgba(120, 90, 40, 0.08);
 }
 
 .scoreHead {
   grid-area: head;
+  /* The layout drops the text column 24px below the dial's top edge. */
+  margin-top: clamp(0px, 1.57cqw, 24px);
 }
 
 /* The head ornament's lines run ~285px a side in the layout; the foot's ~190px. */
@@ -403,185 +417,100 @@
 }
 
 .scoreTitle {
-  margin-top: clamp(18px, 1.98vw, 38px);
+  margin-top: clamp(18px, 2.48cqw, 38px);
   font-family: var(--font-serif);
-  font-size: clamp(32px, 3.28vw, 63px); /* design ink 775px wide */
+  font-size: clamp(32px, 4.11cqw, 63px); /* design ink 775px wide */
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.04em;
-  color: #111;
+  color: #0f0f0f;
 }
 
 /* The layout's grotesque runs ~4% narrower than Montserrat, so 19px here
    reproduces its 736px first line and its wrap points; 1.58 keeps the 30px pitch. */
 .scoreBody,
 .scoreFoot p {
-  margin-top: clamp(14px, 0.83vw, 16px);
+  margin-top: clamp(14px, 1.05cqw, 16px);
   font-family: var(--font-sans);
-  font-size: clamp(15px, 0.99vw, 19px);
+  font-size: clamp(15px, 1.24cqw, 19px);
+  font-weight: 300; /* brand card: Montserrat Light for body copy */
   line-height: 1.58;
-  color: #303549; /* sampled: a dark navy-slate, not warm grey */
+  color: #4b4b4b;
 }
 
 .benefits {
   display: grid;
   grid-area: list;
-  gap: clamp(12px, 0.73vw, 14px); /* design rows on a ~70px pitch */
-  margin: clamp(16px, 1.04vw, 20px) 0 0;
+  gap: clamp(10px, 0.85cqw, 13px); /* design: the three rows over 192px */
+  margin: clamp(16px, 2cqw, 30px) 0 0;
   padding: 0;
   list-style: none;
 }
 
 .benefits li {
   display: grid;
-  grid-template-columns: 44px 1fr;
-  column-gap: 18px;
+  grid-template-columns: clamp(30px, 2.87cqw, 44px) 1fr;
+  column-gap: clamp(12px, 1.18cqw, 18px);
   align-items: center;
   font-family: var(--font-sans);
-  font-size: clamp(15px, 0.99vw, 19px);
+  font-size: clamp(15px, 1.24cqw, 19px);
+  font-weight: 300;
   line-height: 1.58;
-  color: #303549;
+  color: #4b4b4b;
 }
 
 .benefits li > span {
   padding: 4px 0 4px 18px;
-  border-left: 1px solid #e3d7c2;
+  border-left: 1px solid #e7dfd1;
 }
 
 .benefits strong {
   font-weight: 600;
-  color: #1d2740;
+  color: #0f0f0f;
 }
 
 .benefitIcon {
+  width: 100%;
+  height: auto;
   color: var(--gold);
 }
 
 .scoreFoot {
   grid-area: foot;
-  margin-top: clamp(16px, 1.56vw, 30px);
+  /* Pinned to the bottom of the card the way the layout sets it, so any slack
+     falls between the benefit list and this block rather than under the button. */
+  align-self: end;
+  margin-top: clamp(16px, 1.96cqw, 30px);
 }
 
+/* Sampled down the client's own button artwork ("3./3g.png"): a vertical gold
+   fall from #fdea8f to #ad8539, with both ends a shade deeper. */
 .scoreButton {
   width: 100%; /* design: the whole left column */
-  min-height: clamp(48px, 3.23vw, 62px);
-  margin-top: clamp(10px, 0.63vw, 12px);
-  font-size: clamp(17px, 1.15vw, 22px);
+  min-height: clamp(48px, 4.05cqw, 62px);
+  margin-top: clamp(10px, 0.78cqw, 12px);
+  border-radius: 10px;
+  background:
+    linear-gradient(90deg, rgba(120, 80, 20, 0.22) 0%, rgba(120, 80, 20, 0) 3%, rgba(120, 80, 20, 0) 97%, rgba(120, 80, 20, 0.24) 100%),
+    linear-gradient(180deg, #fdea8f 0%, #f4d278 20%, #e3bf6a 40%, #d5b15d 60%, #c39c4a 80%, #ad8539 100%);
+  box-shadow: 0 4px 14px rgba(160, 120, 50, 0.26);
+  color: #0f0f0f;
+  font-size: clamp(17px, 1.44cqw, 22px);
 }
 
+/* The dial is the client's own artwork from the 18.9 asset drop ("3./3A.png"),
+   cropped to its panel at 629x658 — title, scale, range row and pill are all
+   baked in. The crop keeps the card's own #fcfcfc outside its rounded border,
+   which is the card's background here, so the corners need no clipping. */
 .gaugeCard {
   grid-area: gauge;
   align-self: center;
-  padding: 26px 26px 26px;
-  border: 1px solid #e0cba0;
-  border-radius: 28px;
-  background: #fffdf9;
-  box-shadow: 0 4px 24px rgba(120, 90, 40, 0.06);
-  text-align: center;
 }
 
-/* The layout flanks the star above the title with short ~95px lines. */
-.gaugeCard > .divider::before,
-.gaugeCard > .divider::after {
-  width: min(95px, 26%);
-}
-
-.gaugeTitle {
-  margin: 6px 0 0;
-  font-family: var(--font-caps);
-  font-size: clamp(18px, 1.93vw, 37px); /* design ink 495px wide */
-  line-height: 1.3;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #1f2433;
-}
-
-/* Desktop: a bare star below the title; mobile keeps its divider instead. */
-.starSolo {
-  display: block;
-  width: 16px;
-  height: 16px;
-  margin: 4px auto 0;
-}
-
-.gaugeDividerMobile {
-  display: none;
-}
-
-.gauge {
+.gaugeArt {
   display: block;
   width: 100%;
-  margin: 0 auto;
-  overflow: visible;
-}
-
-.gaugeTick {
-  font-family: var(--font-serif);
-  font-size: 20px;
-  fill: #1f2433;
-}
-
-.gaugeValue {
-  font-family: var(--font-serif);
-  font-size: 98px;
-  font-weight: 700;
-  fill: #111;
-}
-
-.gaugeOutOf {
-  font-family: var(--font-serif);
-  font-size: 34px;
-  fill: var(--gold);
-}
-
-/* The layout stacks the star, range row and pill over the white circle's lower
-   arc, which the svg lets spill past its box (overflow: visible). */
-.gaugeStar {
-  display: block; /* inline-block swallowed the negative margin inside its line box */
-  width: 24px;
-  height: 24px;
-  margin: -26px auto 0;
-}
-
-.gaugeRange {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 22px;
-  margin-top: 16px;
-  font-size: clamp(13px, 0.89vw, 17px);
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #1f2433;
-}
-
-.gaugeArrow {
-  width: clamp(36px, 2.9vw, 56px);
   height: auto;
-  color: var(--gold);
-}
-
-.gaugePill {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 16px;
-  padding: clamp(12px, 0.94vw, 18px) clamp(18px, 1.35vw, 26px);
-  border-radius: 999px;
-  background: #0d0d0d;
-  font-size: clamp(13px, 1.09vw, 21px);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: #e8bd63;
-}
-
-.gaugePill .star {
-  width: 26px;
-  height: 26px;
-  background: #e8bd63;
 }
 
 /* ---------- Who this is for ---------- */
@@ -1324,7 +1253,7 @@
   .gaugeCard {
     justify-self: center;
     width: 100%;
-    max-width: 560px;
+    max-width: 440px;
   }
 
   .gapList {
@@ -1566,57 +1495,11 @@
     letter-spacing: 0.14em;
   }
 
+  /* The mobile master shows the dial at roughly three quarters of the screen. */
   .gaugeCard {
-    padding: 8px 12px 12px;
-    border: 1.5px solid #e9c98c;
-  }
-
-  /* The mobile design has no divider above the card title */
-  .gaugeCard > .divider:first-child {
-    display: none;
-  }
-
-  /* Mobile keeps its line-star-line divider below the title, not the bare star. */
-  .starSolo {
-    display: none;
-  }
-
-  .gaugeDividerMobile {
-    display: flex;
-  }
-
-  .gaugeTitle {
-    margin: 2px 0 4px;
-    font-size: 15px;
-  }
-
-  .gauge {
-    max-width: 222px;
-    margin-top: 0;
-  }
-
-  .gaugeStar {
-    width: 14px;
-    height: 14px;
-    margin-top: -12px;
-  }
-
-  .gaugeRange {
-    gap: 10px;
-    margin-top: 0;
-    font-size: 10px;
-  }
-
-  .gaugePill {
-    margin-top: 8px;
-    padding: 7px 14px;
-    font-size: 11.5px;
-    letter-spacing: 0.12em;
-  }
-
-  .gaugePill .star {
-    width: 16px;
-    height: 16px;
+    width: 100%;
+    max-width: 288px;
+    margin: 0 auto;
   }
 
   .who {

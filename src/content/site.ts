@@ -54,7 +54,9 @@ export const landing = {
   ],
   score: {
     title: "Get Your Visibility Score Free",
-    body: "The first step to improving your visibility is knowing exactly where your gap is. Take this 3-minute Visibility Assessment to uncover what may be keeping you from standing out, being seen, and being chosen for the opportunities you want.",
+    // The "\n"s are the layout's own line breaks (desktop only), matching the
+    // client's "3.NEW - WITH BORDER" card.
+    body: "The first step to improving your visibility is knowing exactly where your gap is.\nTake this 3-minute Visibility Assessment to uncover what may be keeping you\nfrom standing out, being seen, and being chosen for the opportunities you want.",
     bullets: [
       { icon: "target", strong: "Discover your Visibility Score,", rest: " from 0 to 100, and what it means." },
       { icon: "search", strong: "Identify your primary visibility gap", rest: " and the area\nthat needs the most attention." },
