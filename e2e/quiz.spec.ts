@@ -247,7 +247,8 @@ test("pop-up and results page follow the compact quiz style", async ({ page }) =
   expect(pop.width).toBe(Math.min(460, pop.vw - 40));
   expect(pop.title).toBe(pop.vw >= 640 ? "32px" : "26px");
 
-  // Results: 800px header on black, cream body kept, narrower content and smaller type.
+  // Results: full-bleed header on black, cream body kept, and the column and type
+  // sizes the client's results PDF asks for.
   await page.goto("/results?r=v1BBABACCCDCCBCBBCBBC&c=emma-ab12c");
   await expect(page.getByTestId("score")).toBeVisible();
   const r = await page.evaluate(() => {
@@ -255,6 +256,7 @@ test("pop-up and results page follow the compact quiz style", async ({ page }) =
     const score = document.querySelector('[data-testid="score"]')!;
     return {
       vw: window.innerWidth,
+      pageW: document.documentElement.clientWidth,
       img: header.querySelector("img")!.getBoundingClientRect().width,
       headerBg: getComputedStyle(header).backgroundColor,
       mainBg: getComputedStyle(document.querySelector("main")!).backgroundColor,
@@ -264,16 +266,16 @@ test("pop-up and results page follow the compact quiz style", async ({ page }) =
       overflow: document.documentElement.scrollWidth - window.innerWidth,
     };
   });
-  expect(r.img).toBe(Math.min(800, r.vw));
+  expect(r.img).toBe(r.pageW);
   expect(r.headerBg).toBe("rgb(0, 0, 0)");
   expect(r.mainBg).toBe("rgb(247, 245, 237)");
   expect(r.overflow).toBeLessThanOrEqual(0);
   if (r.vw >= 1000) {
-    expect(r.card).toBe(880);
-    expect(r.h1).toBe("38px");
-    expect(r.score).toBe("104px");
+    expect(r.card).toBe(980);
+    expect(r.h1).toBe("44px");
+    expect(r.score).toBe("145px");
   } else {
-    expect(r.h1).toBe("28px");
+    expect(r.h1).toBe("30px");
     expect(r.score).toBe("88px");
   }
 });
