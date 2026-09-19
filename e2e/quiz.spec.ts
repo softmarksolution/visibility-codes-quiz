@@ -248,7 +248,9 @@ test("pop-up and results page follow the compact quiz style", async ({ page }) =
   expect(pop.title).toBe(pop.vw >= 640 ? "32px" : "26px");
 
   // Results: full-bleed header on black, cream body kept, and the column and type
-  // sizes the client's results PDF asks for.
+  // sizes the client's results PDF asks for — the column since widened from the
+  // PDF's 980 to the 1200 --shell, which the client asked for to close the dead
+  // cream margins either side of the report.
   await page.goto("/results?r=v1BBABACCCDCCBCBBCBBC&c=emma-ab12c");
   await expect(page.getByTestId("score")).toBeVisible();
   const r = await page.evaluate(() => {
@@ -271,7 +273,7 @@ test("pop-up and results page follow the compact quiz style", async ({ page }) =
   expect(r.mainBg).toBe("rgb(247, 245, 237)");
   expect(r.overflow).toBeLessThanOrEqual(0);
   if (r.vw >= 1000) {
-    expect(r.card).toBe(980);
+    expect(r.card).toBe(1200); // the --shell width on .main
     expect(r.h1).toBe("44px");
     expect(r.score).toBe("145px");
   } else {
