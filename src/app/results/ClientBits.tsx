@@ -41,21 +41,6 @@ function useCopied() {
   return { copied, copy };
 }
 
-export function CopyField({ value, label, buttonLabel }: { value: string; label: string; buttonLabel: string }) {
-  const { copied, copy } = useCopied();
-  return (
-    <div className={styles.copyField}>
-      <label className="sr-only" htmlFor="referral-link">
-        {label}
-      </label>
-      <input id="referral-link" className={styles.copyInput} readOnly value={value} onFocus={(e) => e.currentTarget.select()} />
-      <button type="button" className={styles.copyButton} onClick={() => copy(value)}>
-        {copied ? "Copied" : buttonLabel}
-      </button>
-    </div>
-  );
-}
-
 export function ReportLinkButton({ label }: { label: string }) {
   const { copied, copy } = useCopied();
   return (
