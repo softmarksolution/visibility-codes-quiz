@@ -7,7 +7,7 @@ import { PILLAR_DISPLAY_ORDER, badgeTone, masterclass, pillarCopy, referral, res
 import { googleCalendarUrl } from "@/lib/calendar";
 import { PILLAR_NAMES, type PillarId } from "@/lib/quiz/questions";
 import { decodeReportCode } from "@/lib/quiz/reportCode";
-import { badgeFor, computeResults } from "@/lib/quiz/scoring";
+import { badgeFor, computeResults, gapRatingFor } from "@/lib/quiz/scoring";
 import { sanitizeRef } from "@/lib/referral";
 import { CopyField, Greeting, ReportLinkButton, RetakeButton } from "./ClientBits";
 import styles from "./results.module.css";
@@ -43,7 +43,7 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
 
   return (
     <>
-      <HeaderBanner variant="compact" />
+      <HeaderBanner />
       <main className={styles.main}>
         <section className={styles.intro}>
           <p className={styles.eyebrow}>{resultsCopy.eyebrow}</p>
@@ -75,14 +75,15 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
             </div>
             <dl className={styles.stats}>
               <Stat icon="compass" label={resultsCopy.gapLabel} value={`${results.gap}%`} />
-              {/* Visibility Gap Rating intentionally hidden until the client defines its bands. */}
+              {/* The rating's bands are a DRAFT — see GAP_RATINGS in lib/quiz/scoring.ts. */}
+              <Stat icon="bars" label={resultsCopy.ratingLabel} value={gapRatingFor(results.gap)} />
               <Stat icon="alert" label={resultsCopy.blockerLabel} value={`${gapName} Gap`} />
               <Stat icon="rosette" label={resultsCopy.strongestLabel} value={strongestName} />
             </dl>
           </div>
 
           <div className={styles.means}>
-            <Image src="/brand/icon-lightbulb.webp" alt="" width={96} height={96} className={styles.blendIcon} />
+            <Image src="/brand/icon-lightbulb.webp" alt="" width={120} height={120} className={styles.blendIcon} />
             <div>
               <h3 className={styles.meansTitle}>{resultsCopy.whatThisMeansTitle}</h3>
               <p>
@@ -136,7 +137,7 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
               const badge = badgeFor(results, id);
               return (
                 <li key={id} className={styles.pillarCard}>
-                  <Image src={`/brand/icon-${id}.webp`} alt="" width={84} height={84} className={styles.blendIcon} />
+                  <Image src={`/brand/icon-${id}.webp`} alt="" width={92} height={92} className={styles.blendIcon} />
                   <h3 className={styles.pillarName}>{PILLAR_NAMES[id]}</h3>
                   <p className={styles.pillarPercent}>
                     {results.pillars[id].display}
@@ -261,7 +262,7 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
             <ul className={styles.perks}>
               {referral.perks.map((perk) => (
                 <li key={perk.title}>
-                  <Icon name={perk.icon} size={40} />
+                  <Icon name={perk.icon} size={50} />
                   <h3>{perk.title}</h3>
                   <p>{perk.text}</p>
                 </li>
@@ -272,7 +273,7 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
 
         <section className={`${styles.card} ${styles.reportLink}`}>
           <span className={styles.docIcon}>
-            <Icon name="document" size={30} />
+            <Icon name="document" size={38} />
           </span>
           <div>
             <p>{resultsCopy.reportLinkText}</p>
@@ -305,7 +306,7 @@ function Panel({ title, pillar, percent, text }: { title: string; pillar: Pillar
   return (
     <article className={styles.darkPanel}>
       <h2 className={styles.panelEyebrow}>{title}</h2>
-      <Icon name={PILLAR_ICON[pillar]} size={44} className={styles.panelIcon} />
+      <Icon name={PILLAR_ICON[pillar]} size={56} className={styles.panelIcon} />
       <h3 className={styles.panelName}>{PILLAR_NAMES[pillar]}</h3>
       <p className={styles.panelPercent}>{percent}%</p>
       <div className={styles.glow} aria-hidden="true" />

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { QUESTIONS, SCORED_QUESTIONS, type Answers, type PillarId } from "./questions";
-import { badgeFor, computeResults, levelForScore, PILLAR_MAX } from "./scoring";
+import { badgeFor, computeResults, gapRatingFor, levelForScore, PILLAR_MAX } from "./scoring";
 
 /** Build answers choosing, for each scored question, the option id that gives `points`. */
 function answersWithPoints(points: Partial<Record<PillarId, number[]>>): Answers {
@@ -148,5 +148,22 @@ describe("badgeFor", () => {
     expect(badgeFor(r, "recognition")).toBe("Strongest Area");
     expect(badgeFor(r, "connection")).toBe("Building");
     expect(badgeFor(r, "opportunity")).toBe("Developing");
+  });
+});
+
+describe("gapRatingFor", () => {
+  it("reads the client PDF's 52% gap as Significant", () => {
+    expect(gapRatingFor(52)).toBe("Significant");
+  });
+
+  it("names each band at its boundaries", () => {
+    expect(gapRatingFor(0)).toBe("Minimal");
+    expect(gapRatingFor(20)).toBe("Minimal");
+    expect(gapRatingFor(21)).toBe("Moderate");
+    expect(gapRatingFor(35)).toBe("Moderate");
+    expect(gapRatingFor(36)).toBe("Significant");
+    expect(gapRatingFor(55)).toBe("Significant");
+    expect(gapRatingFor(56)).toBe("Critical");
+    expect(gapRatingFor(100)).toBe("Critical");
   });
 });

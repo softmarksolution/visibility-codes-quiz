@@ -47,6 +47,27 @@ export function levelForScore(score: number): LevelName {
   return (LEVELS.find((l) => score >= l.min) ?? LEVELS[LEVELS.length - 1]!).name;
 }
 
+/**
+ * The "Visibility Gap Rating" row on the results page.
+ *
+ * DRAFT — the client has never defined these bands. They are the developer's,
+ * approved by the user on 2026-09-19 so the row can ship, and they reproduce
+ * the one data point the client's results PDF gives: a 52% gap reads
+ * SIGNIFICANT. Replace them as soon as the client sends real bands.
+ */
+export const GAP_RATINGS = [
+  { min: 56, name: "Critical" },
+  { min: 36, name: "Significant" },
+  { min: 21, name: "Moderate" },
+  { min: 0, name: "Minimal" },
+] as const;
+
+export type GapRating = (typeof GAP_RATINGS)[number]["name"];
+
+export function gapRatingFor(gap: number): GapRating {
+  return (GAP_RATINGS.find((r) => gap >= r.min) ?? GAP_RATINGS[GAP_RATINGS.length - 1]!).name;
+}
+
 /** Throws if any scored question is unanswered or has an unknown option. */
 export function computeResults(answers: Answers): QuizResults {
   const points = emptyTotals();

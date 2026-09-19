@@ -23,6 +23,20 @@
   object-fit: contain;
 }
 
+/* Cover page: the footer's wordmark, whole, on the same black band */
+.bannerLogoBand {
+  display: flex;
+  justify-content: center;
+  padding: 16px 20px 18px;
+}
+
+.bannerLogo {
+  display: block;
+  width: 208px; /* the footer wordmark at its own size — see .footerLogo */
+  height: auto;
+  mix-blend-mode: screen; /* the artwork is gold on black; screen drops the black */
+}
+
 .footer {
   background: radial-gradient(ellipse 60% 120% at 50% 100%, rgba(181, 119, 44, 0.28), transparent 60%), #000;
   color: #e6c98f;
