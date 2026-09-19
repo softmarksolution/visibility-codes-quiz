@@ -732,7 +732,10 @@
     max-width: none;
     height: clamp(260px, 72vw, 420px); /* explicit height beats the base aspect-ratio */
     margin-bottom: 18px;
-    background-position: center 18%;
+    /* The band is a tall portrait squeezed into a short strip, so `cover` throws
+       away most of its height. Anchoring it to the top keeps her head whole
+       instead of slicing the crop through her forehead. */
+    background-position: center top;
     -webkit-mask-image: none;
     mask-image: none;
   }
@@ -1526,11 +1529,13 @@
     gap: 14px;
   }
 
-  /* The mobile design crops the photo to the three faces, without the name labels */
+  /* The mobile design crops the photo to the three faces, without the name
+     labels. The crop now hangs off the TOP edge: a centred one cut through all
+     three heads, while dropping the bottom instead loses only the lettering. */
   .whoPhoto {
     aspect-ratio: 390 / 262;
     object-fit: cover;
-    object-position: 50% 45%;
+    object-position: 50% 0%;
   }
 
   .whoText {
@@ -1646,8 +1651,11 @@
     background: #000;
   }
 
+  /* Same rule as the other two mobile crops: the trim comes off the bottom, so
+     the red-carpet backdrop and her head arrive intact at the section's top. */
   .meetPhoto {
     aspect-ratio: 390 / 340;
+    object-position: center top;
   }
 
   .meetText {
