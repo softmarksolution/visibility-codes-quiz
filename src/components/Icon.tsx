@@ -78,6 +78,11 @@ const paths = {
       <path d="M7.5 14h.01M12 14h.01M16.5 14h.01M7.5 17.5h.01M12 17.5h.01M16.5 17.5h.01" strokeWidth="2.2" />
     </>
   ),
+  bars: (
+    <>
+      <path d="M4.5 20.5V13M10.5 20.5V8.5M16.5 20.5V4" strokeWidth="2.4" />
+    </>
+  ),
   alert: (
     <>
       <path d="M12 3.5L2.5 20.5h19z" />

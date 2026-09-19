@@ -3,8 +3,30 @@ import Link from "next/link";
 import { brand } from "@/content/site";
 import styles from "./SiteChrome.module.css";
 
-/** "compact" is the 800px-wide banner used on the quiz and results pages. */
-export function HeaderBanner({ variant = "default" }: { variant?: "default" | "compact" }) {
+/**
+ * "compact" is the 800px-wide banner used on the quiz and results pages.
+ * "logo" swaps the wide banner for the footer's wordmark artwork, so the
+ * cover page shows the whole logo instead of a crop through it.
+ */
+export function HeaderBanner({ variant = "default" }: { variant?: "default" | "compact" | "logo" }) {
+  if (variant === "logo") {
+    return (
+      <header className={`${styles.banner} ${styles.bannerLogoBand}`}>
+        <Link href="/" aria-label="The Visibility Codes home">
+          <Image
+            src="/brand/footer-logo-v3.webp"
+            alt="The Visibility Codes"
+            width={1300}
+            height={500}
+            priority
+            sizes="208px"
+            className={styles.bannerLogo}
+          />
+        </Link>
+      </header>
+    );
+  }
+
   return (
     <header className={styles.banner}>
       <Link href="/" aria-label="The Visibility Codes home">
@@ -31,7 +53,9 @@ export function SiteFooter() {
           <p className={styles.legal}>
             <Link href={brand.privacyUrl}>Privacy Policy</Link>
             <span aria-hidden="true">|</span>
-            <Link href={brand.termsUrl}>Terms of Use</Link>
+            {/* Both the 18.9 landing layout and the results PDF label this link
+                "Terms and Conditions"; the page itself stays /terms-of-use. */}
+            <Link href={brand.termsUrl}>Terms and Conditions</Link>
           </p>
         </div>
         <Image src="/brand/footer-logo-v3.webp" alt="The Visibility Codes" width={208} height={80} className={styles.footerLogo} />

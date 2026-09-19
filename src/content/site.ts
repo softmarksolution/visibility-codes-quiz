@@ -415,6 +415,7 @@ export const resultsCopy = {
   intro: ["Your assessment has identified how effectively you are currently positioned to be seen, recognised, remembered and ", "chosen", " for opportunities."],
   scoreTitle: "Your Visibility Score",
   gapLabel: "Visibility Gap",
+  ratingLabel: "Visibility Gap Rating",
   blockerLabel: "Primary Visibility Blocker",
   strongestLabel: "Strongest Visibility Area",
   whatThisMeansTitle: "What this means",

@@ -3,12 +3,16 @@
    PAGE.png" (960 wide, content column ~832): headline 50px Playfair on a 60px
    pitch, body 22px on a 35px pitch, three Montserrat pills, and a 420x66 gold
    START QUIZ in Montserrat at 0.3em, as the client's COVER PAGE FONT CARD puts
-   the eyebrow, pills and CTA in Montserrat. */
+   the eyebrow, pills and CTA in Montserrat.
+
+   Tightened one step from the master on 2026-09-19 at the user's request: the
+   desktop type steps down (headline 44, body 19, pills 13.5) and the vertical
+   gaps close up, so the block reads compact instead of airy. */
 
 .page {
   max-width: 860px;
   margin: 0 auto;
-  padding: 43px 20px 40px;
+  padding: 30px 20px 34px;
   background: var(--cream);
   color: var(--body);
   text-align: center;
@@ -25,35 +29,35 @@
 }
 
 .title {
-  margin: 24px auto 0;
+  margin: 16px auto 0;
   max-width: 800px;
   font-family: var(--font-serif);
   font-weight: 700;
   color: #14161a;
-  font-size: 50px;
-  line-height: 1.18;
+  font-size: 44px;
+  line-height: 1.15;
   letter-spacing: normal;
   text-wrap: balance;
 }
 
 .stats {
-  margin: 46px auto 0;
+  margin: 28px auto 0;
   padding: 0;
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
+  gap: 18px;
 }
 
 .stats li {
-  padding: 17px 30px;
+  padding: 13px 24px;
   border: 1px solid rgba(180, 140, 70, 0.7);
   border-radius: 9px;
   background: transparent;
   color: #2b3644;
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 13.5px;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -61,22 +65,22 @@
 }
 
 .copy {
-  margin-top: 48px;
+  margin-top: 28px;
   display: grid;
-  gap: 40px;
+  gap: 20px;
 }
 
 .copy p {
-  max-width: 760px;
+  max-width: 720px;
   margin-inline: auto;
   color: #39434f;
-  font-size: 22px;
-  line-height: 1.55;
+  font-size: 19px;
+  line-height: 1.5;
 }
 
 .button {
   display: inline-block;
-  margin-top: 25px;
+  margin-top: 22px;
   min-width: 420px;
   padding: 14px 48px; /* master button is 420x66 */
   border-radius: 8px;
@@ -96,9 +100,9 @@
 }
 
 .footnote {
-  margin-top: 18px;
+  margin-top: 14px;
   color: #6b7480;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.5;
 }
 

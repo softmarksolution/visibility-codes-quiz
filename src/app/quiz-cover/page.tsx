@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function QuizCoverPage() {
   return (
     <>
-      <HeaderBanner />
+      <HeaderBanner variant="logo" />
       <RequireLead />
       <main className={styles.page}>
         <p className={styles.eyebrow}>{quizCover.eyebrow}</p>
