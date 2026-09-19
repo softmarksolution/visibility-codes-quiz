@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Icon, type IconName } from "@/components/Icon";
 import { HeaderBanner, SiteFooter } from "@/components/SiteChrome";
 import { PILLAR_DISPLAY_ORDER, badgeTone, pillarCopy, resultsCopy } from "@/content/site";
+import { actionPlanUrl } from "@/lib/actionPlan";
 import { PILLAR_NAMES, type PillarId } from "@/lib/quiz/questions";
 import { decodeReportCode } from "@/lib/quiz/reportCode";
 import { badgeFor, computeResults, gapRatingFor } from "@/lib/quiz/scoring";
@@ -114,9 +115,13 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
             </ul>
             <p className={styles.nextStepCta}>
               <span className={styles.nextStepRule} aria-hidden="true" />
-              <Link href={`/checkout?r=${encodeURIComponent(reportCode)}`} className={styles.nextStepButton}>
+              {/* Straight to the client's own checkout page for the edition this
+                  result calls for. It carries the price, the inclusions, the
+                  waitlist question and the payment, so there is nothing left for
+                  an intermediate page on this site to add. */}
+              <a href={actionPlanUrl(results.primaryGap)} className={styles.nextStepButton}>
                 {resultsCopy.nextStep.button}
-              </Link>
+              </a>
               <span className={styles.nextStepRule} aria-hidden="true" />
             </p>
           </div>
