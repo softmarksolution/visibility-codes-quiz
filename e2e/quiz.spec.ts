@@ -77,9 +77,6 @@ test("completes the quiz, unlocks the report and reopens it from the report link
   await expect(page.getByRole("heading", { name: "Emma, here are your results." })).toBeVisible();
   await expect(page.getByTestId("score")).toHaveText("100");
   await expect(page.getByTestId("level")).toHaveText("Chosen Expert");
-  await expect(page.getByRole("textbox", { name: "Your referral link" })).toHaveValue(
-    /https:\/\/www\.truevisibility\.com\/waitlist\?ref=emma-[a-z0-9]{5}/,
-  );
 
   // Same link on another device: no stored name, same report.
   const reportUrl = page.url();

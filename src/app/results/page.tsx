@@ -3,13 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Icon, type IconName } from "@/components/Icon";
 import { HeaderBanner, SiteFooter } from "@/components/SiteChrome";
-import { PILLAR_DISPLAY_ORDER, badgeTone, masterclass, pillarCopy, referral, resultsCopy } from "@/content/site";
-import { googleCalendarUrl } from "@/lib/calendar";
+import { PILLAR_DISPLAY_ORDER, badgeTone, pillarCopy, resultsCopy } from "@/content/site";
 import { PILLAR_NAMES, type PillarId } from "@/lib/quiz/questions";
 import { decodeReportCode } from "@/lib/quiz/reportCode";
 import { badgeFor, computeResults, gapRatingFor } from "@/lib/quiz/scoring";
-import { sanitizeRef } from "@/lib/referral";
-import { CopyField, Greeting, ReportLinkButton, RetakeButton } from "./ClientBits";
+import { Greeting, ReportLinkButton, RetakeButton } from "./ClientBits";
 import styles from "./results.module.css";
 
 export const metadata: Metadata = {
@@ -34,12 +32,9 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
   if (!answers) return <InvalidReport />;
 
   const results = computeResults(answers);
-  const ownReferral = sanitizeRef(params.c);
   const strongestName = PILLAR_NAMES[results.strongest];
   const gapName = PILLAR_NAMES[results.primaryGap];
   const [meansBefore = "", meansAfter = ""] = resultsCopy.whatThisMeans[results.level].split("{gap}");
-  const action = pillarCopy[results.primaryGap].action;
-  const bonus = resultsCopy.bonus(gapName);
 
   return (
     <>
@@ -165,111 +160,6 @@ export default async function ResultsPage({ searchParams }: { searchParams: Sear
             text={pillarCopy[results.primaryGap].gap}
           />
         </section>
-
-        <section className={`${styles.card} ${styles.action}`} aria-labelledby="action-title">
-          <div className={styles.actionMain}>
-            <span className={styles.actionIcon}>
-              <Icon name="target" size={44} />
-            </span>
-            <div>
-              <h2 id="action-title" className={styles.actionTitle}>
-                {resultsCopy.quickActionTitle}
-              </h2>
-              <p className={styles.actionLead}>{action.title}</p>
-              <p className={styles.actionSteps}>{action.steps}</p>
-              <p className={styles.actionClosing}>{action.closing}</p>
-            </div>
-          </div>
-          <div className={styles.bonus}>
-            <Image src="/brand/icon-gift.webp" alt="" width={96} height={96} className={styles.blendIcon} />
-            <p>{bonus.before}</p>
-            <Link href={`/checkout?r=${encodeURIComponent(reportCode)}`} className={styles.bonusCta}>
-              {bonus.button}
-            </Link>
-          </div>
-        </section>
-
-        <section className={styles.masterclass} aria-labelledby="masterclass-title">
-          <div className={styles.mcGrid}>
-            <div>
-              <h2 id="masterclass-title" className={styles.mcTitle}>
-                {masterclass.title}
-              </h2>
-              <p className={styles.mcSubtitle}>{masterclass.subtitle}</p>
-              <p className={styles.mcBio}>{masterclass.bio}</p>
-              <p className={styles.mcLearnIntro}>{masterclass.learnIntro}</p>
-              <ul className={styles.learn}>
-                {masterclass.learn.map((item) => (
-                  <li key={item.title}>
-                    <Icon name={item.icon} size={34} />
-                    <strong>{item.title}</strong>
-                    <span>{item.text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <ul className={styles.dates}>
-              {masterclass.dates.map((d) => (
-                <li key={d.date}>
-                  <Icon name={d.icon} size={40} />
-                  <div>
-                    {d.lines.map((line) => (
-                      <span key={line} className={styles.dateLine}>
-                        {line}
-                      </span>
-                    ))}
-                    <strong className={styles.dateValue}>{d.date}</strong>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className={styles.mcButtons}>
-            <a
-              className={`btn-gold ${styles.mcButton}`}
-              href={googleCalendarUrl(masterclass.calendarEvent)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon name="calendar" size={22} />
-              {masterclass.googleButton}
-            </a>
-            <a className={styles.outlineButton} href="/api/calendar">
-              <Icon name="apple" size={22} />
-              {masterclass.icsButton}
-            </a>
-          </div>
-        </section>
-
-        {ownReferral && (
-          <section className={`${styles.card} ${styles.refer}`} aria-labelledby="refer-title">
-            <div className={styles.referHead}>
-              <span className={styles.roundIcon}>
-                <Icon name="people" size={38} />
-              </span>
-              <div>
-                <h2 id="refer-title" className={styles.referTitle}>
-                  {referral.title}
-                </h2>
-                <p className={styles.referBody}>{referral.body}</p>
-                <CopyField
-                  value={`${referral.baseUrl}?ref=${ownReferral}`}
-                  label="Your referral link"
-                  buttonLabel={referral.button}
-                />
-              </div>
-            </div>
-            <ul className={styles.perks}>
-              {referral.perks.map((perk) => (
-                <li key={perk.title}>
-                  <Icon name={perk.icon} size={50} />
-                  <h3>{perk.title}</h3>
-                  <p>{perk.text}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
 
         <section className={`${styles.card} ${styles.reportLink}`}>
           <span className={styles.docIcon}>
