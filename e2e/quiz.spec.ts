@@ -107,6 +107,35 @@ test("keeps progress after a reload and allows going back", async ({ page }) => 
   await expect(page.getByText("Question 2 of 28")).toBeVisible();
 });
 
+/* The opt-in used to save the lead to localStorage and nothing else, so anyone
+   who opted in and then abandoned the quiz never reached the CRM at all. The
+   pop-up must hand the lead straight to /api/optin — and must not wait for it,
+   because a slow or broken CRM cannot be allowed to strand the visitor. */
+test("the opt-in sends the lead to the CRM before the quiz starts", async ({ page }) => {
+  await page.goto("/");
+
+  // Hold the request open: the visitor should reach the cover page regardless.
+  let optin: { name?: string; email?: string; phone?: string } | undefined;
+  await page.route("**/api/optin", async (route) => {
+    optin = route.request().postDataJSON();
+    await new Promise((r) => setTimeout(r, 2000));
+    await route.fulfill({ status: 200, body: JSON.stringify({ ok: true, synced: true }) });
+  });
+
+  await page.getByRole("button", { name: /start assessment/i }).click();
+  await page.getByPlaceholder("Name").fill("Sam Tester");
+  await page.getByPlaceholder("Email").fill("sam@example.com");
+  await page.getByPlaceholder("Phone").fill("0400000000");
+  await page.getByRole("button", { name: /get my visibility score now/i }).click();
+
+  await expect(page).toHaveURL(/\/quiz-cover$/, { timeout: 1500 });
+  await expect.poll(() => optin).toEqual({
+    name: "Sam Tester",
+    email: "sam@example.com",
+    phone: "0400000000",
+  });
+});
+
 test("the quiz cover page sits behind the opt-in", async ({ page }) => {
   // Reaching it without filling the pop-up sends you back to the landing page,
   // so the opt-in cannot be skipped by typing the URL.

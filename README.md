@@ -80,13 +80,29 @@ These **Contact** custom fields are set up in the Katrina Kavvalos International
 Q1 (role) is saved as a tag only. The older `visibility_level` dropdown (its options don't match the
 scoring doc's level names) and `visibility_gap_rating` (no score bands yet) are left untouched.
 
-**Tags.** Each submission adds the answer tags from the questions document (role, goal, problem,
-platform, blocker, experience, intent) plus `visibility_quiz_completed`. On a retake, quiz tags from
-the previous attempt are removed; tags the quiz doesn't manage are never touched. GHL stores tags in lowercase.
+**Tags.** The funnel writes to GHL at two points, with one tag each:
+
+| When | Tag | Sent by |
+| --- | --- | --- |
+| The opt-in pop-up is submitted, before any question is answered | `visibility_quiz_optin` | `POST /api/optin` |
+| The report is unlocked after Q28 | `visibility_quiz_completed` | `POST /api/submit` |
+
+The opt-in sync carries name, email and phone — it is the only place the phone number is captured,
+so a lead who opts in and then abandons the quiz is still a reachable contact. The completion sync
+adds the answer tags from the questions document (role, goal, problem, platform, blocker,
+experience, intent) alongside `visibility_quiz_completed`.
+
+Anyone who finishes therefore carries **both** tags; anyone who dropped out carries only
+`visibility_quiz_optin`. That is the segment to follow up.
+
+On a retake, quiz tags from the previous attempt are removed. Tags the quiz doesn't manage are never
+touched — `visibility_quiz_optin` is deliberately outside that managed set (see `OPTIN_TAG` in
+`src/lib/quiz/tags.ts`), so completing the quiz can never strip it. GHL stores tags in lowercase.
 
 **Workflow.** The app calculates the Visibility Score itself, so no maths workflow is needed.
 To email the report, trigger a workflow on the tag `visibility_quiz_completed` and use
-`{{contact.visibility_report_url}}` in the email.
+`{{contact.visibility_report_url}}` in the email. For abandoned-quiz follow-up, trigger on
+`visibility_quiz_optin` with a filter excluding `visibility_quiz_completed`.
 
 ## Scoring
 

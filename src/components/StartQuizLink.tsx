@@ -77,7 +77,23 @@ export default function StartQuizLink({
     if (!EMAIL.test(email.trim())) return setError("Please enter a valid email address.");
     if (!phone.trim()) return setError("Please enter your phone number.");
     setError("");
-    saveLead({ name: name.trim(), email: email.trim(), phone: phone.trim() });
+    const lead = { name: name.trim(), email: email.trim(), phone: phone.trim() };
+    saveLead(lead);
+
+    /* Send the lead to the CRM now rather than waiting for the quiz to be
+       finished, so someone who opts in and then drops out is still a contact we
+       have. Deliberately not awaited: the visitor moves on at the speed of the
+       router, not the speed of GoHighLevel, and a CRM outage must not strand
+       them on the pop-up. `keepalive` lets the request finish even though the
+       page navigates out from under it. Failures are the server's to log —
+       there is nothing useful to tell the visitor here. */
+    void fetch("/api/optin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(lead),
+      keepalive: true,
+    }).catch(() => {});
+
     clearProgress();
     router.push("/quiz-cover");
   }
