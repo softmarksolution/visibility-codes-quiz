@@ -1,6 +1,12 @@
 .main {
+  /* One shell width for every block on the page (card, section, panels,
+     masterclass, nextStep), so the side gutters are set in one place. The
+     report used to sit in a 980px column, which left a wide dead cream margin
+     either side on a laptop; 1200 with a 12px outer gutter lets the content
+     run closer to the edges at every width. */
+  --shell: 1200px;
   background: var(--cream);
-  padding: 0 20px 56px;
+  padding: 0 12px 56px;
 }
 
 .goldText {
@@ -53,7 +59,7 @@
 
 /* Cards */
 .card {
-  max-width: 980px;
+  max-width: var(--shell);
   margin-left: auto;
   margin-right: auto;
   background: var(--card);
@@ -190,7 +196,7 @@
 
 /* Breakdown */
 .section {
-  max-width: 980px;
+  max-width: var(--shell);
   margin: 48px auto 0;
 }
 
@@ -296,7 +302,7 @@
 
 /* Dark panels */
 .panels {
-  max-width: 980px;
+  max-width: var(--shell);
   margin: 22px auto 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -439,7 +445,7 @@
 
 /* Masterclass */
 .masterclass {
-  max-width: 980px;
+  max-width: var(--shell);
   margin: 22px auto 0;
   padding: 30px 32px;
 }
@@ -1016,7 +1022,7 @@
   grid-template-columns: 150px minmax(0, 1fr);
   gap: 24px;
   align-items: center;
-  max-width: 980px; /* the results column, as .card */
+  max-width: var(--shell); /* the results column, as .card */
   margin: 22px auto 0;
   padding: 22px 28px 22px 22px;
   border: 2px solid #c9a35c;

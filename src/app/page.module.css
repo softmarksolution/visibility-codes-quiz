@@ -159,7 +159,14 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1920 / 1077;
+  /* The banner opens on 72px of dead black: its own glow only lifts off the
+     floor at y=54 and the "THE VISIBILITY" ink starts at y=95, so the band is
+     shown as 1920x1005 and object-position pins its bottom, cutting that air
+     off the top. The card offsets below are the design y coordinates minus the
+     same 72px, over the cropped height. */
+  aspect-ratio: 1920 / 1005;
+  object-fit: cover;
+  object-position: center bottom;
 }
 
 /* Right, per "LAYOUT - FINAL WEB DESIGN - 18.9.26.pdf" — the client's final layout,
@@ -173,9 +180,9 @@
 .heroCard {
   position: absolute;
   left: 64.38%; /* 1236 / 1920 */
-  top: 14.3%; /*  154 / 1077 */
+  top: 8.16%; /*  (154 - 72) / 1005, the 72px crop above */
   width: 30.26%; /*  581 / 1920 */
-  height: 70.38%; /*  758 / 1077 */
+  height: 75.42%; /*  758 / 1005 */
   border: 0;
   border-radius: 16px;
   display: flex;
@@ -349,7 +356,10 @@
   /* The 18.9 brand card for this section: gold accent #d4a24a, card surface
      #fcfcfc inside a warm-gold rule, body copy #4b4b4b, headings #0f0f0f. */
   --gold: #d4a24a;
-  padding: clamp(30px, 3.44vw, 66px) 24px clamp(60px, 7.45vw, 143px);
+  /* The design lists a 143px foot, which reads as a dead cream band under the
+     card, so the seam is halved to 71px; the WHY section keeps its own 88px of
+     air above the eyebrow. */
+  padding: clamp(30px, 3.44vw, 66px) 24px clamp(36px, 3.7vw, 71px);
   background: var(--cream);
 }
 
@@ -853,7 +863,9 @@
 /* Design at 1920: card 197..1735 (1538 wide), 129px below WHO and 164px above
    MEET; five 272px cards on 22px gutters; button 481x72. */
 .gapsWrap {
-  padding: clamp(60px, 6.72vw, 129px) 24px clamp(60px, 8.54vw, 164px);
+  /* The design's 129/164 cream margins read as dead bands either side of the
+     card, so both are halved (65/82); the card keeps its own inner padding. */
+  padding: clamp(30px, 3.36vw, 65px) 24px clamp(30px, 4.27vw, 82px);
   background: var(--cream);
 }
 
