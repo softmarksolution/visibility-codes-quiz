@@ -144,6 +144,37 @@ describe("syncLeadToGhl", () => {
     ]);
   });
 
+  it("sends the phone and surname the opt-in collected", async () => {
+    const { calls, fetchImpl } = fakeGhl();
+    await syncLeadToGhl({ ...payload, lastName: "Kavvalos", phone: "+1 (347) 428-0292" }, options(fetchImpl));
+    expect(calls.find((c) => c.path === "/contacts/upsert")!.body).toMatchObject({
+      firstName: "Emma",
+      lastName: "Kavvalos",
+      phone: "+1 (347) 428-0292",
+    });
+  });
+
+  /* The quiz sync has no phone to send. Sending `phone: ""` would wipe the
+     number the opt-in stored minutes earlier, so the key must be absent. */
+  it("omits phone and surname entirely when it has none", async () => {
+    const { calls, fetchImpl } = fakeGhl();
+    await syncLeadToGhl(payload, options(fetchImpl));
+    const body = calls.find((c) => c.path === "/contacts/upsert")!.body as Record<string, unknown>;
+    expect(body).not.toHaveProperty("phone");
+    expect(body).not.toHaveProperty("lastName");
+  });
+
+  /* The opt-in tag is set by a different route and is not in the quiz's managed
+     list, so finishing the quiz must leave it alone while still clearing the
+     quiz's own stale tags. */
+  it("leaves tags it does not manage — including the opt-in tag — in place", async () => {
+    const { calls, fetchImpl } = fakeGhl({ contactTags: ["role_coach", "visibility_quiz_optin", "vip_customer"] });
+    await syncLeadToGhl(payload, options(fetchImpl));
+    const deleted = calls.find((c) => c.method === "DELETE")!.body as { tags: string[] };
+    expect(deleted.tags).toEqual(["role_coach"]);
+    expect(deleted.tags).not.toContain("visibility_quiz_optin");
+  });
+
   it("caches the custom field lookup", async () => {
     const { calls, fetchImpl } = fakeGhl();
     await syncLeadToGhl(payload, options(fetchImpl));

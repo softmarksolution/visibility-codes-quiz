@@ -9,7 +9,12 @@ export type GhlFieldValue = string | number | string[];
 
 export interface GhlLeadPayload {
   firstName: string;
+  /** Only the opt-in asks for a surname, and only when the visitor typed one. */
+  lastName?: string;
   email: string;
+  /** Taken at the opt-in. Omitted rather than sent empty, so a later sync that
+      has no phone can never blank the number the opt-in already stored. */
+  phone?: string;
   /** Tags for this attempt. */
   tags: string[];
   /** Every tag the quiz can set; used to remove tags left over from an earlier attempt. */
@@ -99,7 +104,9 @@ export async function syncLeadToGhl(payload: GhlLeadPayload, opts: GhlOptions): 
     const { contact } = await request<{ contact: { id: string; tags?: string[] } }>("POST", "/contacts/upsert", {
       locationId,
       firstName: payload.firstName,
+      ...(payload.lastName ? { lastName: payload.lastName } : {}),
       email: payload.email,
+      ...(payload.phone ? { phone: payload.phone } : {}),
       source: "Visibility Codes Quiz",
       customFields,
     });
