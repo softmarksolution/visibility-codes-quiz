@@ -1,62 +1,26 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import { HeaderBanner, SiteFooter } from "@/components/SiteChrome";
-import { checkoutCopy } from "@/content/site";
-import { PILLAR_NAMES } from "@/lib/quiz/questions";
+import { redirect } from "next/navigation";
+import { actionPlanUrl } from "@/lib/actionPlan";
 import { decodeReportCode } from "@/lib/quiz/reportCode";
 import { computeResults } from "@/lib/quiz/scoring";
-import Purchase from "./Purchase";
-import styles from "./checkout.module.css";
 
-export const metadata: Metadata = {
-  title: "Your Personalised Visibility Action Plan | The Visibility Codes",
-  description: checkoutCopy.closing,
-  robots: { index: false, follow: false },
-};
-
-type SearchParams = Promise<Record<string, string | string[] | undefined>>;
-
-export default async function CheckoutPage({ searchParams }: { searchParams: SearchParams }) {
+/**
+ * The Action Plan is now bought on the client's own site, one checkout page per
+ * edition, so this page no longer sells anything — it only forwards.
+ *
+ * It stays because report links handed out before the change point here, and
+ * because the demo card form that used to live on it has no business being
+ * reachable now that real money moves elsewhere. A report code still names a
+ * primary gap, so an old link lands on exactly the edition it always meant.
+ *
+ * Without a readable result there is no gap, and therefore no correct edition
+ * to sell: those visitors are sent to take the assessment rather than guessed at.
+ */
+export default async function CheckoutPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const params = await searchParams;
-  const reportCode = typeof params.r === "string" ? params.r : "";
-  const answers = decodeReportCode(reportCode);
-  const results = answers ? computeResults(answers) : null;
-  const edition = results ? PILLAR_NAMES[results.primaryGap] : null;
-
-  return (
-    <>
-      <HeaderBanner variant="compact" />
-      <main className={`${styles.page} ${results ? "" : styles.noResult}`}>
-        <header className={styles.head}>
-          <p className={styles.eyebrow}>{checkoutCopy.eyebrow}</p>
-          <h1 className={styles.title}>{checkoutCopy.title}</h1>
-          {!results && <p className={styles.headBody}>{checkoutCopy.noResultBody}</p>}
-        </header>
-
-        <div className={styles.grid}>
-          <figure className={styles.art}>
-            <Image
-              src={`/plans/${results ? results.primaryGap : "direction"}.webp`}
-              alt={checkoutCopy.coverAlt(edition ?? "Direction")}
-              width={1024}
-              height={1536}
-              sizes="(max-width: 860px) 60vw, 360px"
-              priority
-            />
-            <figcaption>
-              {edition && <b>{checkoutCopy.editionLabel(edition)}</b>}
-              {checkoutCopy.personalised}
-            </figcaption>
-          </figure>
-
-          <Purchase
-            edition={edition}
-            editionId={results ? results.primaryGap : null}
-            reportCode={results ? reportCode : ""}
-          />
-        </div>
-      </main>
-      <SiteFooter />
-    </>
-  );
+  const answers = decodeReportCode(typeof params.r === "string" ? params.r : "");
+  redirect(answers ? actionPlanUrl(computeResults(answers).primaryGap) : "/quiz");
 }

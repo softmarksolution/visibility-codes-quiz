@@ -14,8 +14,35 @@ only the scored answer letters (no personal data).
 | `/` | Landing page. Captures `?ref=` referral codes. |
 | `/quiz` | The quiz. Progress is saved in the browser, so a reload picks up where you left off; starting again from the landing page clears it. The unlock pop-up appears after question 28. |
 | `/results?r=…&c=…` | The results report. Works on any device from the copied link. |
+| `/checkout?r=…` | Retired. Forwards to the action-plan page for that report's primary gap, or to `/quiz` without a readable result. |
+| `/api/optin` | Sends the opt-in lead to GHL and tags it `visibility_quiz_optin`. |
 | `/api/submit` | Validates, scores and sends the lead to GHL. |
 | `/api/calendar` | `.ics` file for Apple / Outlook calendars. |
+
+## Selling the Action Plan
+
+The paid Action Plan is **not** sold on this site. Each edition has its own checkout page on the
+client's site, carrying the price, the inclusions, the billing form, the masterclass waitlist
+question and the payment itself.
+
+The results page sends each visitor to the page for their **primary gap** — the lowest-scoring of
+the five pillars — so the edition offered is the one their result calls for:
+
+| Primary gap | Page |
+| --- | --- |
+| Direction | https://thevisibilitycodes.com/action-plan-direction |
+| Recognition | https://thevisibilitycodes.com/action-plan-recognition |
+| Consistency | https://thevisibilitycodes.com/action-plan-consistency |
+| Connection | https://thevisibilitycodes.com/action-plan-connection |
+| Opportunity | https://thevisibilitycodes.com/action-plan-opportunity |
+
+The map lives in `src/lib/actionPlan.ts` and is typed so that adding a pillar without adding its
+page is a compile error. To change a URL, change it there — nothing else needs touching.
+
+This replaced an on-site checkout page with a demo card form. That page and its form are gone;
+`/checkout` now only forwards, so report links handed out before the change still land on the right
+edition. `/thank-you` is no longer reachable from this site — the checkout pages own everything
+after payment — but the page is left in place in case it is linked from GoHighLevel.
 
 ## Local setup
 

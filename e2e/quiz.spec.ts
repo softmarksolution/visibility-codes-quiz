@@ -439,3 +439,27 @@ test("the opt-in pop-up never pulls focus out of a field you have already reache
   await expect(page.getByPlaceholder("Phone")).toBeFocused();
   await expect(page.getByPlaceholder("Name")).toHaveValue("");
 });
+
+/* The paid Action Plan is bought on the client's own site, one checkout page per
+   edition. Which page a visitor is sent to is decided by their primary gap, so a
+   wrong link here sells somebody the wrong edition. */
+test("the results CTA links to the action-plan page for the visitor's own gap", async ({ page }) => {
+  // All-lowest answers put every pillar level; ties go to the earlier pillar,
+  // which makes Direction the primary gap for this report code.
+  await page.goto("/results?r=v1AAAAAAAAAAAAAAAAAAA");
+  await expect(page.getByTestId("level")).toBeVisible();
+
+  const cta = page.getByRole("link", { name: /unlock my personalised action plan/i });
+  await expect(cta).toHaveAttribute("href", "https://thevisibilitycodes.com/action-plan-direction");
+
+  // Nothing on this site sells the plan any more: the old checkout URL forwards
+  // to the same page rather than showing a payment form.
+  const forwarded = await page.request.get("/checkout?r=v1AAAAAAAAAAAAAAAAAAA", { maxRedirects: 0 });
+  expect(forwarded.status()).toBe(307);
+  expect(forwarded.headers()["location"]).toBe("https://thevisibilitycodes.com/action-plan-direction");
+
+  // Without a readable result there is no gap, so no edition is the right one.
+  const noResult = await page.request.get("/checkout", { maxRedirects: 0 });
+  expect(noResult.status()).toBe(307);
+  expect(noResult.headers()["location"]).toContain("/quiz");
+});
