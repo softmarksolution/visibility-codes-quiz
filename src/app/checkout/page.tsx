@@ -22,5 +22,5 @@ export default async function CheckoutPage({
 }) {
   const params = await searchParams;
   const answers = decodeReportCode(typeof params.r === "string" ? params.r : "");
-  redirect(answers ? actionPlanUrl(computeResults(answers).primaryGap) : "/quiz");
+  redirect(answers ? actionPlanUrl(computeResults(answers).primaryGap) : "/");
 }

@@ -31,7 +31,7 @@ export async function processSubmission(input: unknown, deps: SubmissionDeps): P
   const checked = validateAnswers(body.answers);
   if (!checked.ok) return bad(checked.error);
 
-  const { firstName, email } = lead.lead;
+  const { firstName, email, phone } = lead.lead;
   const answers = checked.answers;
   const results = computeResults(answers);
   const reportCode = encodeReportCode(answers);
@@ -41,6 +41,7 @@ export async function processSubmission(input: unknown, deps: SubmissionDeps): P
   const payload: GhlLeadPayload = {
     firstName,
     email,
+    phone,
     tags: collectTags(answers),
     managedTags: ALL_QUIZ_TAGS,
     // Keys match the contact custom fields in the Katrina Kavvalos International GHL

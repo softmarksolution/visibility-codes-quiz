@@ -19,137 +19,6 @@ export const brand = {
   websiteUrl: "https://thevisibilitycodes.com",
 };
 
-// Landing page copy, word for word from the client's desktop and mobile layout PDFs.
-// Uppercase styling is applied in CSS so screen readers read words, not letters.
-// Images in /public/landing were cropped from the flattened PDFs; replace them with the
-// client's original files (same names) for sharper photos and logos.
-export const landing = {
-  hero: {
-    title: "Why Aren’t You Getting The Opportunities You Know You Deserve?",
-    // "\n" marks the layout's own line breaks; they render as <br> on desktop
-    // (see withBreaks in page.tsx) and are ignored on phones.
-    body: "In just 3 minutes, discover what\nis stopping you from standing out,\nbeing seen and being chosen,\nand what to shift next.",
-    tagline: "Stand out. Be seen. Be chosen.",
-    button: "Start assessment",
-    journey: ["Overlooked", "Recognised", "Chosen"],
-    imageAlt: "Katrina Kavvalos in front of The Visibility Codes title",
-  },
-  /* Cut from the client's own "2. Featured in banner - cropped.png" (1920x167),
-     so the logos carry their real proportions. Its background is rgb(245,242,238)
-     against our --cream #f7f5ed, which showed as a faint box behind every logo, so
-     the background is keyed out to transparent with a soft ramp for the antialiasing.
-     w/h are the file's intrinsic size; dw is the rendered width, held at the previous
-     values so the strip does not move. */
-  press: [
-    { id: "aacta", file: "press-aacta-f4235c69.webp", name: "AACTA Awards", w: 165, h: 90, dw: 131 },
-    { id: "nyfinance", file: "press-nyfinance-6f7e31ad.webp", name: "The New York Finance", w: 159, h: 71, dw: 127 },
-    { id: "dailytelegraph", file: "press-dailytelegraph-ba448c50.webp", name: "The Daily Telegraph", w: 236, h: 43, dw: 182 },
-    { id: "seven", file: "press-seven-ea597af7.webp", name: "Channel 7", w: 55, h: 63, dw: 50 },
-    { id: "nine", file: "press-nine-af8a12a9.webp", name: "Channel 9", w: 111, h: 57, dw: 91 },
-    { id: "currentaffair", file: "press-currentaffair-a1940675.webp", name: "A Current Affair", w: 182, h: 55, dw: 142 },
-    { id: "newidea", file: "press-newidea-0091cb88.webp", name: "New Idea", w: 97, h: 68, dw: 80 },
-    { id: "tennews", file: "press-tennews-db41e777.webp", name: "10 News First", w: 126, h: 64, dw: 102 },
-    { id: "livingroom", file: "press-livingroom-36f63380.webp", name: "The Living Room", w: 103, h: 51, dw: 107 },
-    { id: "prevention", file: "press-prevention-c7ad38bf.webp", name: "Prevention", w: 183, h: 42, dw: 146 },
-  ],
-  score: {
-    title: "Get Your Visibility Score Free",
-    // The "\n"s are the layout's own line breaks (desktop only), matching the
-    // client's "3.NEW - WITH BORDER" card.
-    body: "The first step to improving your visibility is knowing exactly where your gap is.\nTake this 3-minute Visibility Assessment to uncover what may be keeping you\nfrom standing out, being seen, and being chosen for the opportunities you want.",
-    bullets: [
-      { icon: "target", strong: "Discover your Visibility Score,", rest: " from 0 to 100, and what it means." },
-      { icon: "search", strong: "Identify your primary visibility gap", rest: " and the area\nthat needs the most attention." },
-      { icon: "clipboard", strong: "Get your visibility category", rest: " and personalised next steps\nyou can apply straight away." },
-    ],
-    after: "You’ll receive your score, primary blocker, strongest area,\nand next steps to help you move forward with clarity.",
-    button: "Get your free score",
-    gaugeTitle: "Your visibility score",
-    sample: 88,
-    rangeFrom: "Hidden potential",
-    rangeTo: "Chosen expert",
-    pill: "Score. Gap. Next steps.",
-  },
-  // "Why The Visibility Codes work" — the section between the score card and
-  // "Who this is for" in the client's FINAL.pdf. Copy is word for word.
-  why: {
-    eyebrow: "Why The Visibility Codes Work",
-    titleStart: "You cannot build visibility",
-    titleGold: "waiting to be discovered.",
-    photoAlt: "Katrina Kavvalos on the TikTok Awards red carpet",
-    /* Word for word from the 18.9.26 layout, which also drops the old closing
-       clause "even before you feel like the obvious choice." */
-    paragraphs: [
-      "I have been chosen for opportunities, stages and rooms I was not the most\nqualified for on paper. Not because I was better than everyone else, but because\nI learned how to position myself to be seen, remembered and chosen.",
-      "At the same time, I have seen incredibly talented, experienced and qualified\npeople stay overlooked simply because they were not visible in the right way.",
-      "You can have the experience, the talent and the expertise, and still be missed.\nVisibility changes when you learn how to position yourself so the right people\nnotice you, remember you and choose you.",
-    ],
-    stats: [
-      { icon: "instagram", lead: "600,000+", rest: "followers on Instagram",
-        note: "Built through visibility, positioning and content that gets remembered." },
-      { icon: "peopleFill", lead: "Almost 1 million", rest: "across social media",
-        note: "A personal brand grown through strategic positioning and visibility." },
-      { icon: "microphone", lead: "Chosen for major", rest: "media and red carpets",
-        note: "Including interviewing global celebrities and entertainment leaders." },
-      { icon: "stage", lead: "12,000 people", rest: "Chosen to host in front of", leadAfter: true,
-        note: "Alongside world class speakers such as Tony Robbins, Steven Bartlett, Gary Brecka and more." },
-    ],
-    footnote: "The Visibility Codes are built from the same strategies I have used in real life\nto create recognition, credibility, proximity and opportunity.",
-  },
-  who: {
-    title: "Who this is for",
-    photoAlt: "Sydney host Katrina Kavvalos with Steven Bartlett and Tony Robbins",
-    bullets: [
-      "You know you’re good at what you do, but you\nstill feel overlooked in your industry.",
-      "You struggle to explain what makes you different,\nso your message is not cutting through.",
-      "You’re showing up and creating content, but it is\nnot turning into recognition, authority or opportunities.",
-      "You keep watching people with less experience\nget the clients, stages, media and partnerships\nyou want.",
-      "You know you need to become more visible, but\nyou are unsure where to focus or what will actually\nmove the needle.",
-      "You feel capable of playing at a much bigger level,\nbut your current positioning does not reflect the\nlevel you want to be known for.",
-    ],
-  },
-  gaps: {
-    titleStart: "What’s Your",
-    titleGold: "Visibility Gap?",
-    body: "In just 3 minutes, uncover the hidden gap affecting your visibility,\nidentify where you are strongest, and receive a personalised next-step plan.",
-    items: [
-      { name: "Direction", text: "Your message, positioning, or focus is unclear, making it harder for people to understand what you do and why it matters." },
-      { name: "Recognition", text: "You have value to offer, but the right people are not noticing, remembering, or choosing you yet." },
-      { name: "Consistency", text: "You show up in pockets, but not often enough to build trust, momentum, and authority." },
-      { name: "Connection", text: "Your content or presence is not fully creating resonance, trust, or the relationships that open doors." },
-      { name: "Opportunity", text: "You are visible in some ways, but not yet positioned for the rooms, referrals, and aligned opportunities you want." },
-    ],
-    button: "Start free quiz",
-  },
-  meet: {
-    title: "Meet Katrina",
-    photoAlt: "Katrina Kavvalos hosting the AACTA Awards red carpet",
-    /* The "\n"s are the 18.9.26 layout's own line breaks (desktop only). */
-    paragraphs: [
-      "Katrina Kavvalos is a TV show creator, producer, speaker,\nmedia personality, red carpet host, celebrity interviewer, and\n#1 bestselling author whose career spans broadcast television,\npublishing, and digital media.",
-      "As a Red Carpet Host and Celebrity Interviewer at the AACTA\nAwards, Katrina has interviewed some of the most recognisable\nnames in entertainment, and also served as VIP Social Media\nReporter for The Voice Australia and singer Will.i.am.",
-      "Katrina was also selected to host the world’s largest\nentrepreneurial event for an audience of more than 12,000 people,\nalongside world class speakers including Tony Robbins,\nSteven Bartlett, Gary Brecka, and other internationally\nrecognised leaders.",
-      "With more than a decade of experience across media and digital\nplatforms, Katrina has built a respected reputation across both\nbroadcast and social, while contributing to bestselling books on\ncredibility, relationships, and personal influence in the digital age.",
-      "Across television, publishing, and visibility-focused media projects,\nKatrina’s work explores identity, reinvention, success, and human\npotential, helping people step out of the background, elevate\ntheir authority, and become impossible to overlook.",
-    ],
-  },
-  galleryLabel: "Katrina speaking, hosting and on the red carpet",
-  gallery: [
-    { id: 1, file: "gallery-1-a7d8ef43.webp", alt: "Katrina speaking on stage to a full conference room", w: 1087, h: 920 },
-    { id: 2, file: "gallery-2-08173966.webp", alt: "Katrina interviewing an actor on the red carpet", w: 1204, h: 1019 },
-    { id: 3, file: "gallery-3-85f72c30.webp", alt: "Katrina with a guest at a red carpet event", w: 502, h: 426 },
-    { id: 4, file: "gallery-4-4e557730.webp", alt: "Katrina with a guest at an awards night", w: 937, h: 1006 },
-    { id: 5, file: "gallery-5-5e1ad081.webp", alt: "Katrina with two guests at a media event", w: 999, h: 1072 },
-    { id: 6, file: "gallery-6-c55c6f55.webp", alt: "Katrina laughing with a guest on the red carpet", w: 937, h: 1006 },
-    { id: 7, file: "gallery-7-57e739ea.webp", alt: "Katrina presenting on stage at a live event", w: 937, h: 1006 },
-  ],
-  final: {
-    lines: ["You were never meant", "to be overlooked."],
-    body: "Discover what is currently holding back your visibility,\nand the exact area to focus on next.",
-    button: "Get your visibility score free",
-  },
-} as const;
-
 export const unlock = {
   headline: {
     "Hidden Potential": "You Have Hidden Potential.", // DRAFT
@@ -161,6 +30,7 @@ export const unlock = {
   body: "Now comes the part that matters most. Discover where your visibility is strongest, where your biggest gap is holding you back, and what to shift next so you can become more recognised and chosen.",
   firstNameLabel: "First name",
   emailLabel: "Email",
+  phoneLabel: "Phone number",
   button: "Unlock my full report",
   sending: "Unlocking…",
   smallPrint: "Your personalised Visibility Report will be sent straight to your inbox.",
@@ -172,36 +42,6 @@ export const unlock = {
    "CHECK OUT PAGE COPY - $35 USD (USED WHEN THEY CLICK BUTTON ON RESULTS PAGE)"
    and marks the Masterclass waitlist "ADD TO YOUR PURCHASE - MUST SAY FREE", so
    the plan is the paid item and the waitlist is the free add-on. */
-/* The opt-in pop-up every "start" button opens, and the quiz cover page it
-   hands off to. Copy from the client's landing page design and
-   "6. QUIZ / 1. QUIZ COVER PAGE - PAGE 1 / COVER PAGE COPY.docx".
-   The .docx heading says "29 QUESTIONS"; the cover artwork says 28, which is
-   what the quiz actually asks, so 28 is used. */
-export const optIn = {
-  titleLines: ["Discover Your", "Visibility Score", "and Find Your Gap"],
-  body: "Enter your details below to get your personalised Visibility Score and instant insights.",
-  note: "We’ll send it straight to your inbox.",
-  namePlaceholder: "Name",
-  emailPlaceholder: "Email",
-  phonePlaceholder: "Phone",
-  button: "Get My Visibility Score Now",
-  close: "Close",
-};
-
-export const quizCover = {
-  eyebrow: "For entrepreneurs, coaches, speakers, authors, personal brands",
-  title: "What’s actually standing between you and the opportunities you know you’re capable of?",
-  stats: ["28 Questions", "Personalised Visibility Score", "3 Minute Quiz"],
-  paragraphs: [
-    "You know you are good at what you do. You have the experience, the knowledge and the ability to deliver. Yet somehow, you keep watching other people get the clients, stages, media opportunities, partnerships and invitations you know you could handle. You show up, work hard and keep building your expertise, but the right people still do not seem to see you at the level you know you are capable of.",
-    "I became fascinated by this because every major opportunity in my career came to me. From hosting the AACTA Awards red carpet, to my first speaking tour, to being chosen to host one of the biggest entrepreneurial events in front of 12,000 people alongside Tony Robbins, Steven Bartlett, Gary Brecka and other world class speakers, I did not chase those opportunities. I was chosen for them.",
-    "It is time to stop wondering what is wrong with you, why you are not being noticed, and what is keeping you from being chosen. In 3 minutes, this assessment will help you identify what is really getting in the way, where your visibility is breaking down, and exactly what to shift so the right people begin to see, recognise and choose you.",
-  ],
-  button: "Start quiz",
-  footnote:
-    "Remember to answer based on where you are right now, not where you want to be. The more honest your answers, the more useful your result.",
-};
-
 export const checkoutCopy = {
   eyebrow: "Your personalised next step",
   title: "Your Personalised Visibility Action Plan",

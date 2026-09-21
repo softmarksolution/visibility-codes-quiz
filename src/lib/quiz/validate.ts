@@ -1,3 +1,4 @@
+import { formatUsPhone } from "../phone";
 import { QUESTIONS, type Answers, type Question } from "./questions";
 
 const DEFAULT_TEXT_MAX = 500;
@@ -6,6 +7,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export interface Lead {
   firstName: string;
   email: string;
+  /** NANP numbers normalised to +1 (XXX) XXX-XXXX; anything else as typed. */
+  phone: string;
 }
 
 export function isAnswered(q: Question, value: unknown): boolean {
@@ -39,11 +42,15 @@ export function validateAnswers(input: unknown): { ok: true; answers: Answers } 
 }
 
 export function validateLead(input: unknown): { ok: true; lead: Lead } | { ok: false; error: string } {
-  if (!input || typeof input !== "object") return { ok: false, error: "Please enter your first name and email." };
-  const { firstName, email } = input as Record<string, unknown>;
+  if (!input || typeof input !== "object") return { ok: false, error: "Please enter your details." };
+  const { firstName, email, phone } = input as Record<string, unknown>;
   const name = typeof firstName === "string" ? firstName.trim() : "";
   if (name.length < 1 || name.length > 80) return { ok: false, error: "Please enter your first name." };
   const mail = typeof email === "string" ? email.trim().toLowerCase() : "";
   if (mail.length > 254 || !EMAIL_RE.test(mail)) return { ok: false, error: "Please enter a valid email address." };
-  return { ok: true, lead: { firstName: name, email: mail } };
+  /* Length is checked before formatting: formatUsPhone returns non-NANP input
+     untouched, so without a cap an arbitrarily long string would reach the CRM. */
+  const rawPhone = typeof phone === "string" ? phone.trim() : "";
+  if (rawPhone.length < 1 || rawPhone.length > 40) return { ok: false, error: "Please enter your phone number." };
+  return { ok: true, lead: { firstName: name, email: mail, phone: formatUsPhone(rawPhone) } };
 }

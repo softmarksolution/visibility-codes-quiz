@@ -11,11 +11,10 @@ only the scored answer letters (no personal data).
 
 | Path | What it is |
 |---|---|
-| `/` | Landing page. Captures `?ref=` referral codes. |
-| `/quiz` | The quiz. Progress is saved in the browser, so a reload picks up where you left off; starting again from the landing page clears it. The unlock pop-up appears after question 28. |
+| `/` | The quiz. Captures `?ref=` referral codes. Progress is saved in the browser, so a reload picks up where you left off. The unlock pop-up appears after question 28. |
+| `/quiz`, `/quiz-cover` | Retired. Permanent redirects to `/` so old ad, email and bookmark links still reach the quiz. |
 | `/results?r=…&c=…` | The results report. Works on any device from the copied link. |
-| `/checkout?r=…` | Retired. Forwards to the action-plan page for that report's primary gap, or to `/quiz` without a readable result. |
-| `/api/optin` | Sends the opt-in lead to GHL and tags it `visibility_quiz_optin`. |
+| `/checkout?r=…` | Retired. Forwards to the action-plan page for that report's primary gap, or to `/` without a readable result. |
 | `/api/submit` | Validates, scores and sends the lead to GHL. |
 | `/api/calendar` | `.ics` file for Apple / Outlook calendars. |
 
@@ -107,29 +106,29 @@ These **Contact** custom fields are set up in the Katrina Kavvalos International
 Q1 (role) is saved as a tag only. The older `visibility_level` dropdown (its options don't match the
 scoring doc's level names) and `visibility_gap_rating` (no score bands yet) are left untouched.
 
-**Tags.** The funnel writes to GHL at two points, with one tag each:
+**Tags.** The funnel writes to GHL at one point: the unlock form after Q28.
 
-| When | Tag | Sent by |
+| When | Tags | Sent by |
 | --- | --- | --- |
-| The opt-in pop-up is submitted, before any question is answered | `visibility_quiz_optin` | `POST /api/optin` |
-| The report is unlocked after Q28 | `visibility_quiz_completed` | `POST /api/submit` |
+| The report is unlocked after Q28 | `visibility_quiz_optin`, `visibility_quiz_completed` | `POST /api/submit` |
 
-The opt-in sync carries name, email and phone — it is the only place the phone number is captured,
-so a lead who opts in and then abandons the quiz is still a reachable contact. The completion sync
-adds the answer tags from the questions document (role, goal, problem, platform, blocker,
-experience, intent) alongside `visibility_quiz_completed`.
+The sync carries first name, email and phone, plus the answer tags from the questions document
+(role, goal, problem, platform, blocker, experience, intent).
 
-Anyone who finishes therefore carries **both** tags; anyone who dropped out carries only
-`visibility_quiz_optin`. That is the segment to follow up.
+The opt-in tag used to be sent ahead of the quiz by a pop-up on the landing page, which caught people
+who handed over their details and then dropped out. That landing page and its pop-up have been
+removed, so **the details are now only asked for at the end and only finishers become contacts.**
+The tag is still sent, so workflows built on it keep firing, but it no longer identifies a separate
+abandoned-quiz segment — every contact carrying it also carries `visibility_quiz_completed`.
 
 On a retake, quiz tags from the previous attempt are removed. Tags the quiz doesn't manage are never
 touched — `visibility_quiz_optin` is deliberately outside that managed set (see `OPTIN_TAG` in
-`src/lib/quiz/tags.ts`), so completing the quiz can never strip it. GHL stores tags in lowercase.
+`src/lib/quiz/tags.ts`), so a later sync can never strip it. GHL stores tags in lowercase.
 
 **Workflow.** The app calculates the Visibility Score itself, so no maths workflow is needed.
 To email the report, trigger a workflow on the tag `visibility_quiz_completed` and use
-`{{contact.visibility_report_url}}` in the email. For abandoned-quiz follow-up, trigger on
-`visibility_quiz_optin` with a filter excluding `visibility_quiz_completed`.
+`{{contact.visibility_report_url}}` in the email. Abandoned-quiz follow-up is no longer possible:
+nobody reaches the CRM until they finish.
 
 ## Scoring
 

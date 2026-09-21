@@ -1,15 +1,14 @@
 import { QUESTIONS, type Answers } from "./questions";
 
 /**
- * Added the moment the opt-in pop-up is submitted, before a single question is
- * answered. Use it as the GHL workflow trigger for "started but has not
- * finished" — every completed lead carries it too, so pair it with
- * COMPLETED_TAG to tell the two apart.
+ * Marks the visitor as having handed over their details. The details are now
+ * asked for on the form that completes the quiz, so this arrives together with
+ * COMPLETED_TAG rather than ahead of it; it is kept as its own tag so the GHL
+ * workflows built on it keep firing.
  *
  * It is deliberately NOT in ALL_QUIZ_TAGS: that list is what the quiz is
- * allowed to REMOVE on a later sync, and stripping the opt-in tag when someone
- * finishes would destroy exactly the signal it exists to carry. There is a test
- * on this.
+ * allowed to REMOVE on a later sync, and stripping the opt-in tag would destroy
+ * exactly the signal it exists to carry. There is a test on this.
  */
 export const OPTIN_TAG = "VISIBILITY_QUIZ_OPTIN";
 
@@ -28,5 +27,6 @@ export function collectTags(answers: Answers): string[] {
     option?.tags?.forEach((t) => tags.add(t));
   }
   tags.add(COMPLETED_TAG);
+  tags.add(OPTIN_TAG);
   return [...tags];
 }
