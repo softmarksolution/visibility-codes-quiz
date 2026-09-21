@@ -15,6 +15,7 @@ describe("collectTags", () => {
       "READY_FOR_ACTION",
       "READY_TO_INVEST",
       COMPLETED_TAG,
+      OPTIN_TAG,
     ]);
   });
 
@@ -29,12 +30,19 @@ describe("collectTags", () => {
     expect(new Set(ALL_QUIZ_TAGS).size).toBe(ALL_QUIZ_TAGS.length);
   });
 
+  /* The opt-in now happens on the same form that completes the quiz, so every
+     submission carries both tags. */
+  it("adds the opt-in tag alongside the completion tag", () => {
+    const tags = collectTags({ 1: "B", 27: "D" });
+    expect(tags).toContain(OPTIN_TAG);
+    expect(tags).toContain(COMPLETED_TAG);
+    expect(OPTIN_TAG).not.toBe(COMPLETED_TAG);
+  });
+
   /* ALL_QUIZ_TAGS is the set the completion sync is allowed to DELETE. If the
-     opt-in tag ever lands in it, finishing the quiz would strip the tag that
+     opt-in tag ever lands in it, a later re-sync would strip the tag that
      records the visitor opted in — the very thing it exists to record. */
   it("keeps the opt-in tag out of the set the quiz may remove", () => {
     expect(ALL_QUIZ_TAGS).not.toContain(OPTIN_TAG);
-    expect(collectTags({ 1: "B", 27: "D" })).not.toContain(OPTIN_TAG);
-    expect(OPTIN_TAG).not.toBe(COMPLETED_TAG);
   });
 });

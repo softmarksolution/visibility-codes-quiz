@@ -58,19 +58,31 @@ describe("isAnswered", () => {
 });
 
 describe("validateLead", () => {
-  it("normalises name and email", () => {
-    expect(validateLead({ firstName: "  Emma ", email: " Emma@Example.COM " })).toEqual({
+  it("normalises name, email and phone", () => {
+    expect(validateLead({ firstName: "  Emma ", email: " Emma@Example.COM ", phone: "347-428-0292" })).toEqual({
       ok: true,
-      lead: { firstName: "Emma", email: "emma@example.com" },
+      lead: { firstName: "Emma", email: "emma@example.com", phone: "+1 (347) 428-0292" },
     });
   });
 
+  /* This audience is largely Australian and an Australian mobile is also ten
+     digits, so anything that is not a NANP number is kept exactly as typed
+     rather than rewritten into an unreachable US number. */
+  it("keeps a non-NANP number as typed", () => {
+    const result = validateLead({ firstName: "Emma", email: "a@b.co", phone: " 0412 345 678 " });
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.lead.phone).toBe("0412 345 678");
+  });
+
   it.each([
-    [{ firstName: "", email: "a@b.co" }],
-    [{ firstName: "x".repeat(81), email: "a@b.co" }],
-    [{ firstName: "Emma", email: "not-an-email" }],
-    [{ firstName: "Emma", email: "a@b" }],
-    [{ firstName: "Emma" }],
+    [{ firstName: "", email: "a@b.co", phone: "0412345678" }],
+    [{ firstName: "x".repeat(81), email: "a@b.co", phone: "0412345678" }],
+    [{ firstName: "Emma", email: "not-an-email", phone: "0412345678" }],
+    [{ firstName: "Emma", email: "a@b", phone: "0412345678" }],
+    [{ firstName: "Emma", phone: "0412345678" }],
+    [{ firstName: "Emma", email: "a@b.co" }],
+    [{ firstName: "Emma", email: "a@b.co", phone: "   " }],
+    [{ firstName: "Emma", email: "a@b.co", phone: "x".repeat(41) }],
     ["nope"],
   ])("rejects %j", (input) => {
     expect(validateLead(input).ok).toBe(false);

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import type { GhlLeadPayload, SyncResult } from "./ghl";
 import { QUESTIONS, type Answers } from "./quiz/questions";
-import { ALL_QUIZ_TAGS, COMPLETED_TAG } from "./quiz/tags";
+import { ALL_QUIZ_TAGS, COMPLETED_TAG, OPTIN_TAG } from "./quiz/tags";
 import { processSubmission } from "./submission";
 
 function answers(): Answers {
@@ -15,7 +15,7 @@ function answers(): Answers {
 }
 
 function body(overrides: Record<string, unknown> = {}) {
-  return { firstName: "Emma", email: "Emma@Example.com", answers: answers(), website: "", ...overrides };
+  return { firstName: "Emma", email: "Emma@Example.com", phone: "347-428-0292", answers: answers(), website: "", ...overrides };
 }
 
 function deps(result: SyncResult = { synced: true, contactId: "c1" }) {
@@ -35,8 +35,10 @@ describe("processSubmission", () => {
 
     const payload = d.sync.mock.calls[0]![0];
     expect(payload.email).toBe("emma@example.com");
+    expect(payload.phone).toBe("+1 (347) 428-0292");
     expect(payload.tags).toContain("ROLE_OTHER");
     expect(payload.tags).toContain(COMPLETED_TAG);
+    expect(payload.tags).toContain(OPTIN_TAG);
     expect(payload.managedTags).toEqual(ALL_QUIZ_TAGS);
     // Keys match the fields in the Katrina Kavvalos International GHL sub-account.
     expect(payload.fields).toEqual({
@@ -115,6 +117,7 @@ describe("processSubmission", () => {
   it.each([
     ["non-object body", "nope"],
     ["missing email", body({ email: "" })],
+    ["missing phone", body({ phone: "" })],
     ["bad answers", body({ answers: { ...answers(), 5: "Z" } })],
   ])("rejects %s with 400", async (_label, input) => {
     const d = deps();

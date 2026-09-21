@@ -58,7 +58,7 @@ export function RetakeButton({ label }: { label: string }) {
       className={styles.retakeButton}
       onClick={() => {
         clearProgress();
-        router.push("/quiz");
+        router.push("/");
       }}
     >
       {label}

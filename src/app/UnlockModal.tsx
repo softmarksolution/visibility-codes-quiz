@@ -5,7 +5,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { unlock } from "@/content/site";
 import type { Answers } from "@/lib/quiz/questions";
 import { computeResults } from "@/lib/quiz/scoring";
-import { clearProgress, readLead, readRef, saveName } from "@/lib/storage";
+import { formatUsPhone } from "@/lib/phone";
+import { clearProgress, readRef, saveName } from "@/lib/storage";
 import styles from "./quiz.module.css";
 
 interface Props {
@@ -16,13 +17,12 @@ interface Props {
 export default function UnlockModal({ answers, onClose }: Props) {
   const router = useRouter();
   const results = useMemo(() => computeResults(answers), [answers]);
-  /* The opt-in before the quiz already took a name, email and phone, so this
-     second ask is pre-filled from it rather than made to be re-typed. Read
-     lazily: readLead() is storage-guarded and returns null on the server, and
-     this modal only mounts after the last question is answered, so its first
-     render is client-side. */
-  const [firstName, setFirstName] = useState(() => readLead()?.name.trim().split(/\s+/)[0] ?? "");
-  const [email, setEmail] = useState(() => readLead()?.email ?? "");
+  /* This is now the only place the visitor hands over their details — the
+     opt-in that used to run before the quiz went with the landing page — so
+     the fields start empty, and phone is asked for here rather than up front. */
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [website, setWebsite] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -52,13 +52,14 @@ export default function UnlockModal({ answers, onClose }: Props) {
     setError(null);
     if (!firstName.trim()) return setError("Please enter your first name.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) return setError("Please enter a valid email address.");
+    if (!phone.trim()) return setError("Please enter your phone number.");
 
     setSubmitting(true);
     try {
       const res = await fetch("/api/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, email, answers, ref: readRef() ?? undefined, website }),
+        body: JSON.stringify({ firstName, email, phone, answers, ref: readRef() ?? undefined, website }),
       });
       const data = (await res.json().catch(() => null)) as
         | { ok: true; reportCode: string; referralCode: string }
@@ -117,6 +118,23 @@ export default function UnlockModal({ answers, onClose }: Props) {
             maxLength={254}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+          <label htmlFor="phone" className="sr-only">
+            {unlock.phoneLabel}
+          </label>
+          <input
+            id="phone"
+            type="tel"
+            className={styles.field}
+            placeholder={unlock.phoneLabel}
+            autoComplete="tel"
+            inputMode="tel"
+            maxLength={40}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            /* Format on blur, not per keystroke, so the cursor is never moved
+               out from under someone mid-number. */
+            onBlur={(e) => setPhone(formatUsPhone(e.target.value))}
           />
           <div className={styles.honeypot} aria-hidden="true">
             <label htmlFor="website">Website</label>

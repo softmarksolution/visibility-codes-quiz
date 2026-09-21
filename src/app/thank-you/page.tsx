@@ -58,7 +58,7 @@ export default async function ThankYouPage({ searchParams }: { searchParams: Sea
 
   function hrefFor(target: NonNullable<ThankYouCard["cta"]>["href"]) {
     if (target === "waitlist") return "/waitlist";
-    if (target === "results") return reportCode ? `/results?r=${encodeURIComponent(reportCode)}` : "/quiz";
+    if (target === "results") return reportCode ? `/results?r=${encodeURIComponent(reportCode)}` : "/";
     return planHref;
   }
 

@@ -218,7 +218,7 @@ function InvalidReport() {
         <section className={`${styles.card} ${styles.invalid}`}>
           <h1 className={styles.invalidTitle}>{resultsCopy.invalidTitle}</h1>
           <p>{resultsCopy.invalidBody}</p>
-          <Link href="/quiz" className="btn-gold">
+          <Link href="/" className="btn-gold">
             {resultsCopy.invalidButton}
           </Link>
         </section>
