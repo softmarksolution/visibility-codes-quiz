@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { GhlLeadPayload, SyncResult } from "./ghl";
 import { QUESTIONS, type Answers } from "./quiz/questions";
 import { ALL_QUIZ_TAGS, COMPLETED_TAG, OPTIN_TAG } from "./quiz/tags";
-import { processSubmission } from "./submission";
+import { ANSWER_FIELD_KEYS, processSubmission } from "./submission";
 
 function answers(): Answers {
   const a: Answers = {};
@@ -41,7 +41,17 @@ describe("processSubmission", () => {
     expect(payload.tags).toContain(OPTIN_TAG);
     expect(payload.managedTags).toEqual(ALL_QUIZ_TAGS);
     // Keys match the fields in the Katrina Kavvalos International GHL sub-account.
-    expect(payload.fields).toEqual({
+    // The per-question keys are checked one by one in the test below; here the
+    // whole key set is pinned so nothing is added or dropped unnoticed.
+    expect(Object.keys(payload.fields).sort()).toEqual(
+      [
+        "direction_percent", "recognition_percent", "connection_percent", "consistency_percent",
+        "opportunity_percent", "visibility_score", "visibility_gap", "visibility_level_quiz",
+        "strongest_code", "weakest_code", "primary_visibility_problem", "visibility_report_url",
+        "referral_code", "referred_by", ...Object.values(ANSWER_FIELD_KEYS),
+      ].sort(),
+    );
+    expect(payload.fields).toMatchObject({
       direction_percent: 100,
       recognition_percent: 100,
       connection_percent: 100,
@@ -83,6 +93,56 @@ describe("processSubmission", () => {
       q25_years_experience: "1 to 3 years",
       q27_intent_level: "I am interested, but it is not a major priority right now",
     });
+  });
+
+  /* Every answer gets its own GHL field, so the client can filter and build
+     workflows on any single question. The first nine keys predate this and are
+     kept as they were, because fields and workflows may already use them. */
+  it("sends every one of the 28 answers as its own field", async () => {
+    const expectedKeys: [number, string][] = [
+      [1, "q1_role"],
+      [2, "q2_desired_outcome"],
+      [3, "q3_perceived_problem"],
+      [4, "q4_primary_platform"],
+      [5, "q5_goal_clarity"],
+      [6, "q6_who_can_help"],
+      [7, "q7_where_to_show_up"],
+      [8, "q8_visibility_focus"],
+      [9, "q9_efforts_working"],
+      [10, "q10_what_makes_you_different"],
+      [11, "q11_brand_perception"],
+      [12, "q12_proof_online"],
+      [13, "q13_audience_size"],
+      [14, "q14_sought_for_advice"],
+      [15, "q15_key_industry_people"],
+      [16, "q16_right_rooms"],
+      [17, "q17_following_up_connections"],
+      [18, "q18_connecting_without_agenda"],
+      [19, "inner_visibility_blocker"],
+      [20, "q20_posting_frequency"],
+      [21, "q21_reviewing_what_works"],
+      [22, "q22_last_inbound_opportunity"],
+      [23, "q23_how_opportunities_came"],
+      [24, "q24_building_on_opportunities"],
+      [25, "q25_years_experience"],
+      [26, "what_have_you_already_done_to_try_to_become_more_visible"],
+      [27, "q27_intent_level"],
+      [28, "q28_written_response"],
+    ];
+    expect(expectedKeys.map(([id]) => id)).toEqual(QUESTIONS.map((q) => q.id));
+
+    const d = deps();
+    const a = answers();
+    await processSubmission(body({ answers: a }), d);
+    const fields = d.sync.mock.calls[0]![0].fields;
+
+    for (const [id, key] of expectedKeys) {
+      const q = QUESTIONS.find((x) => x.id === id)!;
+      const label = (optionId: string) => q.options.find((o) => o.id === optionId)!.label;
+      const value = a[id];
+      const expected = q.type === "text" ? value : Array.isArray(value) ? value.map(label) : label(value as string);
+      expect(fields[key], `Q${id} -> ${key}`).toEqual(expected);
+    }
   });
 
   it("ignores client-sent scores", async () => {
