@@ -103,7 +103,36 @@ These **Contact** custom fields are set up in the Katrina Kavvalos International
 | Referral code | Referral Code | `referral_code` | Text | Created |
 | Referred by | Referred By | `referred_by` | Text | Created |
 
-Q1 (role) is saved as a tag only. The older `visibility_level` dropdown (its options don't match the
+**Per-question fields — to create.** Every answer is also sent as its own field, so any single
+question can be filtered on or used in a workflow. The nine answer fields above already exist; these
+twenty do not yet, and **must be created in GHL** (Settings → Custom Fields → Contact) before their
+answers are stored. Name each field exactly as shown and GHL generates the matching key; check the
+key after saving. Each holds the wording of the option the visitor picked.
+
+| Quiz data | GHL field name | Key | Type |
+|---|---|---|---|
+| Q1 answer | Q1 Role | `q1_role` | Text |
+| Q5 answer | Q5 Goal Clarity | `q5_goal_clarity` | Text |
+| Q6 answer | Q6 Who Can Help | `q6_who_can_help` | Text |
+| Q7 answer | Q7 Where To Show Up | `q7_where_to_show_up` | Text |
+| Q8 answer | Q8 Visibility Focus | `q8_visibility_focus` | Text |
+| Q9 answer | Q9 Efforts Working | `q9_efforts_working` | Text |
+| Q10 answer | Q10 What Makes You Different | `q10_what_makes_you_different` | Text |
+| Q11 answer | Q11 Brand Perception | `q11_brand_perception` | Text |
+| Q12 answer | Q12 Proof Online | `q12_proof_online` | Text |
+| Q13 answer | Q13 Audience Size | `q13_audience_size` | Text |
+| Q14 answer | Q14 Sought For Advice | `q14_sought_for_advice` | Text |
+| Q15 answer | Q15 Key Industry People | `q15_key_industry_people` | Text |
+| Q16 answer | Q16 Right Rooms | `q16_right_rooms` | Text |
+| Q17 answer | Q17 Following Up Connections | `q17_following_up_connections` | Text |
+| Q18 answer | Q18 Connecting Without Agenda | `q18_connecting_without_agenda` | Text |
+| Q20 answer | Q20 Posting Frequency | `q20_posting_frequency` | Text |
+| Q21 answer | Q21 Reviewing What Works | `q21_reviewing_what_works` | Text |
+| Q22 answer | Q22 Last Inbound Opportunity | `q22_last_inbound_opportunity` | Text |
+| Q23 answer | Q23 How Opportunities Came | `q23_how_opportunities_came` | Text |
+| Q24 answer | Q24 Building On Opportunities | `q24_building_on_opportunities` | Text |
+
+Q1 (role) is also saved as a tag. The older `visibility_level` dropdown (its options don't match the
 scoring doc's level names) and `visibility_gap_rating` (no score bands yet) are left untouched.
 
 **Tags.** The funnel writes to GHL at one point: the unlock form after Q28.
