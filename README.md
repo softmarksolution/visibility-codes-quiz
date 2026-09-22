@@ -103,11 +103,11 @@ These **Contact** custom fields are set up in the Katrina Kavvalos International
 | Referral code | Referral Code | `referral_code` | Text | Created |
 | Referred by | Referred By | `referred_by` | Text | Created |
 
-**Per-question fields — to create.** Every answer is also sent as its own field, so any single
-question can be filtered on or used in a workflow. The nine answer fields above already exist; these
-twenty do not yet, and **must be created in GHL** (Settings → Custom Fields → Contact) before their
-answers are stored. Name each field exactly as shown and GHL generates the matching key; check the
-key after saving. Each holds the wording of the option the visitor picked.
+**Per-question fields.** Every answer is also sent as its own field, so any single question can be
+filtered on or used in a workflow. These twenty were created in the sub-account on 2026-09-22 and
+confirmed with a test submission that stored all 28 answers. If they are ever recreated, name each
+field exactly as shown and GHL generates the matching key; check the key after saving. Each holds the
+wording of the option the visitor picked.
 
 | Quiz data | GHL field name | Key | Type |
 |---|---|---|---|
